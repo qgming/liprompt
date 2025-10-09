@@ -2,8 +2,14 @@
   <view class="container">
     <!-- 简洁标题 -->
     <view class="header">
-      <text class="logo-text">历史上的今天</text>
-      <text class="subtitle">回顾历史 · 启迪未来</text>
+      <view class="title-section">
+        <text class="logo-text">历史上的今天</text>
+        <text class="subtitle">回顾历史 · 启迪未来</text>
+      </view>
+      <button class="share-btn" open-type="share">
+        <text class="share-icon">↗</text>
+        <text class="share-text">分享</text>
+      </button>
     </view>
 
     <!-- 日期信息 -->
@@ -131,6 +137,18 @@ onMounted(() => {
 })
 </script>
 
+<script>
+// 微信小程序分享配置 - 单独使用选项式API导出
+export default {
+  onShareAppMessage() {
+    return {
+      title: '历史上的今天 - 回顾历史',
+      path: '/pages/history/index'
+    }
+  }
+}
+</script>
+
 <style>
 .container {
   width: 100vw;
@@ -144,11 +162,18 @@ onMounted(() => {
 
 .header {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 40rpx;
   padding-bottom: 20rpx;
   border-bottom: 2px solid #000000;
+}
+
+.title-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
 }
 
 .logo-text {
@@ -165,6 +190,41 @@ onMounted(() => {
   color: #333333;
   font-weight: 400;
   font-style: italic;
+}
+
+.share-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 0;
+  padding: 12rpx 20rpx;
+  min-width: 80rpx;
+  height: auto;
+  margin: 0;
+  line-height: 1;
+}
+
+.share-btn::after {
+  border: none;
+}
+
+.share-icon {
+  font-size: 24rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.share-text {
+  font-size: 20rpx;
+  font-weight: 400;
+}
+
+.share-btn:active {
+  background: #333333;
 }
 
 .date-info {

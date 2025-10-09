@@ -5,39 +5,38 @@
 
 // 多个备用API服务器
 const API_SERVERS = [
-  "https://api.yanyua.icu/v2",
-  "https://60s.qgming.com/v2",
-  "https://60api.09cdn.xyz/v2",
-  "https://60s.7se.cn/v2",
-  "https://60s.crystelf.top/v2",
-  "https://60s.viki.moe/v2",
+  "https://api.yanyua.icu",
+  "https://60s.qgming.com",
+  "https://60api.09cdn.xyz",
+  "https://60s.7se.cn",
+  "https://60s.crystelf.top",
 ];
 
 // 各渠道API路径配置
 const API_PATHS = {
   // 60秒新闻
-  "60s": "/60s",
+  "60s": "/v2/60s",
 
   // 哔哩哔哩热搜
-  bilibili: "/bili",
+  bilibili: "/v2/bili",
 
   // 抖音热搜
-  douyin: "/douyin",
+  douyin: "/v2/douyin",
 
   // 微博热搜
-  weibo: "/weibo",
+  weibo: "/v2/weibo",
 
   // 小红书热搜
-  xiaohongshu: "/rednote",
+  xiaohongshu: "/v2/rednote",
 
   // 知乎话题榜
-  zhihu: "/zhihu",
+  zhihu: "/v2/zhihu",
 
   // 历史上的今天
-  history: "/today-in-history",
+  history: "/v2/today-in-history",
 
   // 头条热搜
-  toutiao: "/toutiao",
+  toutiao: "/v2/toutiao",
 };
 
 // 各渠道信息配置

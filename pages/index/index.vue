@@ -39,16 +39,16 @@
 						<text class="hot-search-title">抖音热搜</text>
 					</view>
 
-					<!-- 小红书热搜卡片 -->
-					<view class="hot-search-card" @click="navigateToXiaohongshu">
-						<view class="hot-search-icon">📕</view>
-						<text class="hot-search-title">小红书热搜</text>
-					</view>
-
 					<!-- 微博热搜卡片 -->
 					<view class="hot-search-card" @click="navigateToWeibo">
 						<view class="hot-search-icon">📱</view>
 						<text class="hot-search-title">微博热搜</text>
+					</view>
+
+					<!-- 小红书热搜卡片 -->
+					<view class="hot-search-card" @click="navigateToXiaohongshu">
+						<view class="hot-search-icon">📕</view>
+						<text class="hot-search-title">小红书热搜</text>
 					</view>
 
 					<!-- 哔哩哔哩热搜卡片 -->

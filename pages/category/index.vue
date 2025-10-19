@@ -1,74 +1,40 @@
 <template>
 	<view class="container">
-		<!-- 搜索栏 -->
-		<view class="search-section">
-			<view class="search-box">
-				<input
-					class="search-input"
-					type="text"
-					v-model="searchKeyword"
-					placeholder="搜索提示词..."
-					@input="handleSearch"
-				/>
-				<view class="search-icon">🔍</view>
-			</view>
-		</view>
-
-		<scroll-view scroll-y class="scroll-content">
-			<!-- 分类列表 -->
-			<view class="category-section">
-				<view class="section-title">
-					<text class="title-text">所有分类</text>
-					<text class="title-count">({{ filteredCategories.length }})</text>
+		<!-- 左侧分类导航 -->
+		<scroll-view scroll-y class="sidebar" enhanced :show-scrollbar="false">
+			<view class="category-nav">
+				<view class="nav-item" v-for="category in categories" :key="category" @click="selectCategory(category)"
+					:class="{ active: selectedCategory === category }">
+					<text class="nav-name">{{ category }}</text>
+					<view class="nav-count-badge">{{ getCategoryCount(category) }}</view>
 				</view>
+			</view>
+		</scroll-view>
 
-				<view class="category-grid">
-					<view
-						class="category-card"
-						v-for="category in filteredCategories"
-						:key="category"
-						@click="selectCategory(category)"
-						:class="{ active: selectedCategory === category }"
-					>
-						<view class="category-emoji">{{ getCategoryEmoji(category) }}</view>
-						<text class="category-name">{{ category }}</text>
-						<text class="category-count">({{ getCategoryCount(category) }})</text>
+		<!-- 右侧内容区域 -->
+		<scroll-view scroll-y class="content-area" enhanced :show-scrollbar="false" :bounces="true">
+			<view v-if="selectedCategory" class="content-wrapper">
+				<!-- 提示词卡片列表 -->
+				<view class="prompt-grid">
+					<view class="prompt-card" v-for="prompt in filteredPrompts" :key="prompt.id"
+						@click="viewPromptDetail(prompt)">
+						<view class="card-header">
+							<text class="card-emoji">{{ prompt.emoji }}</text>
+							<text class="card-name">{{ prompt.name }}</text>
+						</view>
+						<text class="card-desc">{{ prompt.description }}</text>
+						<view class="card-tags">
+							<text class="tag" v-for="tag in prompt.group" :key="tag">{{ tag }}</text>
+						</view>
 					</view>
 				</view>
 			</view>
 
-			<!-- 选中分类的提示词列表 -->
-			<view v-if="selectedCategory" class="prompts-section">
-				<view class="section-title">
-					<text class="title-text">{{ selectedCategory }}</text>
-					<text class="title-count">({{ filteredPrompts.length }})</text>
-				</view>
-
-				<view class="prompt-list">
-					<view
-						class="prompt-card"
-						v-for="prompt in filteredPrompts"
-						:key="prompt.id"
-						@click="viewPromptDetail(prompt)"
-					>
-						<view class="prompt-header">
-							<view class="prompt-emoji">{{ prompt.emoji }}</view>
-							<view class="prompt-info">
-								<text class="prompt-name">{{ prompt.name }}</text>
-								<text class="prompt-desc">{{ prompt.description }}</text>
-							</view>
-						</view>
-						<view class="prompt-tags">
-							<text
-								class="tag"
-								v-for="tag in prompt.group"
-								:key="tag"
-							>
-								{{ tag }}
-							</text>
-						</view>
-					</view>
-				</view>
+			<!-- 未选择分类时的空状态 -->
+			<view v-else class="empty-state">
+				<view class="empty-emoji">📂</view>
+				<text class="empty-title">选择分类</text>
+				<text class="empty-desc">请从左侧选择一个分类查看提示词</text>
 			</view>
 		</scroll-view>
 	</view>
@@ -78,20 +44,9 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { getAllPrompts, getPromptsByCategory, getAllCategories } from '@/data/prompts.js'
 
-const searchKeyword = ref('')
 const selectedCategory = ref('')
 const prompts = ref([])
 const categories = ref([])
-
-// 计算过滤后的分类
-const filteredCategories = computed(() => {
-	if (!searchKeyword.value) {
-		return categories.value
-	}
-	return categories.value.filter(category =>
-		category.toLowerCase().includes(searchKeyword.value.toLowerCase())
-	)
-})
 
 // 计算过滤后的提示词 - 使用新的分类查询函数
 const filteredPrompts = computed(() => {
@@ -99,22 +54,6 @@ const filteredPrompts = computed(() => {
 	return getPromptsByCategory(selectedCategory.value)
 })
 
-// 获取分类表情符号
-const getCategoryEmoji = (category) => {
-	const emojiMap = {
-		'职业': '💼',
-		'商业': '📊',
-		'工具': '🔧',
-		'生活': '🏠',
-		'教育': '📚',
-		'娱乐': '🎮',
-		'技术': '💻',
-		'创意': '✨',
-		'健康': '🏥',
-		'金融': '💰'
-	}
-	return emojiMap[category] || '📂'
-}
 
 // 获取分类下的提示词数量
 const getCategoryCount = (category) => {
@@ -123,52 +62,31 @@ const getCategoryCount = (category) => {
 	).length
 }
 
-// 防抖函数
-const debounce = (func, wait) => {
-	let timeout
-	return function executedFunction(...args) {
-		const later = () => {
-			clearTimeout(timeout)
-			func(...args)
-		}
-		clearTimeout(timeout)
-		timeout = setTimeout(later, wait)
-	}
-}
-
-// 处理搜索 - 带防抖
-const handleSearch = debounce(() => {
-	if (searchKeyword.value) {
-		// 如果有搜索关键词，清除选中的分类
-		selectedCategory.value = ''
-	}
-}, 300)
-
 // 选择分类
 const selectCategory = (category) => {
 	selectedCategory.value = category
-	searchKeyword.value = ''
+}
+
+// 自动选择第一个分类
+const autoSelectFirstCategory = () => {
+	if (categories.value.length > 0 && !selectedCategory.value) {
+		selectedCategory.value = categories.value[0]
+	}
 }
 
 // 查看提示词详情
 const viewPromptDetail = (prompt) => {
 	// 将提示词内容存储到本地
 	uni.setStorageSync('currentPrompt', prompt)
-	// 跳转到首页显示详情
-	uni.switchTab({
-		url: '/pages/index/index'
+	// 直接跳转到详情页面
+	uni.navigateTo({
+		url: '/pages/detail/index'
 	})
 }
 
 // 加载提示词数据 - 使用新的数据加载方式
 const loadPrompts = async () => {
 	try {
-		// 显示加载提示
-		uni.showLoading({
-			title: '加载中...',
-			mask: true
-		})
-
 		// 直接从数据模块加载所有提示词和分类
 		const allPrompts = getAllPrompts()
 		const allCategories = getAllCategories()
@@ -176,26 +94,10 @@ const loadPrompts = async () => {
 		prompts.value = allPrompts
 		categories.value = allCategories
 
-		uni.hideLoading()
-
 		console.log('成功加载', prompts.value.length, '个提示词')
 		console.log('分类:', categories.value)
-
-		// 显示成功提示
-		uni.showToast({
-			title: `已加载${prompts.value.length}个提示词`,
-			icon: 'success',
-			duration: 2000
-		})
 	} catch (error) {
-		uni.hideLoading()
 		console.error('加载提示词失败:', error)
-
-		uni.showToast({
-			title: '加载提示词失败',
-			icon: 'none',
-			duration: 3000
-		})
 	}
 }
 
@@ -206,6 +108,9 @@ onMounted(() => {
 	uni.$on('selectCategory', (category) => {
 		selectedCategory.value = category
 	})
+
+	// 自动选择第一个分类
+	autoSelectFirstCategory()
 })
 
 // 组件卸载时移除事件监听
@@ -218,245 +123,271 @@ onUnmounted(() => {
 .container {
 	width: 100vw;
 	height: 100vh;
-	background: #fafbfc;
+	background: #ffffff;
 	display: flex;
-	flex-direction: column;
 	font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+	overflow: hidden;
 }
 
-/* 搜索区域 */
-.search-section {
-	padding: 24rpx 32rpx;
+/* 左侧导航栏 */
+.sidebar {
+	width: 160rpx;
 	background: #ffffff;
-	border-bottom: 1rpx solid #f0f0f0;
+	flex-shrink: 0;
 }
 
-.search-box {
+.category-nav {
+	padding-top: 0;
+}
+
+.nav-item {
+	display: flex;
+	align-items: center;
+	padding: 16rpx 12rpx;
+	margin: 8rpx 8rpx;
+	border-radius: 16rpx;
+	transition: all 0.2s ease;
 	position: relative;
-	display: flex;
-	align-items: center;
+	gap: 8rpx;
+	min-height: 60rpx;
+	box-sizing: border-box;
 }
 
-.search-input {
-	flex: 1;
-	height: 80rpx;
-	padding: 0 80rpx 0 28rpx;
-	background: #f5f5f7;
-	border: none;
-	border-radius: 24rpx;
-	font-size: 30rpx;
-	color: #1d1d1f;
-	transition: all 0.2s ease;
-}
-
-.search-input:focus {
-	background: #e8e8ed;
-}
-
-.search-input::placeholder {
-	color: #8e8e93;
-}
-
-.search-icon {
-	position: absolute;
-	right: 28rpx;
-	font-size: 32rpx;
-	color: #8e8e93;
-}
-
-.scroll-content {
-	flex: 1;
-	padding: 0 32rpx 32rpx;
-}
-
-/* 分类区域 */
-.category-section {
-	margin-bottom: 32rpx;
-}
-
-.section-title {
-	display: flex;
-	align-items: center;
-	margin-bottom: 24rpx;
-}
-
-.title-text {
-	font-size: 36rpx;
-	font-weight: 600;
-	color: #1d1d1f;
-	margin-right: 12rpx;
-}
-
-.title-count {
-	font-size: 26rpx;
-	color: #8e8e93;
-}
-
-.category-grid {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 16rpx;
-}
-
-.category-card {
-	background: #ffffff;
-	border-radius: 20rpx;
-	padding: 28rpx 24rpx;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
-	border: 1rpx solid #f0f0f0;
-	transition: all 0.2s ease;
-}
-
-.category-card:active {
-	transform: translateY(-2rpx);
-	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
-	background: #f8f9fa;
-}
-
-.category-card.active {
-	border-color: #B8A88C;
+.nav-item.active {
 	background: linear-gradient(135deg, #f8f4e6 0%, #f0e6d2 100%);
+	color: #B8A88C;
+	box-shadow: 0 2rpx 8rpx rgba(184, 168, 140, 0.15);
 }
 
-.category-emoji {
-	font-size: 44rpx;
-	margin-bottom: 16rpx;
+.nav-item.active::before {
+	content: '';
+	position: absolute;
+	left: -9rpx;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 4rpx;
+	height: 36rpx;
+	background: #B8A88C;
+	border-radius: 0 2rpx 2rpx 0;
+	z-index: 1;
 }
 
-.category-name {
-	font-size: 30rpx;
+.nav-name {
+	font-size: 26rpx;
 	font-weight: 600;
 	color: #1d1d1f;
-	margin-bottom: 8rpx;
+	line-height: 1.3;
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
-.category-count {
-	font-size: 24rpx;
+.nav-count-badge {
+	background: #f2f2f7;
 	color: #8e8e93;
+	font-size: 20rpx;
+	font-weight: 500;
+	padding: 4rpx 10rpx;
+	border-radius: 12rpx;
+	min-width: 32rpx;
+	text-align: center;
+	transition: all 0.2s ease;
 }
 
-/* 提示词列表 */
-.prompts-section {
-	margin-top: 40rpx;
+.nav-item.active .nav-name {
+	color: #B8A88C;
 }
 
-.prompt-list {
-	display: flex;
-	flex-direction: column;
-	gap: 16rpx;
+.nav-item.active .nav-count-badge {
+	background: #B8A88C;
+	color: #ffffff;
+}
+
+/* 右侧内容区域 */
+.content-area {
+	flex: 1;
+	background: #ffffff;
+	-webkit-overflow-scrolling: touch;
+	scroll-behavior: smooth;
+}
+
+.content-wrapper {
+	padding: 20rpx;
+	padding-right: 32rpx;
+}
+
+/* 提示词网格 */
+.prompt-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300rpx, 1fr));
+	gap: 24rpx;
 }
 
 .prompt-card {
 	background: #ffffff;
 	border-radius: 20rpx;
-	padding: 24rpx 28rpx;
+	padding: 28rpx;
 	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
 	border: 1rpx solid #f0f0f0;
 	transition: all 0.2s ease;
+	will-change: transform;
+	backface-visibility: hidden;
+	cursor: pointer;
 }
 
 .prompt-card:active {
-	transform: translateY(-2rpx);
-	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
-	background: #f8f9fa;
+	transform: translateY(-4rpx);
+	box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
 }
 
-.prompt-header {
+.card-header {
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	margin-bottom: 16rpx;
 }
 
-.prompt-emoji {
-	font-size: 40rpx;
-	margin-right: 20rpx;
-	margin-top: 4rpx;
+.card-emoji {
+	font-size: 36rpx;
+	margin-right: 16rpx;
 }
 
-.prompt-info {
-	flex: 1;
-}
-
-.prompt-name {
-	display: block;
+.card-name {
 	font-size: 32rpx;
 	font-weight: 600;
 	color: #1d1d1f;
-	margin-bottom: 8rpx;
+	line-height: 1.3;
 }
 
-.prompt-desc {
+.card-desc {
 	display: block;
-	font-size: 28rpx;
+	font-size: 26rpx;
 	color: #8e8e93;
-	line-height: 1.4;
+	line-height: 1.5;
+	margin-bottom: 20rpx;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
-.prompt-tags {
+.card-tags {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 12rpx;
+	gap: 8rpx;
 }
 
 .tag {
 	background: #f2f2f7;
 	color: #8e8e93;
-	font-size: 24rpx;
-	padding: 8rpx 16rpx;
-	border-radius: 16rpx;
+	font-size: 22rpx;
+	padding: 6rpx 12rpx;
+	border-radius: 12rpx;
 	transition: all 0.2s ease;
 }
 
-.tag:active {
-	background: #B8A88C;
-	color: #ffffff;
+/* 空状态 */
+.empty-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	padding: 60rpx 40rpx;
+}
+
+.empty-emoji {
+	font-size: 120rpx;
+	margin-bottom: 32rpx;
+	opacity: 0.6;
+}
+
+.empty-title {
+	font-size: 36rpx;
+	font-weight: 600;
+	color: #1d1d1f;
+	margin-bottom: 16rpx;
+}
+
+.empty-desc {
+	font-size: 28rpx;
+	color: #8e8e93;
+	text-align: center;
+	line-height: 1.5;
 }
 
 /* 响应式设计 */
 @media (max-width: 750rpx) {
-	.category-grid {
+	.sidebar {
+		width: 140rpx;
+	}
+
+	.nav-item {
+		padding: 12rpx 10rpx;
+		margin: 6rpx 6rpx;
+		gap: 6rpx;
+	}
+
+	.nav-name {
+		font-size: 22rpx;
+	}
+
+	.nav-count-badge {
+		font-size: 18rpx;
+		padding: 3rpx 8rpx;
+		border-radius: 10rpx;
+		min-width: 28rpx;
+	}
+
+	.nav-item.active::before {
+		left: -7rpx;
+	}
+
+	.content-wrapper {
+		padding: 24rpx;
+		padding-top: 16rpx;
+	}
+
+	.prompt-grid {
 		grid-template-columns: 1fr;
-	}
-
-	.search-section {
-		padding: 20rpx 24rpx;
-	}
-
-	.scroll-content {
-		padding: 0 24rpx 32rpx;
-	}
-
-	.category-card {
-		padding: 24rpx 20rpx;
-	}
-
-	.category-emoji {
-		font-size: 40rpx;
-	}
-
-	.category-name {
-		font-size: 28rpx;
+		gap: 16rpx;
 	}
 
 	.prompt-card {
-		padding: 20rpx 24rpx;
+		padding: 24rpx;
 	}
 
-	.prompt-emoji {
-		font-size: 36rpx;
-		margin-right: 16rpx;
+	.card-header {
+		margin-bottom: 12rpx;
 	}
 
-	.prompt-name {
+	.card-emoji {
+		font-size: 32rpx;
+		margin-right: 12rpx;
+	}
+
+	.card-name {
 		font-size: 30rpx;
 	}
 
-	.prompt-desc {
-		font-size: 26rpx;
+	.card-desc {
+		font-size: 24rpx;
+		margin-bottom: 16rpx;
+		-webkit-line-clamp: 3;
+	}
+
+	.tag {
+		font-size: 20rpx;
+		padding: 4rpx 10rpx;
+		border-radius: 10rpx;
+	}
+}
+
+/* 横屏适配 */
+@media (orientation: landscape) {
+	.prompt-grid {
+		grid-template-columns: repeat(auto-fill, minmax(280rpx, 1fr));
 	}
 }
 </style>

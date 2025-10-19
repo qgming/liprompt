@@ -122,7 +122,14 @@ const sharePrompt = () => {
 
 // 返回上一页
 const goBack = () => {
-	uni.navigateBack()
+	uni.navigateBack({
+		fail: () => {
+			// 如果无法返回（比如没有历史记录），则跳转到首页
+			uni.switchTab({
+				url: '/pages/index/index'
+			})
+		}
+	})
 }
 
 // 页面加载时获取提示词数据
@@ -143,21 +150,20 @@ onMounted(() => {
 <style>
 .container {
 	min-height: 100vh;
-	background: #fafbfc;
+	background: #ffffff;
 	padding-bottom: 40rpx;
 }
 
 .detail-content {
-	padding: 32rpx;
+	padding: 24rpx 32rpx 32rpx 32rpx;
 }
 
 /* 头部信息 */
 .header-section {
-	background: #ffffff;
+	background: #fafbfc;
 	border-radius: 24rpx;
 	padding: 40rpx 32rpx;
 	margin-bottom: 24rpx;
-	box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.06);
 	border: 1rpx solid #f0f0f0;
 	text-align: center;
 }
@@ -201,11 +207,10 @@ onMounted(() => {
 
 /* 内容区域 */
 .content-section {
-	background: #ffffff;
+	background: #fafbfc;
 	border-radius: 24rpx;
 	padding: 32rpx;
 	margin-bottom: 24rpx;
-	box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.06);
 	border: 1rpx solid #f0f0f0;
 }
 
@@ -247,7 +252,7 @@ onMounted(() => {
 }
 
 .prompt-content {
-	background: #f8f9fa;
+	background: #ffffff;
 	border-radius: 16rpx;
 	padding: 24rpx;
 	border: 1rpx solid #f0f0f0;
@@ -359,7 +364,7 @@ onMounted(() => {
 /* 响应式设计 */
 @media (max-width: 750rpx) {
 	.detail-content {
-		padding: 24rpx;
+		padding: 16rpx 24rpx 24rpx 24rpx;
 	}
 
 	.header-section {

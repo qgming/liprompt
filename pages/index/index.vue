@@ -1,14 +1,16 @@
 <template>
 	<view class="container">
-		<!-- 固定顶部 -->
-		<view class="fixed-header" :style="headerStyle">
-			<view class="header-content">
-				<text class="title-gradient">流金提示词</text>
+		<!-- 页面整体滚动 -->
+		<scroll-view scroll-y class="page-scroll" enhanced :show-scrollbar="false">
+			<!-- 顶部区域 -->
+			<view class="header-section">
+				<view class="header-content">
+					<text class="title-gradient">流金提示词</text>
+				</view>
 			</view>
-		</view>
 
-		<!-- 滚动内容区域 -->
-		<scroll-view scroll-y class="scroll-content" :style="{ paddingTop: scrollPaddingTop }" show-scrollbar="false">
+			<!-- 内容区域 -->
+			<view class="content-wrapper">
 			<!-- 搜索栏 -->
 			<view class="search-section">
 				<view class="search-box">
@@ -74,6 +76,7 @@
 					<text class="empty-desc">试试其他关键词吧</text>
 				</view>
 			</view>
+			</view>
 		</scroll-view>
 	</view>
 </template>
@@ -90,10 +93,6 @@ const categories = ref([])
 const currentPage = ref(1)
 const pageSize = ref(20)
 
-// 计算后的样式
-const headerStyle = ref({})
-// 计算滚动区域的padding-top
-const scrollPaddingTop = ref('150rpx')
 
 // 计算精选提示词（筛选分组为'精选'的提示词）
 const featuredPrompts = computed(() => {
@@ -212,49 +211,10 @@ const loadPrompts = async () => {
 	}
 }
 
-// 获取胶囊按钮位置信息并计算样式
-const getMenuButtonStyle = () => {
-	try {
-		const systemInfo = uni.getSystemInfoSync()
-		const menuButton = uni.getMenuButtonBoundingClientRect()
-
-		// 计算顶部安全距离（状态栏高度）
-		const statusBarHeight = systemInfo.statusBarHeight || 0
-		// 计算header的高度
-		const headerHeight = menuButton.height + (menuButton.top - statusBarHeight) * 2
-		// 计算文字左右边距
-		const textMargin = systemInfo.windowWidth - menuButton.right
-
-		headerStyle.value = {
-			paddingTop: `${statusBarHeight}px`,
-			paddingLeft: `${textMargin}px`,
-			paddingRight: `${textMargin}px`,
-			height: `${headerHeight}px`
-		}
-
-		// 计算滚动区域的padding-top（转换为rpx）
-		const rpxRatio = 750 / systemInfo.windowWidth
-		const scrollPadding = Math.round(headerHeight * rpxRatio) + 100 // 额外100rpx间距
-		scrollPaddingTop.value = `${scrollPadding}rpx`
-
-		console.log('胶囊按钮信息:', menuButton)
-	} catch (error) {
-		console.error('获取胶囊按钮位置失败:', error)
-		// 使用默认值
-		headerStyle.value = {
-			paddingTop: '44px',
-			paddingLeft: '32rpx',
-			paddingRight: '32rpx',
-			height: '88px'
-		}
-		scrollPaddingTop.value = '200rpx'
-	}
-}
 
 // 监听来自分类页面的事件
 onMounted(() => {
 	loadPrompts()
-	getMenuButtonStyle()
 
 	// 监听分类页面传递的选中分类
 	uni.$on('selectCategory', (category) => {
@@ -275,31 +235,42 @@ onUnmounted(() => {
 	height: 100vh;
 	background: #ffffff;
 	font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-	display: flex;
-	flex-direction: column;
 }
 
-/* 固定顶部区域 */
-.fixed-header {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 100;
+/* 页面整体滚动 */
+.page-scroll {
+	width: 100%;
+	height: 100%;
+}
+
+/* 顶部区域 */
+.header-section {
 	background: #ffffff;
+	padding: 120rpx 32rpx 16rpx 32rpx;
 }
-
 
 .header-content {
 	display: flex;
 	align-items: center;
-	height: 100%;
 	justify-content: flex-start;
 }
 
-/* 滚动内容区域 */
-.scroll-content {
-	flex: 1;
+/* 内容区域 */
+.content-wrapper {
+	background: #ffffff;
+}
+
+/* 隐藏滚动条 */
+.page-scroll ::-webkit-scrollbar {
+	display: none;
+	width: 0;
+	height: 0;
+	color: transparent;
+}
+
+.page-scroll {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 }
 
 .title-gradient {
@@ -315,7 +286,7 @@ onUnmounted(() => {
 
 /* 搜索区域 */
 .search-section {
-	padding: 24rpx 32rpx;
+	padding: 24rpx 32rpx 24rpx 32rpx;
 	background: #ffffff;
 	border: none;
 }

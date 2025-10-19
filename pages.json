@@ -10,14 +10,13 @@
 		{
 			"path": "pages/category/index",
 			"style": {
-				"navigationBarTitleText": "分类浏览"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/detail/index",
 			"style": {
-				"navigationBarTitleText": "提示词详情",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": ""
 			}
 		}
 	],

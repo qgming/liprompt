@@ -9,11 +9,7 @@
 
 				<!-- 标签 -->
 				<view class="prompt-tags">
-					<text
-						class="tag"
-						v-for="tag in prompt.group"
-						:key="tag"
-					>
+					<text class="tag" v-for="tag in prompt.group" :key="tag">
 						{{ tag }}
 					</text>
 				</view>
@@ -42,7 +38,7 @@
 				</view>
 				<view class="action-btn secondary" @click="sharePrompt">
 					<text class="btn-icon">📤</text>
-					<text class="btn-text">分享</text>
+					<text class="btn-text">分享给好友</text>
 				</view>
 			</view>
 		</view>

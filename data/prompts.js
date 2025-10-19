@@ -7504,3 +7504,8 @@ export function getPromptsPaginated(page = 1, pageSize = 20, filters = {}) {
     hasMore: endIndex < filteredPrompts.length,
   };
 }
+
+// 根据ID获取提示词
+export function getPromptById(id) {
+  return PROMPTS_DATA.find(prompt => prompt.id === id);
+}

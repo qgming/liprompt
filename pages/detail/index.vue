@@ -60,6 +60,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { getPromptById } from '@/data/prompts.js'
 
 const prompt = ref(null)
 
@@ -135,11 +136,29 @@ const goBack = () => {
 // 页面加载时获取提示词数据
 onMounted(() => {
 	try {
-		const storedPrompt = uni.getStorageSync('currentPrompt')
-		if (storedPrompt) {
-			prompt.value = storedPrompt
+		// 获取当前页面实例
+		const pages = getCurrentPages()
+		const currentPage = pages[pages.length - 1]
+		const options = currentPage.options
+
+		if (options && options.id) {
+			// 根据ID获取提示词数据
+			const promptData = getPromptById(options.id)
+			if (promptData) {
+				prompt.value = promptData
+				console.log('成功获取提示词:', promptData.name)
+			} else {
+				console.warn('未找到ID为', options.id, '的提示词')
+			}
 		} else {
-			console.warn('未找到提示词数据')
+			// 兼容旧的本地存储方式
+			const storedPrompt = uni.getStorageSync('currentPrompt')
+			if (storedPrompt) {
+				prompt.value = storedPrompt
+				console.log('使用本地存储的提示词:', storedPrompt.name)
+			} else {
+				console.warn('未找到提示词数据')
+			}
 		}
 	} catch (error) {
 		console.error('获取提示词数据失败:', error)

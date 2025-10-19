@@ -200,15 +200,10 @@ const goToCategory = (category) => {
 
 // 查看提示词详情
 const viewPromptDetail = (prompt) => {
-	console.log('存储提示词到本地:', prompt.name)
-	// 将提示词内容存储到本地
-	uni.setStorageSync('currentPrompt', prompt)
-	// 验证存储是否成功
-	const storedPrompt = uni.getStorageSync('currentPrompt')
-	console.log('验证存储结果:', storedPrompt ? storedPrompt.name : '存储失败')
-	// 跳转到详情页面
+	console.log('传递提示词ID到详情页面:', prompt.id)
+	// 跳转到详情页面，传递ID参数
 	uni.navigateTo({
-		url: '/pages/detail/index'
+		url: `/pages/detail/index?id=${prompt.id}`
 	})
 }
 

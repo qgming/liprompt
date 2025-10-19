@@ -76,8 +76,12 @@ const autoSelectFirstCategory = () => {
 
 // 查看提示词详情
 const viewPromptDetail = (prompt) => {
+	console.log('分类页面存储提示词到本地:', prompt.name)
 	// 将提示词内容存储到本地
 	uni.setStorageSync('currentPrompt', prompt)
+	// 验证存储是否成功
+	const storedPrompt = uni.getStorageSync('currentPrompt')
+	console.log('分类页面验证存储结果:', storedPrompt ? storedPrompt.name : '存储失败')
 	// 直接跳转到详情页面
 	uni.navigateTo({
 		url: '/pages/detail/index'

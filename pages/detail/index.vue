@@ -160,12 +160,34 @@ onMounted(() => {
 
 /* 头部信息 */
 .header-section {
-	background: #fafbfc;
-	border-radius: 24rpx;
+	background: #ffffff;
+	border-radius: 20rpx;
 	padding: 40rpx 32rpx;
 	margin-bottom: 24rpx;
 	border: 1rpx solid #f0f0f0;
 	text-align: center;
+	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+	transition: all 0.2s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.header-section::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 165, 0, 0.02) 100%);
+	border-radius: 20rpx;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+	pointer-events: none;
+}
+
+.header-section:active::after {
+	opacity: 1;
 }
 
 .prompt-emoji {
@@ -207,11 +229,33 @@ onMounted(() => {
 
 /* 内容区域 */
 .content-section {
-	background: #fafbfc;
-	border-radius: 24rpx;
+	background: #ffffff;
+	border-radius: 20rpx;
 	padding: 32rpx;
 	margin-bottom: 24rpx;
 	border: 1rpx solid #f0f0f0;
+	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+	transition: all 0.2s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.content-section::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 165, 0, 0.02) 100%);
+	border-radius: 20rpx;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+	pointer-events: none;
+}
+
+.content-section:active::after {
+	opacity: 1;
 }
 
 .section-header {
@@ -252,7 +296,7 @@ onMounted(() => {
 }
 
 .prompt-content {
-	background: #ffffff;
+	background: #fafbfc;
 	border-radius: 16rpx;
 	padding: 24rpx;
 	border: 1rpx solid #f0f0f0;
@@ -264,6 +308,10 @@ onMounted(() => {
 	line-height: 1.6;
 	white-space: pre-wrap;
 	word-wrap: break-word;
+	user-select: text;
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
 }
 
 /* 操作按钮 */

@@ -436,7 +436,7 @@ export const PROMPTS_DATA = [
     description:
       "使用HTML、JS、CSS和TailwindCSS创建一个网页，并以单个HTML文件的形式提供代码。",
     emoji: "🌐",
-    group: ["精选"],
+    group: ["编程"],
     id: "46",
     name: "网页生成",
     prompt:
@@ -464,7 +464,7 @@ export const PROMPTS_DATA = [
   {
     description: "帮助用户理解角色心理并提供专业的心理分析和角色构建指导",
     emoji: "🧠\r\n",
-    group: ["情感", "教育"],
+    group: ["精选", "情感", "教育"],
     id: "49",
     name: "心理模型专家",
     prompt:
@@ -1274,7 +1274,7 @@ export const PROMPTS_DATA = [
   {
     description: "创建并发布社交媒体内容以提高品牌知名度。",
     emoji: "📱",
-    group: ["文案", "商业", "创意"],
+    group: ["精选", "文案", "商业", "创意"],
     id: "138",
     name: "社交媒体影响者",
     prompt:
@@ -3069,7 +3069,7 @@ export const PROMPTS_DATA = [
     description:
       "一个高效可靠的周报生成器，能够将用户输入的信息转化为一份高质量的周报。",
     emoji: "📝",
-    group: ["商业", "办公", "写作"],
+    group: ["精选", "商业", "办公", "写作"],
     id: "332",
     name: "周报生成器",
     prompt:
@@ -3924,7 +3924,7 @@ export const PROMPTS_DATA = [
     description:
       "麦肯锡顾问会使用专业的&lt;麦肯锡方法&gt;为用户提供科学的问题分析。",
     emoji: "👨‍💼",
-    group: ["职业", "商业", "咨询"],
+    group: ["精选", "职业", "商业", "咨询"],
     id: "423",
     name: "麦肯锡顾问",
     prompt:
@@ -7409,7 +7409,7 @@ export const PROMPTS_DATA = [
   {
     description: "使用 Mermaid 图表来解释概念和回答问题的AI助手",
     emoji: "🖼️",
-    group: ["精选"],
+    group: ["工具"],
     id: "778",
     name: "Mermaid 图表",
     prompt:
@@ -7418,7 +7418,7 @@ export const PROMPTS_DATA = [
   {
     description: "",
     emoji: "🧠",
-    group: ["精选"],
+    group: ["工具"],
     id: "780",
     name: "思维链",
     prompt:

@@ -11,73 +11,93 @@
 
 			<!-- 内容区域 -->
 			<view class="content-wrapper">
-			<!-- 搜索栏 -->
-			<view class="search-section">
-				<view class="search-box">
-					<input class="search-input" type="text" v-model="searchKeyword" placeholder="搜索提示词..."
-						@input="handleSearch" />
-					<view class="search-icon">🔍</view>
-				</view>
-			</view>
-			<!-- 精选提示词 -->
-			<view v-if="!searchKeyword" class="featured-section">
-				<view class="section-title">
-					<text class="title-text">精选</text>
-				</view>
-
-				<view class="featured-list">
-					<prompt-card v-for="prompt in featuredPrompts" :key="prompt.id" :prompt="prompt" @click="viewPromptDetail"
-						@tagClick="goToCategory" />
-				</view>
-			</view>
-
-			<!-- 随机推荐横向滚动 -->
-			<view v-if="!searchKeyword" class="trending-section">
-				<view class="section-title">
-					<text class="title-text">推荐</text>
-				</view>
-
-				<scroll-view scroll-x class="trending-scroll" show-scrollbar="false">
-					<view class="trending-list">
-						<trending-card v-for="prompt in randomPrompts" :key="prompt.id" :prompt="prompt"
-							@click="viewPromptDetail" />
-					</view>
-				</scroll-view>
-			</view>
-
-			<!-- 搜索结果或全部提示词 -->
-			<view class="prompts-section">
-				<view class="section-title">
-					<text class="title-text">{{ searchKeyword ? '搜索结果' : '全部' }}</text>
-				</view>
-
-				<view class="prompt-list">
-					<prompt-card v-for="prompt in paginatedPrompts" :key="prompt.id" :prompt="prompt" @click="viewPromptDetail"
-						@tagClick="goToCategory" />
-				</view>
-
-				<!-- 分页控件 -->
-				<view v-if="totalPages > 1" class="pagination">
-					<view class="page-btn prev-btn" :class="{ disabled: currentPage <= 1 }" @click="prevPage">
-						上一页
-					</view>
-					<view class="page-info">
-						{{ currentPage }} / {{ totalPages }}
-					</view>
-					<view class="page-btn next-btn" :class="{ disabled: currentPage >= totalPages }" @click="nextPage">
-						下一页
+				<!-- 搜索栏 -->
+				<view class="search-section">
+					<view class="search-box">
+						<input class="search-input" type="text" v-model="searchKeyword" placeholder="搜索提示词..."
+							@input="handleSearch" />
+						<view class="search-icon">🔍</view>
 					</view>
 				</view>
+				<!-- 精选提示词横向滚动 -->
+				<view v-if="!searchKeyword" class="featured-section">
+					<view class="section-title">
+						<text class="title-text">精选</text>
+					</view>
 
-				<!-- 空状态 -->
-				<view v-if="paginatedPrompts.length === 0" class="empty-state">
-					<view class="empty-icon">📝</view>
-					<text class="empty-text">暂无相关提示词</text>
-					<text class="empty-desc">试试其他关键词吧</text>
+					<scroll-view scroll-x class="featured-scroll" show-scrollbar="false">
+						<view class="featured-list">
+							<trending-card v-for="prompt in featuredPrompts" :key="prompt.id" :prompt="prompt"
+								@click="viewPromptDetail" />
+						</view>
+					</scroll-view>
 				</view>
-			</view>
+
+				<!-- 随机推荐横向滚动 -->
+				<view v-if="!searchKeyword" class="trending-section">
+					<view class="section-title">
+						<text class="title-text">随机推荐</text>
+					</view>
+
+					<scroll-view scroll-x class="trending-scroll" show-scrollbar="false">
+						<view class="trending-list">
+							<trending-card v-for="prompt in randomPrompts" :key="prompt.id" :prompt="prompt"
+								@click="viewPromptDetail" />
+						</view>
+					</scroll-view>
+				</view>
+
+				<!-- 搜索结果或全部提示词 -->
+				<view class="prompts-section">
+					<view class="section-title">
+						<text class="title-text">{{ searchKeyword ? '搜索结果' : '全部' }}</text>
+					</view>
+
+					<view class="prompt-list">
+						<prompt-card v-for="prompt in paginatedPrompts" :key="prompt.id" :prompt="prompt" @click="viewPromptDetail"
+							@tagClick="goToCategory" />
+					</view>
+
+					<!-- 分页控件 -->
+					<view v-if="totalPages > 1" class="pagination">
+						<view class="page-btn prev-btn" :class="{ disabled: currentPage <= 1 }" @click="prevPage">
+							上一页
+						</view>
+						<view class="page-info" @click="showPageSelector">
+							{{ currentPage }} / {{ totalPages }}
+						</view>
+						<view class="page-btn next-btn" :class="{ disabled: currentPage >= totalPages }" @click="nextPage">
+							下一页
+						</view>
+					</view>
+
+					<!-- 空状态 -->
+					<view v-if="paginatedPrompts.length === 0" class="empty-state">
+						<view class="empty-icon">📝</view>
+						<text class="empty-text">暂无相关提示词</text>
+						<text class="empty-desc">试试其他关键词吧</text>
+					</view>
+				</view>
 			</view>
 		</scroll-view>
+
+		<!-- 页数选择器 -->
+		<view v-if="showPicker" class="picker-mask" @click="hidePicker">
+			<view class="picker-content" @click.stop>
+				<view class="picker-header">
+					<view class="picker-cancel" @click="hidePicker">取消</view>
+					<view class="picker-title">选择页数</view>
+					<view class="picker-confirm" @click="confirmPicker">确定</view>
+				</view>
+				<picker-view class="picker-view" :value="pickerValue" @change="onPickerChange">
+					<picker-view-column>
+						<view v-for="(item, index) in pickerPages" :key="index" class="picker-item">
+							第 {{ item }} 页
+						</view>
+					</picker-view-column>
+				</picker-view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -91,7 +111,14 @@ const searchKeyword = ref('')
 const prompts = ref([])
 const categories = ref([])
 const currentPage = ref(1)
-const pageSize = ref(20)
+const pageSize = ref(10)
+
+// 选择器相关状态
+const showPicker = ref(false)
+const pickerValue = ref([0])
+const pickerPages = computed(() => {
+	return Array.from({ length: totalPages.value }, (_, i) => i + 1)
+})
 
 
 // 计算精选提示词（筛选分组为'精选'的提示词）
@@ -100,7 +127,7 @@ const featuredPrompts = computed(() => {
 
 	return prompts.value
 		.filter(prompt => prompt.group?.includes('精选'))
-		.slice(0, 5)
+		.slice(0, 8)
 })
 
 // 计算随机推荐提示词（横向滚动）
@@ -173,8 +200,12 @@ const goToCategory = (category) => {
 
 // 查看提示词详情
 const viewPromptDetail = (prompt) => {
+	console.log('存储提示词到本地:', prompt.name)
 	// 将提示词内容存储到本地
 	uni.setStorageSync('currentPrompt', prompt)
+	// 验证存储是否成功
+	const storedPrompt = uni.getStorageSync('currentPrompt')
+	console.log('验证存储结果:', storedPrompt ? storedPrompt.name : '存储失败')
 	// 跳转到详情页面
 	uni.navigateTo({
 		url: '/pages/detail/index'
@@ -192,6 +223,40 @@ const nextPage = () => {
 	if (currentPage.value < totalPages.value) {
 		currentPage.value++
 	}
+}
+
+// 显示页数选择器
+const showPageSelector = () => {
+	console.log('总页数:', totalPages.value)
+
+	// 设置选择器初始值为当前页
+	pickerValue.value = [currentPage.value - 1]
+	showPicker.value = true
+}
+
+// 隐藏选择器
+const hidePicker = () => {
+	showPicker.value = false
+}
+
+// 选择器值变化
+const onPickerChange = (e) => {
+	pickerValue.value = e.detail.value
+}
+
+// 确认选择
+const confirmPicker = () => {
+	const selectedPage = pickerPages.value[pickerValue.value[0]]
+	currentPage.value = selectedPage
+	console.log('跳转到页数:', currentPage.value)
+
+	hidePicker()
+
+	uni.showToast({
+		title: `已跳转到第${selectedPage}页`,
+		icon: 'success',
+		duration: 1500
+	})
 }
 
 // 加载提示词数据
@@ -286,7 +351,7 @@ onUnmounted(() => {
 
 /* 搜索区域 */
 .search-section {
-	padding: 24rpx 32rpx 24rpx 32rpx;
+	padding: 24rpx 32rpx 16rpx 32rpx;
 	background: #ffffff;
 	border: none;
 }
@@ -339,21 +404,25 @@ onUnmounted(() => {
 }
 
 
-/* 精选提示词 */
+/* 精选提示词横向滚动 */
 .featured-section {
-	margin-top: 32rpx;
+	margin-top: 20rpx;
 	padding: 0 32rpx;
 }
 
+.featured-scroll {
+	white-space: nowrap;
+}
+
 .featured-list {
-	display: flex;
-	flex-direction: column;
+	display: inline-flex;
 	gap: 16rpx;
+	padding-bottom: 8rpx;
 }
 
 /* 热门推荐横向滚动 */
 .trending-section {
-	margin-top: 48rpx;
+	margin-top: 24rpx;
 	padding: 0 32rpx;
 }
 
@@ -401,11 +470,21 @@ onUnmounted(() => {
 	font-size: 28rpx;
 	color: #1d1d1f;
 	font-weight: 500;
+	padding: 12rpx 24rpx;
+	border-radius: 20rpx;
+	background: #f2f2f7;
+	transition: all 0.2s ease;
+	cursor: pointer;
+}
+
+.page-info:active {
+	background: #e8e8ed;
+	transform: scale(0.95);
 }
 
 /* 提示词列表 */
 .prompts-section {
-	margin-top: 48rpx;
+	margin-top: 24rpx;
 	padding: 0 32rpx;
 }
 
@@ -441,4 +520,59 @@ onUnmounted(() => {
 	color: #c7c7cc;
 }
 
+/* 页数选择器样式 */
+.picker-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
+	display: flex;
+	align-items: flex-end;
+}
+
+.picker-content {
+	width: 100%;
+	background: #ffffff;
+	border-radius: 24rpx 24rpx 0 0;
+	overflow: hidden;
+}
+
+.picker-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 32rpx;
+	border-bottom: 1rpx solid #f0f0f0;
+}
+
+.picker-cancel,
+.picker-confirm {
+	font-size: 32rpx;
+	color: #007AFF;
+	padding: 8rpx 16rpx;
+}
+
+.picker-title {
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #1d1d1f;
+}
+
+.picker-view {
+	width: 100%;
+	height: 500rpx;
+	background: #ffffff;
+}
+
+.picker-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80rpx;
+	font-size: 32rpx;
+	color: #1d1d1f;
+}
 </style>

@@ -47,8 +47,8 @@
 			{
 				"pagePath": "pages/index/index",
 				"text": "精选",
-				"iconPath": "static/tabs/home.png",
-				"selectedIconPath": "static/tabs/home-active.png"
+				"iconPath": "static/tabs/star.png",
+				"selectedIconPath": "static/tabs/star-active.png"
 			},
 			{
 				"pagePath": "pages/category/index",

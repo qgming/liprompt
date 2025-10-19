@@ -151,14 +151,7 @@ onMounted(() => {
 				console.warn('未找到ID为', options.id, '的提示词')
 			}
 		} else {
-			// 兼容旧的本地存储方式
-			const storedPrompt = uni.getStorageSync('currentPrompt')
-			if (storedPrompt) {
-				prompt.value = storedPrompt
-				console.log('使用本地存储的提示词:', storedPrompt.name)
-			} else {
-				console.warn('未找到提示词数据')
-			}
+			console.warn('未提供提示词ID参数')
 		}
 	} catch (error) {
 		console.error('获取提示词数据失败:', error)

@@ -8,6 +8,13 @@
 			}
 		},
 		{
+			"path": "pages/ranking/index",
+			"style": {
+				"navigationBarTitleText": "排行榜",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/category/index",
 			"style": {
 				"navigationBarTitleText": ""
@@ -49,6 +56,12 @@
 				"text": "精选",
 				"iconPath": "static/tabs/star.png",
 				"selectedIconPath": "static/tabs/star-active.png"
+			},
+			{
+				"pagePath": "pages/ranking/index",
+				"text": "排行榜",
+				"iconPath": "static/tabs/ranking.png",
+				"selectedIconPath": "static/tabs/ranking-active.png"
 			},
 			{
 				"pagePath": "pages/category/index",

@@ -1,0 +1,167 @@
+{
+  "category": "Video",
+  "data": [
+    {
+      "id": "video_001",
+      "rank": 1,
+      "model": "veo3-fast-audio",
+      "score": 1372,
+      "votes": 20751,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_002",
+      "rank": 1,
+      "model": "veo3-audio",
+      "score": 1356,
+      "votes": 14425,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_003",
+      "rank": 1,
+      "model": "sora-2-pro",
+      "score": 1346,
+      "votes": 1592,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_004",
+      "rank": 3,
+      "model": "sora-2",
+      "score": 1323,
+      "votes": 2050,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_005",
+      "rank": 5,
+      "model": "veo3-fast",
+      "score": 1265,
+      "votes": 10712,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_006",
+      "rank": 5,
+      "model": "veo3",
+      "score": 1256,
+      "votes": 10427,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_007",
+      "rank": 7,
+      "model": "kling-2.5-turbo-1080p",
+      "score": 1224,
+      "votes": 1634,
+      "organization": "KlingAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_008",
+      "rank": 7,
+      "model": "hailuo-02-pro",
+      "score": 1223,
+      "votes": 9591,
+      "organization": "MiniMax",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_009",
+      "rank": 7,
+      "model": "hailuo-02-standard",
+      "score": 1201,
+      "votes": 9355,
+      "organization": "MiniMax",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_010",
+      "rank": 9,
+      "model": "seedance-v1-pro",
+      "score": 1192,
+      "votes": 13017,
+      "organization": "Bytedance",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_011",
+      "rank": 11,
+      "model": "kling-v2.1-master",
+      "score": 1170,
+      "votes": 11829,
+      "organization": "KlingAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_012",
+      "rank": 11,
+      "model": "veo2",
+      "score": 1162,
+      "votes": 7672,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_013",
+      "rank": 13,
+      "model": "wan-v2.2-a14b",
+      "score": 1133,
+      "votes": 12089,
+      "organization": "Alibaba",
+      "license": "Apache 2.0"
+    },
+    {
+      "id": "video_014",
+      "rank": 14,
+      "model": "seedance-v1-lite",
+      "score": 1102,
+      "votes": 12659,
+      "organization": "Bytedance",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_015",
+      "rank": 15,
+      "model": "sora",
+      "score": 1079,
+      "votes": 4911,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_016",
+      "rank": 15,
+      "model": "ray2",
+      "score": 1064,
+      "votes": 6056,
+      "organization": "Luma AI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_017",
+      "rank": 17,
+      "model": "pika-v2.2",
+      "score": 1007,
+      "votes": 6926,
+      "organization": "Pika",
+      "license": "Proprietary"
+    },
+    {
+      "id": "video_018",
+      "rank": 17,
+      "model": "mochi-v1",
+      "score": 993,
+      "votes": 7160,
+      "organization": "Genmo AI",
+      "license": "Apache 2.0"
+    }
+  ]
+}

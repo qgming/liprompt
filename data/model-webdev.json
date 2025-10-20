@@ -1,0 +1,473 @@
+{
+  "category": "WebDev",
+  "data": [
+    {
+      "id": "webdev_001",
+      "rank": 1,
+      "model": "GPT-5 (high)",
+      "score": 1478,
+      "votes": 5848,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_002",
+      "rank": 1,
+      "model": "Claude Opus 4.1 thinking-16k (20250805)",
+      "score": 1472,
+      "votes": 5312,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_003",
+      "rank": 1,
+      "model": "Claude Opus 4.1 (20250805)",
+      "score": 1462,
+      "votes": 5582,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_004",
+      "rank": 4,
+      "model": "Claude Sonnet 4.5 (thinking 32k)",
+      "score": 1421,
+      "votes": 1337,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_005",
+      "rank": 4,
+      "model": "Gemini-2.5-Pro",
+      "score": 1401,
+      "votes": 11022,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_006",
+      "rank": 4,
+      "model": "GLM-4.6",
+      "score": 1398,
+      "votes": 5442,
+      "organization": "ZAI",
+      "license": "MIT"
+    },
+    {
+      "id": "webdev_007",
+      "rank": 4,
+      "model": "DeepSeek-R1-0528",
+      "score": 1394,
+      "votes": 4800,
+      "organization": "DeepSeek",
+      "license": "MIT"
+    },
+    {
+      "id": "webdev_008",
+      "rank": 5,
+      "model": "Claude Sonnet 4.5",
+      "score": 1385,
+      "votes": 4127,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_009",
+      "rank": 6,
+      "model": "Claude Opus 4 (20250514)",
+      "score": 1384,
+      "votes": 9238,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_010",
+      "rank": 6,
+      "model": "GLM-4.5",
+      "score": 1381,
+      "votes": 4360,
+      "organization": "ZAI",
+      "license": "MIT"
+    },
+    {
+      "id": "webdev_011",
+      "rank": 8,
+      "model": "GLM-4.5-Air",
+      "score": 1369,
+      "votes": 1425,
+      "organization": "ZAI",
+      "license": "MIT"
+    },
+    {
+      "id": "webdev_012",
+      "rank": 8,
+      "model": "DeepSeek-V3.1-thinking",
+      "score": 1363,
+      "votes": 1459,
+      "organization": "DeepSeek",
+      "license": "DeepSeek"
+    },
+    {
+      "id": "webdev_013",
+      "rank": 10,
+      "model": "Qwen3-Coder",
+      "score": 1367,
+      "votes": 9741,
+      "organization": "Alibaba",
+      "license": "Apache 2.0"
+    },
+    {
+      "id": "webdev_014",
+      "rank": 11,
+      "model": "Claude Sonnet 4 (20250514)",
+      "score": 1363,
+      "votes": 11526,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_015",
+      "rank": 11,
+      "model": "Claude 3.7 Sonnet (20250219)",
+      "score": 1358,
+      "votes": 7460,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_016",
+      "rank": 11,
+      "model": "Qwen3-235B-A22B-Instruct-2507",
+      "score": 1351,
+      "votes": 992,
+      "organization": "Alibaba",
+      "license": "Apache 2.0"
+    },
+    {
+      "id": "webdev_017",
+      "rank": 13,
+      "model": "DeepSeek-V3.1",
+      "score": 1341,
+      "votes": 1304,
+      "organization": "DeepSeek",
+      "license": "DeepSeek"
+    },
+    {
+      "id": "webdev_018",
+      "rank": 14,
+      "model": "Claude Haiku 4.5 (20251001)",
+      "score": 1338,
+      "votes": 1832,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_019",
+      "rank": 16,
+      "model": "qwen3-coder-plus-2025-09-23",
+      "score": 1335,
+      "votes": 3972,
+      "organization": "Alibaba",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_020",
+      "rank": 19,
+      "model": "Kimi-K2-Instruct",
+      "score": 1317,
+      "votes": 7027,
+      "organization": "Moonshot",
+      "license": "Modified MIT"
+    },
+    {
+      "id": "webdev_021",
+      "rank": 21,
+      "model": "Gemini-2.5-Flash",
+      "score": 1289,
+      "votes": 11543,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_022",
+      "rank": 22,
+      "model": "GPT-4.1-2025-04-14",
+      "score": 1253,
+      "votes": 11506,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_023",
+      "rank": 23,
+      "model": "Claude 3.5 Sonnet (20241022)",
+      "score": 1238,
+      "votes": 26267,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_024",
+      "rank": 24,
+      "model": "DeepSeek-V3-0324",
+      "score": 1208,
+      "votes": 1094,
+      "organization": "DeepSeek",
+      "license": "MIT"
+    },
+    {
+      "id": "webdev_025",
+      "rank": 24,
+      "model": "DeepSeek-R1",
+      "score": 1199,
+      "votes": 3755,
+      "organization": "DeepSeek",
+      "license": "MIT"
+    },
+    {
+      "id": "webdev_026",
+      "rank": 24,
+      "model": "GPT-4.1-mini-2025-04-14",
+      "score": 1193,
+      "votes": 9064,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_027",
+      "rank": 24,
+      "model": "Qwen3-235B-A22B",
+      "score": 1190,
+      "votes": 5600,
+      "organization": "Alibaba",
+      "license": "Apache 2.0"
+    },
+    {
+      "id": "webdev_028",
+      "rank": 24,
+      "model": "o3-2025-04-16",
+      "score": 1186,
+      "votes": 5572,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_029",
+      "rank": 26,
+      "model": "Mistral Medium 3",
+      "score": 1181,
+      "votes": 7511,
+      "organization": "Mistral",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_030",
+      "rank": 27,
+      "model": "Grok-4-0709",
+      "score": 1175,
+      "votes": 7685,
+      "organization": "xAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_031",
+      "rank": 31,
+      "model": "grok-code-fast-1",
+      "score": 1152,
+      "votes": 4745,
+      "organization": "xAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_032",
+      "rank": 31,
+      "model": "Grok-3-preview-02-24",
+      "score": 1143,
+      "votes": 5764,
+      "organization": "xAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_033",
+      "rank": 31,
+      "model": "o3-mini-high (20250131)",
+      "score": 1137,
+      "votes": 2979,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_034",
+      "rank": 31,
+      "model": "MiniMax-M1",
+      "score": 1130,
+      "votes": 3361,
+      "organization": "MiniMax",
+      "license": "MIT"
+    },
+    {
+      "id": "webdev_035",
+      "rank": 32,
+      "model": "Claude 3.5 Haiku (20241022)",
+      "score": 1133,
+      "votes": 22213,
+      "organization": "Anthropic",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_036",
+      "rank": 33,
+      "model": "gpt-oss-120b",
+      "score": 1096,
+      "votes": 759,
+      "organization": "OpenAI",
+      "license": "Apache 2.0"
+    },
+    {
+      "id": "webdev_037",
+      "rank": 34,
+      "model": "o4-mini-2025-04-16",
+      "score": 1118,
+      "votes": 8850,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_038",
+      "rank": 37,
+      "model": "o3-mini (20250131)",
+      "score": 1092,
+      "votes": 6369,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_039",
+      "rank": 37,
+      "model": "Gemini-2.0-Pro-Exp-02-05",
+      "score": 1090,
+      "votes": 11859,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_040",
+      "rank": 40,
+      "model": "o1 (20241217)",
+      "score": 1045,
+      "votes": 9235,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_041",
+      "rank": 40,
+      "model": "o1-mini (20240912)",
+      "score": 1043,
+      "votes": 13688,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_042",
+      "rank": 40,
+      "model": "Gemini-2.0-Flash-001",
+      "score": 1040,
+      "votes": 10498,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_043",
+      "rank": 40,
+      "model": "Gemini-2.0-Flash-Thinking-01-21",
+      "score": 1030,
+      "votes": 1058,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_044",
+      "rank": 40,
+      "model": "Llama-4-Maverick-17B-128E-Instruct",
+      "score": 1027,
+      "votes": 5474,
+      "organization": "Meta",
+      "license": "Llama 4"
+    },
+    {
+      "id": "webdev_045",
+      "rank": 45,
+      "model": "Gemini-2.0-Flash-Exp",
+      "score": 980,
+      "votes": 14454,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_046",
+      "rank": 45,
+      "model": "Qwen2.5-Max",
+      "score": 976,
+      "votes": 11073,
+      "organization": "Alibaba",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_047",
+      "rank": 46,
+      "model": "GPT-4o-2024-11-20",
+      "score": 964,
+      "votes": 18601,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_048",
+      "rank": 46,
+      "model": "DeepSeek-V3",
+      "score": 960,
+      "votes": 7699,
+      "organization": "DeepSeek",
+      "license": "DeepSeek"
+    },
+    {
+      "id": "webdev_049",
+      "rank": 49,
+      "model": "Qwen2.5-Coder-32B-Instruct",
+      "score": 902,
+      "votes": 16199,
+      "organization": "Alibaba",
+      "license": "Apache 2.0"
+    },
+    {
+      "id": "webdev_050",
+      "rank": 49,
+      "model": "Llama-4-Scout-17B-16E-Instruct",
+      "score": 901,
+      "votes": 687,
+      "organization": "Meta",
+      "license": "Llama 4"
+    },
+    {
+      "id": "webdev_051",
+      "rank": 49,
+      "model": "Gemini-1.5-Pro-002",
+      "score": 893,
+      "votes": 15159,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "webdev_052",
+      "rank": 52,
+      "model": "Llama-3.1-405B-Instruct",
+      "score": 810,
+      "votes": 1117,
+      "organization": "Meta",
+      "license": "Llama 3.1"
+    }
+  ]
+}

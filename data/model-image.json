@@ -1,0 +1,248 @@
+{
+  "category": "Image",
+  "data": [
+    {
+      "id": "image_001",
+      "rank": 1,
+      "model": "hunyuan-image-3.0",
+      "score": 1161,
+      "votes": 14414,
+      "organization": "Tencent",
+      "license": "tencent-hunyuan-community"
+    },
+    {
+      "id": "image_002",
+      "rank": 1,
+      "model": "gemini-2.5-flash-image-preview (nano-banana)",
+      "score": 1154,
+      "votes": 526205,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_003",
+      "rank": 3,
+      "model": "imagen-4.0-ultra-generate-preview-06-06",
+      "score": 1145,
+      "votes": 447731,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_004",
+      "rank": 3,
+      "model": "seedream-4-2k",
+      "score": 1144,
+      "votes": 14582,
+      "organization": "Bytedance",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_005",
+      "rank": 4,
+      "model": "seedream-4-high-res-fal",
+      "score": 1134,
+      "votes": 20954,
+      "organization": "Bytedance",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_006",
+      "rank": 5,
+      "model": "imagen-4.0-generate-preview-06-06",
+      "score": 1131,
+      "votes": 448875,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_007",
+      "rank": 7,
+      "model": "gpt-image-1",
+      "score": 1123,
+      "votes": 204686,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_008",
+      "rank": 7,
+      "model": "seedream-4-fal",
+      "score": 1118,
+      "votes": 13513,
+      "organization": "Bytedance",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_009",
+      "rank": 9,
+      "model": "mai-image-1",
+      "score": 1096,
+      "votes": 4091,
+      "organization": "Microsoft AI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_010",
+      "rank": 9,
+      "model": "seedream-3",
+      "score": 1082,
+      "votes": 36678,
+      "organization": "Bytedance",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_011",
+      "rank": 10,
+      "model": "flux-1-kontext-max",
+      "score": 1079,
+      "votes": 72764,
+      "organization": "Black Forest Labs",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_012",
+      "rank": 12,
+      "model": "qwen-image-prompt-extend",
+      "score": 1072,
+      "votes": 571973,
+      "organization": "Alibaba",
+      "license": "Apache 2.0"
+    },
+    {
+      "id": "image_013",
+      "rank": 13,
+      "model": "imagen-3.0-generate-002",
+      "score": 1062,
+      "votes": 418478,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_014",
+      "rank": 13,
+      "model": "flux-1-kontext-pro",
+      "score": 1062,
+      "votes": 333142,
+      "organization": "Black Forest Labs",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_015",
+      "rank": 13,
+      "model": "qwen-image",
+      "score": 1061,
+      "votes": 106803,
+      "organization": "Alibaba",
+      "license": "Apache 2.0"
+    },
+    {
+      "id": "image_016",
+      "rank": 16,
+      "model": "ideogram-v3-quality",
+      "score": 1049,
+      "votes": 36941,
+      "organization": "Ideogram",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_017",
+      "rank": 17,
+      "model": "lucid-origin",
+      "score": 1025,
+      "votes": 277597,
+      "organization": "Leonardo AI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_018",
+      "rank": 17,
+      "model": "photon",
+      "score": 1020,
+      "votes": 56961,
+      "organization": "Luma AI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_019",
+      "rank": 18,
+      "model": "recraft-v3",
+      "score": 1017,
+      "votes": 107683,
+      "organization": "Recraft",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_020",
+      "rank": 18,
+      "model": "flux-1.1-pro",
+      "score": 1013,
+      "votes": 71781,
+      "organization": "Black Forest Labs",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_021",
+      "rank": 19,
+      "model": "ideogram-v2",
+      "score": 1012,
+      "votes": 73285,
+      "organization": "Ideogram",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_022",
+      "rank": 22,
+      "model": "gemini-2.0-flash-preview-image-generation",
+      "score": 987,
+      "votes": 285249,
+      "organization": "Google",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_023",
+      "rank": 23,
+      "model": "dall-e-3",
+      "score": 978,
+      "votes": 266633,
+      "organization": "OpenAI",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_024",
+      "rank": 24,
+      "model": "flux-1-dev-fp8",
+      "score": 966,
+      "votes": 49919,
+      "organization": "Black Forest Labs",
+      "license": "Open"
+    },
+    {
+      "id": "image_025",
+      "rank": 24,
+      "model": "flux-1-kontext-dev",
+      "score": 963,
+      "votes": 214478,
+      "organization": "Black Forest Labs",
+      "license": "Proprietary"
+    },
+    {
+      "id": "image_026",
+      "rank": 26,
+      "model": "stable-diffusion-v35-large",
+      "score": 936,
+      "votes": 23764,
+      "organization": "Stability AI",
+      "license": "Open"
+    },
+    {
+      "id": "image_027",
+      "rank": 27,
+      "model": "bagel",
+      "score": 913,
+      "votes": 11646,
+      "organization": "Bytedance",
+      "license": "Apache 2.0"
+    }
+  ]
+}

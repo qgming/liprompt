@@ -72,6 +72,17 @@ const onShareAppMessage = (res) => {
 	}
 }
 
+// 分享到朋友圈
+const onShareTimeline = () => {
+	if (!prompt.value) return {}
+
+	return {
+		title: `${prompt.value.name} - 流金提示词`,
+		query: `id=${prompt.value.id}`,
+		imageUrl: ''
+	}
+}
+
 // 复制提示词
 const copyPrompt = () => {
 	if (!prompt.value) return

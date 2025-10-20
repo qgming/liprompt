@@ -112,6 +112,25 @@ onMounted(() => {
 	autoSelectFirstCategory()
 })
 
+// 分享给好友
+const onShareAppMessage = (res) => {
+	return {
+		title: '提示词分类 - 流金提示词',
+		path: '/pages/category/index',
+		desc: '探索各种分类的优质AI提示词，找到适合的创作灵感',
+		imageUrl: ''
+	}
+}
+
+// 分享到朋友圈
+const onShareTimeline = () => {
+	return {
+		title: '提示词分类大全 - 流金提示词',
+		query: '',
+		imageUrl: ''
+	}
+}
+
 // 组件卸载时移除事件监听
 onUnmounted(() => {
 	uni.$off('selectCategory')

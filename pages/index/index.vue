@@ -283,6 +283,25 @@ onMounted(() => {
 	})
 })
 
+// 分享给好友
+const onShareAppMessage = (res) => {
+	return {
+		title: '流金提示词 - 精选AI提示词库',
+		path: '/pages/index/index',
+		desc: '发现精选和推荐的高质量AI提示词，提升你的AI创作效率',
+		imageUrl: ''
+	}
+}
+
+// 分享到朋友圈
+const onShareTimeline = () => {
+	return {
+		title: '流金提示词 - 精选AI提示词库，提升AI创作效率',
+		query: '',
+		imageUrl: ''
+	}
+}
+
 // 组件卸载时移除事件监听
 onUnmounted(() => {
 	uni.$off('selectCategory')

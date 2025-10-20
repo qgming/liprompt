@@ -32,14 +32,14 @@
 
 			<!-- 操作按钮 -->
 			<view class="action-section">
-				<view class="action-btn primary" @click="copyPrompt">
+				<button class="action-btn primary" @click="copyPrompt">
 					<text class="btn-icon">📋</text>
 					<text class="btn-text">复制提示词</text>
-				</view>
-				<view class="action-btn secondary" @click="sharePrompt">
+				</button>
+				<button class="action-btn secondary" open-type="share">
 					<text class="btn-icon">📤</text>
 					<text class="btn-text">分享给好友</text>
-				</view>
+				</button>
 			</view>
 		</view>
 
@@ -59,6 +59,18 @@ import { ref, onMounted } from 'vue'
 import { getPromptById } from '@/data/prompts.js'
 
 const prompt = ref(null)
+
+// 分享给好友
+const onShareAppMessage = (res) => {
+	if (!prompt.value) return {}
+
+	return {
+		title: prompt.value.name,
+		path: `/pages/detail/index?id=${prompt.value.id}`,
+		desc: prompt.value.description,
+		imageUrl: ''
+	}
+}
 
 // 复制提示词
 const copyPrompt = () => {
@@ -81,41 +93,6 @@ const copyPrompt = () => {
 	})
 }
 
-// 分享提示词
-const sharePrompt = () => {
-	if (!prompt.value) return
-
-	// #ifdef MP-WEIXIN
-	uni.share({
-		provider: 'weixin',
-		scene: 'WXSceneSession',
-		type: 0,
-		href: '',
-		title: prompt.value.name,
-		summary: prompt.value.description,
-		imageUrl: '',
-		success: () => {
-			uni.showToast({
-				title: '分享成功',
-				icon: 'success'
-			})
-		},
-		fail: () => {
-			uni.showToast({
-				title: '分享失败',
-				icon: 'none'
-			})
-		}
-	})
-	// #endif
-
-	// #ifndef MP-WEIXIN
-	uni.showToast({
-		title: '当前平台不支持分享',
-		icon: 'none'
-	})
-	// #endif
-}
 
 // 返回上一页
 const goBack = () => {

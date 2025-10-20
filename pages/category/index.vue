@@ -42,16 +42,18 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { getAllPrompts, getPromptsByCategory, getAllCategories } from '@/data/prompts.js'
+import { getAllPrompts, getAllCategories } from '@/data/prompts-manager.js'
 
 const selectedCategory = ref('')
 const prompts = ref([])
 const categories = ref([])
 
-// 计算过滤后的提示词 - 使用新的分类查询函数
+// 计算过滤后的提示词 - 根据分类过滤
 const filteredPrompts = computed(() => {
 	if (!selectedCategory.value) return []
-	return getPromptsByCategory(selectedCategory.value)
+	return prompts.value.filter(prompt =>
+		prompt.group && prompt.group.includes(selectedCategory.value)
+	)
 })
 
 

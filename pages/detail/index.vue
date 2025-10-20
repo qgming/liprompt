@@ -56,7 +56,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getPromptById } from '@/data/prompts.js'
+import { getPromptById } from '@/data/prompts-manager.js'
 
 const prompt = ref(null)
 

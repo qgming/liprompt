@@ -103,7 +103,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { getAllPrompts, getAllCategories } from '@/data/prompts.js'
+import { getAllPrompts, getAllCategories } from '@/data/prompts-manager.js'
 import PromptCard from '@/components/prompt-card/prompt-card.vue'
 import TrendingCard from '@/components/trending-card/trending-card.vue'
 

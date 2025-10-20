@@ -47,6 +47,20 @@
 					</scroll-view>
 				</view>
 
+				<!-- 神笔提示词横向滚动 -->
+				<view v-if="!searchKeyword" class="shenbi-section">
+					<view class="section-title">
+						<text class="title-text">神笔写作</text>
+					</view>
+
+					<scroll-view scroll-x class="shenbi-scroll" show-scrollbar="false">
+						<view class="shenbi-list">
+							<trending-card v-for="prompt in shenbiPrompts" :key="prompt.id" :prompt="prompt"
+								@click="viewPromptDetail" />
+						</view>
+					</scroll-view>
+				</view>
+
 				<!-- 搜索结果或全部提示词 -->
 				<view class="prompts-section">
 					<view class="section-title">
@@ -127,7 +141,7 @@ const featuredPrompts = computed(() => {
 
 	return prompts.value
 		.filter(prompt => prompt.group?.includes('精选'))
-		.slice(0, 8)
+	// .slice(0, 8)
 })
 
 // 计算随机推荐提示词（横向滚动）
@@ -136,6 +150,14 @@ const randomPrompts = computed(() => {
 
 	// 随机选择10个提示词作为推荐
 	return [...prompts.value].sort(() => Math.random() - 0.5).slice(0, 10)
+})
+
+// 计算神笔提示词（横向滚动）
+const shenbiPrompts = computed(() => {
+	if (searchKeyword.value || !prompts.value.length) return []
+
+	return prompts.value
+		.filter(prompt => prompt.group?.includes('神笔'))
 })
 
 // 计算过滤后的提示词
@@ -445,6 +467,22 @@ onUnmounted(() => {
 }
 
 .trending-list {
+	display: inline-flex;
+	gap: 16rpx;
+	padding-bottom: 8rpx;
+}
+
+/* 神笔提示词横向滚动 */
+.shenbi-section {
+	margin-top: 24rpx;
+	padding: 0 32rpx;
+}
+
+.shenbi-scroll {
+	white-space: nowrap;
+}
+
+.shenbi-list {
 	display: inline-flex;
 	gap: 16rpx;
 	padding-bottom: 8rpx;

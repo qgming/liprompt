@@ -132,9 +132,12 @@ cd liprompt
    - `remote-data/text-prompts.json`
    - `remote-data/image-prompts.json`
 
-2. 将这两个 JSON 上传到 GitHub 仓库。
+2. 将这两个 JSON 发布到：
 
-3. 确认 `data/remote-config.js` 中的地址与实际仓库路径一致。
+   - `https://www.qgming.com/json/text-prompts.json`
+   - `https://www.qgming.com/json/image-prompts.json`
+
+3. 确认 `data/remote-config.js` 中的固定地址保持一致。
 
 ### 项目配置
 

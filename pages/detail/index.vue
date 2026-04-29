@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view v-if="isLoading" class="loading-state compact">
+		<view v-if="isLoading" class="loading-state compact" :style="loadingStateStyle">
 			<view class="loading-card">
 				<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
 				<text class="loading-title">正在加载详情</text>
@@ -8,20 +8,29 @@
 			</view>
 		</view>
 
-		<view v-else-if="prompt" class="detail-content">
+		<view v-else-if="prompt" class="detail-content" :style="detailContentStyle">
+			<view class="page-topbar" :style="pageTopbarStyle">
+				<view class="back-pill" @click="goBack">
+					<image class="back-icon" src="/static/icons/back-arrow.svg" mode="aspectFit" />
+					<text class="back-label">返回</text>
+				</view>
+			</view>
+
 			<view v-if="isImagePrompt" class="gallery-section">
-				<swiper class="gallery-swiper" circular indicator-dots indicator-active-color="#b89467">
+				<swiper class="gallery-swiper" :style="gallerySwiperStyle" circular indicator-dots
+					indicator-active-color="#b89467" @change="handleGalleryChange">
 					<swiper-item v-for="(image, index) in galleryImages" :key="image">
-						<image class="gallery-image" :src="image" mode="aspectFill" @click="previewImages(index)" />
+						<image class="gallery-image" :src="image" mode="widthFix" @load="handleGalleryImageLoad(index, $event)"
+							@click="previewImages(index)" />
 					</swiper-item>
 				</swiper>
 				<view class="gallery-tip">点击图片可查看原图，共 {{ galleryImages.length }} 张</view>
 			</view>
 
 			<view class="header-section">
-				<view class="prompt-emoji">{{ prompt.emoji }}</view>
+				<view v-if="prompt.emoji" class="prompt-emoji">{{ prompt.emoji }}</view>
 				<text class="prompt-title">{{ prompt.name }}</text>
-				<text class="prompt-description">{{ prompt.description }}</text>
+				<text class="prompt-description" user-select>{{ prompt.description }}</text>
 				<text v-if="isImagePrompt" class="prompt-meta">{{ prompt.author }} · {{ prompt.section }}</text>
 				<view class="prompt-tags">
 					<text class="tag" v-for="tag in prompt.group" :key="tag">{{ tag }}</text>
@@ -31,22 +40,18 @@
 			<view class="content-section">
 				<view class="section-header">
 					<text class="section-title">完整提示词</text>
-					<view class="copy-btn" @click="copyPrompt">复制</view>
+					<view class="section-actions">
+						<button class="share-btn" open-type="share">分享给好友</button>
+						<view class="copy-btn" @click="copyPrompt">复制</view>
+					</view>
 				</view>
 				<view class="prompt-content">
-					<text class="content-text">{{ prompt.prompt }}</text>
+					<text class="content-text" user-select>{{ prompt.prompt }}</text>
 				</view>
-			</view>
-
-			<view class="action-section" :class="{ 'image-actions': isImagePrompt }">
-				<button class="action-btn primary" @click="copyPrompt">复制提示词</button>
-				<button v-if="isImagePrompt" class="action-btn secondary" @click="previewImages()">预览原图</button>
-				<button v-if="isImagePrompt" class="action-btn secondary" open-type="share">分享案例</button>
-				<button v-else class="action-btn secondary" open-type="share">分享给好友</button>
 			</view>
 		</view>
 
-		<view v-else class="empty-state">
+		<view v-else class="empty-state" :style="emptyStateStyle">
 			<view class="empty-icon">📝</view>
 			<text class="empty-text">提示词不存在</text>
 			<view class="back-btn" @click="goBack">
@@ -66,6 +71,15 @@ import { getImagePromptById } from '@/data/image-prompts-manager.js'
 const prompt = ref(null)
 const isLoading = ref(true)
 const cachedImageMap = ref({})
+const topSafeInset = ref(96)
+const topbarHeight = ref(32)
+const currentGalleryIndex = ref(0)
+const galleryWidth = ref(0)
+const galleryRatios = ref({})
+
+const DEFAULT_GALLERY_RATIO = 1.2
+const DETAIL_HORIZONTAL_PADDING = 64
+const HERO_TOP_PADDING_RPX = 116
 
 const isImagePrompt = computed(() => {
 	return !!prompt.value && prompt.value.promptType === 'image'
@@ -86,6 +100,25 @@ const detailPath = computed(() => {
 	const query = isImagePrompt.value ? '&source=image' : ''
 	return `/pages/detail/index?id=${prompt.value.id}${query}`
 })
+const detailContentStyle = computed(() => ({
+	paddingTop: `${topSafeInset.value}px`
+}))
+const pageTopbarStyle = computed(() => ({
+	minHeight: `${topbarHeight.value}px`
+}))
+const loadingStateStyle = computed(() => ({
+	paddingTop: `${topSafeInset.value + 24}px`
+}))
+const emptyStateStyle = computed(() => ({
+	paddingTop: `${topSafeInset.value + 88}px`
+}))
+const galleryHeight = computed(() => {
+	const ratio = galleryRatios.value[currentGalleryIndex.value] || DEFAULT_GALLERY_RATIO
+	return Math.max(Math.round(galleryWidth.value * ratio), 240)
+})
+const gallerySwiperStyle = computed(() => ({
+	height: `${galleryHeight.value}px`
+}))
 
 const showToast = (title, icon = 'success') => {
 	uni.showToast({ title, icon })
@@ -110,6 +143,27 @@ const previewImages = (current = 0) => {
 		current: galleryImages.value[current],
 		urls: galleryImages.value
 	})
+}
+
+const handleGalleryChange = (event) => {
+	currentGalleryIndex.value = event.detail?.current || 0
+}
+
+const handleGalleryImageLoad = (index, event) => {
+	const { width, height } = event.detail || {}
+	if (!width || !height) {
+		return
+	}
+
+	const ratio = Number((height / width).toFixed(4))
+	if (galleryRatios.value[index] === ratio) {
+		return
+	}
+
+	galleryRatios.value = {
+		...galleryRatios.value,
+		[index]: ratio
+	}
 }
 
 const goBack = () => {
@@ -153,13 +207,47 @@ const cachePromptImages = async (images = []) => {
 	}
 }
 
+const resolveTopSafeInset = () => {
+	const defaultTopInset = uni.upx2px(HERO_TOP_PADDING_RPX)
+	const defaultTopbarHeight = uni.upx2px(64)
+
+	try {
+		const systemInfo = uni.getSystemInfoSync ? uni.getSystemInfoSync() : {}
+		const statusBarHeight = Number(systemInfo.statusBarHeight) || 0
+		const viewportWidth = Number(systemInfo.windowWidth) || 0
+		let safeTop = statusBarHeight + 8
+		let nextTopbarHeight = defaultTopbarHeight
+
+		if (typeof uni.getMenuButtonBoundingClientRect === 'function') {
+			const menuButtonRect = uni.getMenuButtonBoundingClientRect()
+			if (menuButtonRect?.top) {
+				safeTop = menuButtonRect.top
+			}
+			if (menuButtonRect?.height) {
+				nextTopbarHeight = menuButtonRect.height
+			}
+		}
+
+		topSafeInset.value = Math.max(safeTop, defaultTopInset - nextTopbarHeight - uni.upx2px(24))
+		topbarHeight.value = Math.max(nextTopbarHeight, defaultTopbarHeight)
+		galleryWidth.value = Math.max(viewportWidth - uni.upx2px(DETAIL_HORIZONTAL_PADDING), 200)
+	} catch {
+		topSafeInset.value = defaultTopInset - defaultTopbarHeight - uni.upx2px(24)
+		topbarHeight.value = defaultTopbarHeight
+		galleryWidth.value = 320
+	}
+}
+
 onMounted(() => {
 	const pages = getCurrentPages()
 	const currentPage = pages[pages.length - 1]
 	const options = currentPage ? currentPage.options : {}
+	resolveTopSafeInset()
 	bootstrapRemoteData()
 		.then(() => {
 			prompt.value = resolvePrompt(options)
+			currentGalleryIndex.value = 0
+			galleryRatios.value = {}
 			if (prompt.value?.promptType === 'image' && Array.isArray(prompt.value.images)) {
 				cachePromptImages(prompt.value.images)
 			}
@@ -203,7 +291,7 @@ const onShareTimeline = () => {
 <style>
 .container {
 	min-height: 100vh;
-	background: linear-gradient(180deg, #fcfaf6 0%, #ffffff 26%);
+	background: #ffffff;
 	padding-bottom: 40rpx;
 }
 
@@ -216,7 +304,6 @@ const onShareTimeline = () => {
 
 .loading-state.compact {
 	min-height: 60vh;
-	padding-top: 80rpx;
 }
 
 .loading-card {
@@ -250,7 +337,42 @@ const onShareTimeline = () => {
 }
 
 .detail-content {
-	padding: 24rpx 32rpx 32rpx;
+	padding: 0 32rpx 32rpx;
+}
+
+.page-topbar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin-bottom: 24rpx;
+	position: relative;
+	z-index: 2;
+}
+
+.back-pill {
+	display: inline-flex;
+	align-items: center;
+}
+
+.back-pill {
+	gap: 8rpx;
+	padding: 10rpx 22rpx 10rpx 14rpx;
+	border-radius: 999rpx;
+	background: #ffffff;
+	border: 1rpx solid rgba(0, 0, 0, 0.14);
+}
+
+.back-icon {
+	width: 28rpx;
+	height: 28rpx;
+	display: block;
+}
+
+.back-label {
+	display: block;
+	font-size: 24rpx;
+	font-weight: 500;
+	color: #4b4b4b;
 }
 
 .gallery-section,
@@ -265,13 +387,13 @@ const onShareTimeline = () => {
 }
 
 .gallery-swiper {
-	height: 720rpx;
 	background: #f5efe5;
+	transition: height 0.24s ease;
 }
 
 .gallery-image {
 	width: 100%;
-	height: 100%;
+	display: block;
 }
 
 .gallery-tip,
@@ -294,7 +416,7 @@ const onShareTimeline = () => {
 
 .header-section {
 	padding: 40rpx 32rpx;
-	text-align: center;
+	text-align: left;
 }
 
 .prompt-emoji {
@@ -325,7 +447,7 @@ const onShareTimeline = () => {
 .prompt-tags {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
+	justify-content: flex-start;
 	gap: 12rpx;
 	margin-top: 22rpx;
 }
@@ -356,12 +478,25 @@ const onShareTimeline = () => {
 	color: #1f1a14;
 }
 
+.section-actions {
+	display: flex;
+	align-items: center;
+	gap: 12rpx;
+}
+
+.share-btn,
 .copy-btn {
 	padding: 12rpx 22rpx;
 	border-radius: 18rpx;
 	font-size: 24rpx;
 	color: #7b6c59;
 	background: #f5efe4;
+	line-height: 1;
+}
+
+.share-btn {
+	margin: 0;
+	border: none;
 }
 
 .prompt-content {
@@ -379,43 +514,12 @@ const onShareTimeline = () => {
 	word-break: break-word;
 }
 
-.action-section {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 16rpx;
-}
-
-.action-section.image-actions {
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.action-btn {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 22rpx;
-	border-radius: 22rpx;
-	font-size: 28rpx;
-}
-
-.action-btn.primary {
-	background: linear-gradient(135deg, #c6a57a 0%, #a57d4e 100%);
-	color: #ffffff;
-	box-shadow: 0 12rpx 24rpx rgba(165, 125, 78, 0.24);
-}
-
-.action-btn.secondary {
-	background: #ffffff;
-	color: #726351;
-	border: 1rpx solid #eadfce;
-}
-
 .empty-state {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 140rpx 40rpx;
+	padding: 0 40rpx 140rpx;
 	text-align: center;
 }
 

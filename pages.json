@@ -10,7 +10,7 @@
 		{
 			"path": "pages/image/index",
 			"style": {
-				"navigationBarTitleText": "图片提示",
+				"navigationBarTitleText": "图片案例库",
 				"navigationStyle": "custom"
 			}
 		},
@@ -23,7 +23,8 @@
 		{
 			"path": "pages/detail/index",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
 			}
 		}
 	],

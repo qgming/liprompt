@@ -2,12 +2,15 @@
 	<view class="container">
 		<scroll-view scroll-y class="page-scroll" enhanced :show-scrollbar="false">
 			<view class="hero">
-				<text class="hero-title">GPT-Image-2 案例库</text>
+				<text class="hero-eyebrow">GPT-IMAGE-2</text>
+				<text class="hero-title">图片案例库</text>
 			</view>
 
 			<view class="toolbar">
 				<view class="search-box">
-					<input class="search-input" v-model="searchKeyword" placeholder="搜索案例、作者、提示词..." @input="handleSearch" />
+					<input class="search-input" type="text" v-model="searchKeyword" placeholder="搜索案例、作者、提示词..."
+						@input="handleSearch" />
+					<view class="search-icon">🔍</view>
 				</view>
 				<scroll-view scroll-x class="chips" show-scrollbar="false">
 					<view class="chip-list">
@@ -54,10 +57,27 @@
 
 			<view v-if="totalPages > 1" class="pagination">
 				<view class="page-btn" :class="{ disabled: currentPage === 1 }" @click="prevPage">上一页</view>
-				<text class="page-text">{{ currentPage }} / {{ totalPages }}</text>
+				<view class="page-info" @click="showPageSelector">{{ currentPage }} / {{ totalPages }}</view>
 				<view class="page-btn" :class="{ disabled: currentPage === totalPages }" @click="nextPage">下一页</view>
 			</view>
 		</scroll-view>
+
+		<view v-if="showPicker" class="picker-mask" @click="hidePicker">
+			<view class="picker-content" @click.stop>
+				<view class="picker-header">
+					<view class="picker-cancel" @click="hidePicker">取消</view>
+					<view class="picker-title">选择页数</view>
+					<view class="picker-confirm" @click="confirmPicker">确定</view>
+				</view>
+				<picker-view class="picker-view" :value="pickerValue" @change="onPickerChange">
+					<picker-view-column>
+						<view v-for="(item, index) in pickerPages" :key="index" class="picker-item">
+							第 {{ item }} 页
+						</view>
+					</picker-view-column>
+				</picker-view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -78,10 +98,12 @@ const categories = ref([])
 const searchKeyword = ref('')
 const selectedCategory = ref('全部')
 const currentPage = ref(1)
-const pageSize = ref(12)
+const pageSize = ref(24)
 const isLoading = ref(true)
 const imageRatios = ref({})
 const cachedImageMap = ref({})
+const showPicker = ref(false)
+const pickerValue = ref([0])
 
 const paginationData = computed(() =>
 	getImagePromptsPaginated(currentPage.value, pageSize.value, {
@@ -92,6 +114,7 @@ const paginationData = computed(() =>
 
 const paginatedPrompts = computed(() => paginationData.value.data)
 const totalPages = computed(() => Math.max(1, Math.ceil(paginationData.value.total / pageSize.value)))
+const pickerPages = computed(() => Array.from({ length: totalPages.value }, (_, index) => index + 1))
 
 const getShortestColumnIndex = (heights) => {
 	return heights.reduce((bestIndex, currentHeight, currentIndex) => {
@@ -223,6 +246,31 @@ const nextPage = () => {
 	}
 }
 
+const showPageSelector = () => {
+	pickerValue.value = [currentPage.value - 1]
+	showPicker.value = true
+}
+
+const hidePicker = () => {
+	showPicker.value = false
+}
+
+const onPickerChange = (event) => {
+	pickerValue.value = event.detail.value
+}
+
+const confirmPicker = () => {
+	const selectedPage = pickerPages.value[pickerValue.value[0]]
+	currentPage.value = selectedPage
+	hidePicker()
+
+	uni.showToast({
+		title: `已跳转到第${selectedPage}页`,
+		icon: 'success',
+		duration: 1500
+	})
+}
+
 onMounted(() => {
 	loadImagePromptsData()
 })
@@ -239,17 +287,17 @@ watch(paginatedPrompts, (prompts) => {
 .page-scroll {
 	width: 100vw;
 	height: 100vh;
-	background: linear-gradient(180deg, #fcfaf6 0%, #ffffff 24%);
+	background: #ffffff;
 }
 
 .hero {
-	padding: 116rpx 32rpx 20rpx;
+	padding: 116rpx 32rpx 12rpx;
 }
 
 .hero-title,
 .empty-title,
 .empty-desc,
-.page-text {
+.page-info {
 	display: block;
 }
 
@@ -260,6 +308,7 @@ watch(paginatedPrompts, (prompts) => {
 }
 
 .hero-title {
+	margin-top: 10rpx;
 	font-size: 52rpx;
 	font-weight: 700;
 	color: #221c12;
@@ -309,18 +358,36 @@ watch(paginatedPrompts, (prompts) => {
 }
 
 .search-box {
-	padding: 0 32rpx 0 0;
+	position: relative;
+	display: flex;
+	align-items: center;
 }
 
 .search-input {
-	height: 84rpx;
-	padding: 0 28rpx;
-	background: rgba(255, 255, 255, 0.96);
-	border: 1rpx solid #ede3d4;
+	flex: 1;
+	height: 80rpx;
+	padding: 0 80rpx 0 28rpx;
+	background: #f5f5f7;
+	border: none;
 	border-radius: 24rpx;
-	font-size: 28rpx;
-	color: #1f1a14;
-	box-shadow: 0 10rpx 24rpx rgba(42, 32, 18, 0.04);
+	font-size: 30rpx;
+	color: #1d1d1f;
+	transition: all 0.2s ease;
+}
+
+.search-input:focus {
+	background: #e8e8ed;
+}
+
+.search-input::placeholder {
+	color: #8e8e93;
+}
+
+.search-icon {
+	position: absolute;
+	right: 28rpx;
+	font-size: 32rpx;
+	color: #8e8e93;
 }
 
 .chips {
@@ -483,8 +550,67 @@ watch(paginatedPrompts, (prompts) => {
 	opacity: 0.35;
 }
 
-.page-text {
+.page-info {
+	padding: 16rpx 24rpx;
+	border-radius: 20rpx;
+	background: #f6f0e5;
 	font-size: 24rpx;
 	color: #7b6d5c;
+	cursor: pointer;
+}
+
+.picker-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 9999;
+	display: flex;
+	align-items: flex-end;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.picker-content {
+	width: 100%;
+	background: #ffffff;
+	border-radius: 24rpx 24rpx 0 0;
+	overflow: hidden;
+}
+
+.picker-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 32rpx;
+	border-bottom: 1rpx solid #f0f0f0;
+}
+
+.picker-cancel,
+.picker-confirm {
+	padding: 8rpx 16rpx;
+	font-size: 32rpx;
+	color: #007aff;
+}
+
+.picker-title {
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #1d1d1f;
+}
+
+.picker-view {
+	width: 100%;
+	height: 500rpx;
+	background: #ffffff;
+}
+
+.picker-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 80rpx;
+	font-size: 32rpx;
+	color: #1d1d1f;
 }
 </style>

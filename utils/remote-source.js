@@ -36,11 +36,14 @@ function parseGithubRawUrl(url) {
 
 function parseGiteeRawUrl(url) {
   const segments = splitUrlSegments(url, GITEE_RAW_HOST);
-  if (!segments || segments.length < 4) {
+  if (!segments || segments.length < 5) {
     return null;
   }
 
-  const [owner, repo, branch, ...rest] = segments;
+  const [owner, repo, rawMarker, branch, ...rest] = segments;
+  if (rawMarker !== "raw") {
+    return null;
+  }
   const path = rest.join("/");
   if (!owner || !repo || !branch || !path) {
     return null;
@@ -60,7 +63,7 @@ function buildGithubRawUrl(parts) {
 }
 
 function buildGiteeRawUrl(parts) {
-  return `${GITEE_RAW_HOST}/${parts.owner}/${parts.repo}/${parts.branch}/${parts.path}`;
+  return `${GITEE_RAW_HOST}/${parts.owner}/${parts.repo}/raw/${parts.branch}/${parts.path}`;
 }
 
 export function buildRepositoryRawUrls(parts, preferred = "github") {

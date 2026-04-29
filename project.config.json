@@ -3,7 +3,20 @@
   "compileType": "miniprogram",
   "libVersion": "3.10.2",
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "remote-data"
+      },
+      {
+        "type": "folder",
+        "value": "images"
+      },
+      {
+        "type": "file",
+        "value": "README.md"
+      }
+    ],
     "include": []
   },
   "setting": {
@@ -12,6 +25,7 @@
     "postcss": true,
     "minified": true,
     "enhance": true,
+    "urlCheck": false,
     "showShadowRootInWxmlPanel": true,
     "packNpmRelationList": [],
     "babelSetting": {

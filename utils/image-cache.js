@@ -1,4 +1,4 @@
-import { getRawMirrorCandidates, getRawSourceCacheKey, getPreferredRawMirrorUrl } from "./remote-source.js";
+import { getRawMirrorCandidates, getRawSourceCacheKey } from "./remote-source.js";
 
 const IMAGE_CACHE_STORAGE_KEY = "image_file_cache_v1";
 const IMAGE_CACHE_MAX_ENTRIES = 80;
@@ -65,8 +65,28 @@ function getCachedImageSync(url) {
   return record.savedFilePath;
 }
 
-function getFileInfo(filePath) {
+function getFileSystemManager() {
+  if (typeof uni.getFileSystemManager === "function") {
+    return uni.getFileSystemManager();
+  }
+  if (typeof wx !== "undefined" && typeof wx.getFileSystemManager === "function") {
+    return wx.getFileSystemManager();
+  }
+  return null;
+}
+
+function hasSavedFile(filePath) {
   return new Promise((resolve) => {
+    const fileSystemManager = getFileSystemManager();
+    if (fileSystemManager && typeof fileSystemManager.getFileInfo === "function") {
+      fileSystemManager.getFileInfo({
+        filePath,
+        success: () => resolve(true),
+        fail: () => resolve(false),
+      });
+      return;
+    }
+
     uni.getFileInfo({
       filePath,
       success: () => resolve(true),
@@ -94,6 +114,16 @@ function downloadImage(url) {
 
 function saveImage(tempFilePath) {
   return new Promise((resolve, reject) => {
+    const fileSystemManager = getFileSystemManager();
+    if (fileSystemManager && typeof fileSystemManager.saveFile === "function") {
+      fileSystemManager.saveFile({
+        tempFilePath,
+        success: (result) => resolve(result.savedFilePath),
+        fail: reject,
+      });
+      return;
+    }
+
     uni.saveFile({
       tempFilePath,
       success: (result) => resolve(result.savedFilePath),
@@ -153,7 +183,7 @@ async function cacheImage(url) {
   const task = (async () => {
     const current = cacheIndex.get(cacheKey);
     if (current?.savedFilePath) {
-      const exists = await getFileInfo(current.savedFilePath);
+      const exists = await hasSavedFile(current.savedFilePath);
       if (exists) {
         updateAccessTime(cacheKey);
         persistIndex();
@@ -188,7 +218,7 @@ async function cacheImage(url) {
   })()
     .catch((error) => {
       console.warn("图片缓存失败，继续使用远程地址", url, error);
-      return getPreferredRawMirrorUrl(url, "gitee");
+      return url;
     })
     .finally(() => {
       pendingTasks.delete(cacheKey);

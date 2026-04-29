@@ -38,9 +38,13 @@ liprompt/
 ├── components/
 │   ├── prompt-card/    # 提示词卡片组件
 │   └── trending-card/  # 热门提示词卡片组件
-├── data/               # 数据源
-│   ├── prompts*.js     # 提示词数据文件
-│   └── prompts-manager.js # 提示词数据管理器
+├── data/               # 远程数据配置与管理器
+│   ├── prompts-manager.js
+│   ├── image-prompts-manager.js
+│   └── remote-config.js
+├── remote-data/        # 准备上传到 GitHub 的远程 JSON 数据
+│   ├── text-prompts.json
+│   └── image-prompts.json
 ├── static/
 │   ├── logo.png        # 应用图标
 │   └── tabs/           # 底部导航栏图标
@@ -121,37 +125,16 @@ cd liprompt
 # 在 HBuilderX 中点击：运行 -> 运行到小程序模拟器 -> 微信开发者工具
 ```
 
-### 添加新的提示词
+### 更新提示词数据
 
-1. **在相应的数据文件中添加**：
+1. 直接编辑远程数据文件：
 
-   ```javascript
-   // 在 data/prompts-custom.js 中添加
-   export const CUSTOM_PROMPTS = [
-     {
-       id: "custom_001",
-       name: "提示词名称",
-       description: "提示词描述",
-       prompt: "具体的提示词内容",
-       group: ["分类1", "分类2"],
-       emoji: "🎯",
-     },
-   ];
-   ```
+   - `remote-data/text-prompts.json`
+   - `remote-data/image-prompts.json`
 
-2. **使用数据管理器动态添加**：
+2. 将这两个 JSON 上传到 GitHub 仓库。
 
-   ```javascript
-   import { promptsManager } from "@/data/prompts-manager.js";
-
-   const newPrompt = {
-     id: "dynamic_001",
-     name: "动态提示词",
-     // ... 其他属性
-   };
-
-   promptsManager.addPrompt(newPrompt);
-   ```
+3. 确认 `data/remote-config.js` 中的地址与实际仓库路径一致。
 
 ### 项目配置
 

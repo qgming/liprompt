@@ -46,12 +46,7 @@
         "setting" : {
             "urlCheck" : false
         },
-        "usingComponents" : true,
-        "request" : {
-            "domainList" : [
-                "https://api.siliconflow.cn"
-            ]
-        }
+        "usingComponents" : true
     },
     "mp-alipay" : {
         "usingComponents" : true

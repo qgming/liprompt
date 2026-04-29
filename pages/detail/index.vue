@@ -1,49 +1,47 @@
 <template>
 	<view class="container">
-		<view v-if="prompt" class="detail-content">
-			<!-- 头部信息 -->
+		<view v-if="isLoading" class="empty-state">
+			<text class="empty-text">正在加载提示词...</text>
+		</view>
+
+		<view v-else-if="prompt" class="detail-content">
+			<view v-if="isImagePrompt" class="gallery-section">
+				<swiper class="gallery-swiper" circular indicator-dots indicator-active-color="#b89467">
+					<swiper-item v-for="(image, index) in prompt.images" :key="image">
+						<image class="gallery-image" :src="image" mode="aspectFill" @click="previewImages(index)" />
+					</swiper-item>
+				</swiper>
+				<view class="gallery-tip">点击图片可查看原图，共 {{ prompt.images.length }} 张</view>
+			</view>
+
 			<view class="header-section">
 				<view class="prompt-emoji">{{ prompt.emoji }}</view>
 				<text class="prompt-title">{{ prompt.name }}</text>
 				<text class="prompt-description">{{ prompt.description }}</text>
-
-				<!-- 标签 -->
+				<text v-if="isImagePrompt" class="prompt-meta">{{ prompt.author }} · {{ prompt.section }}</text>
 				<view class="prompt-tags">
-					<text class="tag" v-for="tag in prompt.group" :key="tag">
-						{{ tag }}
-					</text>
+					<text class="tag" v-for="tag in prompt.group" :key="tag">{{ tag }}</text>
 				</view>
 			</view>
 
-			<!-- 提示词内容 -->
 			<view class="content-section">
 				<view class="section-header">
 					<text class="section-title">完整提示词</text>
-					<view class="copy-btn" @click="copyPrompt">
-						<text class="copy-icon">📋</text>
-						<text class="copy-text">复制</text>
-					</view>
+					<view class="copy-btn" @click="copyPrompt">复制</view>
 				</view>
-
 				<view class="prompt-content">
 					<text class="content-text">{{ prompt.prompt }}</text>
 				</view>
 			</view>
 
-			<!-- 操作按钮 -->
-			<view class="action-section">
-				<button class="action-btn primary" @click="copyPrompt">
-					<text class="btn-icon">📋</text>
-					<text class="btn-text">复制提示词</text>
-				</button>
-				<button class="action-btn secondary" open-type="share">
-					<text class="btn-icon">📤</text>
-					<text class="btn-text">分享给好友</text>
-				</button>
+			<view class="action-section" :class="{ 'image-actions': isImagePrompt }">
+				<button class="action-btn primary" @click="copyPrompt">复制提示词</button>
+				<button v-if="isImagePrompt" class="action-btn secondary" @click="previewImages()">预览原图</button>
+				<button v-if="isImagePrompt" class="action-btn secondary" open-type="share">分享案例</button>
+				<button v-else class="action-btn secondary" open-type="share">分享给好友</button>
 			</view>
 		</view>
 
-		<!-- 空状态 -->
 		<view v-else class="empty-state">
 			<view class="empty-icon">📝</view>
 			<text class="empty-text">提示词不存在</text>
@@ -55,61 +53,52 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getPromptById } from '@/data/prompts-manager.js'
+import { computed, onMounted, ref } from 'vue'
+import { getPromptById, loadPrompts } from '@/data/prompts-manager.js'
+import { getImagePromptById, loadImagePrompts } from '@/data/image-prompts-manager.js'
 
 const prompt = ref(null)
+const isLoading = ref(true)
 
-// 分享给好友
-const onShareAppMessage = (res) => {
-	if (!prompt.value) return {}
-
-	return {
-		title: prompt.value.name,
-		path: `/pages/detail/index?id=${prompt.value.id}`,
-		desc: prompt.value.description,
-		imageUrl: ''
+const isImagePrompt = computed(() => {
+	return !!prompt.value && prompt.value.promptType === 'image'
+})
+const detailPath = computed(() => {
+	if (!prompt.value) {
+		return '/pages/index/index'
 	}
+	const query = isImagePrompt.value ? '&source=image' : ''
+	return `/pages/detail/index?id=${prompt.value.id}${query}`
+})
+
+const showToast = (title, icon = 'success') => {
+	uni.showToast({ title, icon })
 }
 
-// 分享到朋友圈
-const onShareTimeline = () => {
-	if (!prompt.value) return {}
-
-	return {
-		title: `${prompt.value.name} - 流金提示词`,
-		query: `id=${prompt.value.id}`,
-		imageUrl: ''
-	}
-}
-
-// 复制提示词
 const copyPrompt = () => {
-	if (!prompt.value) return
-
+	if (!prompt.value) {
+		return
+	}
 	uni.setClipboardData({
 		data: prompt.value.prompt,
-		success: () => {
-			uni.showToast({
-				title: '已复制到剪贴板',
-				icon: 'success'
-			})
-		},
-		fail: () => {
-			uni.showToast({
-				title: '复制失败',
-				icon: 'none'
-			})
-		}
+		success: () => showToast('已复制到剪贴板'),
+		fail: () => showToast('复制失败', 'none')
 	})
 }
 
+const previewImages = (current = 0) => {
+	if (!isImagePrompt.value) {
+		return
+	}
+	uni.previewImage({
+		current: prompt.value.images[current],
+		urls: prompt.value.images
+	})
+}
 
-// 返回上一页
 const goBack = () => {
 	uni.navigateBack({
 		fail: () => {
-			// 如果无法返回（比如没有历史记录），则跳转到首页
 			uni.switchTab({
 				url: '/pages/index/index'
 			})
@@ -117,95 +106,141 @@ const goBack = () => {
 	})
 }
 
-// 页面加载时获取提示词数据
-onMounted(() => {
-	try {
-		// 获取当前页面实例
-		const pages = getCurrentPages()
-		const currentPage = pages[pages.length - 1]
-		const options = currentPage.options
-
-		if (options && options.id) {
-			// 根据ID获取提示词数据
-			const promptData = getPromptById(options.id)
-			if (promptData) {
-				prompt.value = promptData
-				console.log('成功获取提示词:', promptData.name)
-			} else {
-				console.warn('未找到ID为', options.id, '的提示词')
-			}
-		} else {
-			console.warn('未提供提示词ID参数')
-		}
-	} catch (error) {
-		console.error('获取提示词数据失败:', error)
+const resolvePrompt = (options = {}) => {
+	if (!options.id) {
+		return null
 	}
+	if (options.source === 'image' || options.id.startsWith('IMG_')) {
+		return getImagePromptById(options.id)
+	}
+	return getPromptById(options.id) || getImagePromptById(options.id)
+}
+
+onMounted(() => {
+	const pages = getCurrentPages()
+	const currentPage = pages[pages.length - 1]
+	const options = currentPage ? currentPage.options : {}
+	const loadData = options.source === 'image' || (options.id && options.id.startsWith('IMG_'))
+		? loadImagePrompts()
+		: loadPrompts()
+	loadData
+		.then(() => {
+			prompt.value = resolvePrompt(options)
+		})
+		.catch((error) => {
+			console.error('加载详情失败:', error)
+			uni.showToast({
+				title: '提示词加载失败',
+				icon: 'none'
+			})
+		})
+		.finally(() => {
+			isLoading.value = false
+		})
 })
+
+const onShareAppMessage = () => {
+	if (!prompt.value) {
+		return {}
+	}
+	return {
+		title: prompt.value.name,
+		path: detailPath.value,
+		desc: prompt.value.description,
+		imageUrl: isImagePrompt.value ? prompt.value.coverImage : ''
+	}
+}
+
+const onShareTimeline = () => {
+	if (!prompt.value) {
+		return {}
+	}
+	return {
+		title: `${prompt.value.name} - 流金提示词`,
+		query: detailPath.value.split('?')[1] || '',
+		imageUrl: isImagePrompt.value ? prompt.value.coverImage : ''
+	}
+}
 </script>
 
 <style>
 .container {
 	min-height: 100vh;
-	background: #ffffff;
+	background: linear-gradient(180deg, #fcfaf6 0%, #ffffff 26%);
 	padding-bottom: 40rpx;
 }
 
 .detail-content {
-	padding: 24rpx 32rpx 32rpx 32rpx;
+	padding: 24rpx 32rpx 32rpx;
 }
 
-/* 头部信息 */
-.header-section {
+.gallery-section,
+.header-section,
+.content-section {
 	background: #ffffff;
-	border-radius: 20rpx;
-	padding: 40rpx 32rpx;
+	border-radius: 28rpx;
+	border: 1rpx solid #efe6d8;
+	box-shadow: 0 8rpx 24rpx rgba(44, 31, 14, 0.05);
 	margin-bottom: 24rpx;
-	border: 1rpx solid #f0f0f0;
-	text-align: center;
-	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
-	transition: all 0.2s ease;
-	position: relative;
 	overflow: hidden;
 }
 
-.header-section::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 165, 0, 0.02) 100%);
-	border-radius: 20rpx;
-	opacity: 0;
-	transition: opacity 0.2s ease;
-	pointer-events: none;
+.gallery-swiper {
+	height: 720rpx;
+	background: #f5efe5;
 }
 
-.header-section:active::after {
-	opacity: 1;
+.gallery-image {
+	width: 100%;
+	height: 100%;
+}
+
+.gallery-tip,
+.prompt-title,
+.prompt-description,
+.prompt-meta,
+.section-title,
+.content-text,
+.empty-text,
+.back-text {
+	display: block;
+}
+
+.gallery-tip {
+	padding: 18rpx 24rpx 22rpx;
+	font-size: 24rpx;
+	color: #866f4d;
+	background: #fffaf1;
+}
+
+.header-section {
+	padding: 40rpx 32rpx;
+	text-align: center;
 }
 
 .prompt-emoji {
-	font-size: 80rpx;
-	margin-bottom: 20rpx;
+	font-size: 76rpx;
+	margin-bottom: 18rpx;
 }
 
 .prompt-title {
-	display: block;
-	font-size: 44rpx;
-	font-weight: 600;
-	color: #1d1d1f;
-	margin-bottom: 16rpx;
-	line-height: 1.3;
+	font-size: 42rpx;
+	font-weight: 700;
+	line-height: 1.35;
+	color: #1f1a14;
 }
 
 .prompt-description {
-	display: block;
-	font-size: 30rpx;
-	color: #8e8e93;
-	line-height: 1.5;
-	margin-bottom: 24rpx;
+	margin-top: 14rpx;
+	font-size: 28rpx;
+	line-height: 1.6;
+	color: #7c6e5b;
+}
+
+.prompt-meta {
+	margin-top: 16rpx;
+	font-size: 24rpx;
+	color: #a18b6a;
 }
 
 .prompt-tags {
@@ -213,239 +248,118 @@ onMounted(() => {
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 12rpx;
+	margin-top: 22rpx;
 }
 
 .tag {
-	background: #f2f2f7;
-	color: #8e8e93;
-	font-size: 24rpx;
 	padding: 8rpx 16rpx;
-	border-radius: 16rpx;
+	border-radius: 999rpx;
+	font-size: 22rpx;
+	color: #7d6d5a;
+	background: #f6f0e6;
 }
 
-/* 内容区域 */
 .content-section {
-	background: #ffffff;
-	border-radius: 20rpx;
-	padding: 32rpx;
-	margin-bottom: 24rpx;
-	border: 1rpx solid #f0f0f0;
-	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
-	transition: all 0.2s ease;
-	position: relative;
-	overflow: hidden;
-}
-
-.content-section::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 165, 0, 0.02) 100%);
-	border-radius: 20rpx;
-	opacity: 0;
-	transition: opacity 0.2s ease;
-	pointer-events: none;
-}
-
-.content-section:active::after {
-	opacity: 1;
+	padding: 28rpx;
 }
 
 .section-header {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 20rpx;
+	justify-content: space-between;
+	gap: 16rpx;
+	margin-bottom: 18rpx;
 }
 
 .section-title {
-	font-size: 32rpx;
+	font-size: 30rpx;
 	font-weight: 600;
-	color: #1d1d1f;
+	color: #1f1a14;
 }
 
 .copy-btn {
-	display: flex;
-	align-items: center;
-	gap: 8rpx;
-	padding: 12rpx 20rpx;
-	background: #f2f2f7;
-	border-radius: 20rpx;
-	transition: all 0.2s ease;
-}
-
-.copy-btn:active {
-	background: #e8e8ed;
-	transform: translateY(-1rpx);
-}
-
-.copy-icon {
+	padding: 12rpx 22rpx;
+	border-radius: 18rpx;
 	font-size: 24rpx;
-}
-
-.copy-text {
-	font-size: 24rpx;
-	color: #8e8e93;
+	color: #7b6c59;
+	background: #f5efe4;
 }
 
 .prompt-content {
-	background: #fafbfc;
-	border-radius: 16rpx;
 	padding: 24rpx;
-	border: 1rpx solid #f0f0f0;
+	border-radius: 20rpx;
+	background: #fbfaf7;
+	border: 1rpx solid #f0eadf;
 }
 
 .content-text {
-	font-size: 28rpx;
-	color: #1d1d1f;
-	line-height: 1.6;
+	font-size: 27rpx;
+	line-height: 1.72;
+	color: #241d14;
 	white-space: pre-wrap;
-	word-wrap: break-word;
-	user-select: text;
-	-webkit-user-select: text;
-	-moz-user-select: text;
-	-ms-user-select: text;
+	word-break: break-word;
 }
 
-/* 操作按钮 */
 .action-section {
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 16rpx;
 }
 
+.action-section.image-actions {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .action-btn {
-	flex: 1;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 12rpx;
-	padding: 24rpx;
-	border-radius: 20rpx;
-	transition: all 0.2s ease;
-	position: relative;
-	overflow: hidden;
-}
-
-.action-btn:active {
-	transform: translateY(-2rpx);
+	padding: 22rpx;
+	border-radius: 22rpx;
+	font-size: 28rpx;
 }
 
 .action-btn.primary {
-	background: #B8A88C;
+	background: linear-gradient(135deg, #c6a57a 0%, #a57d4e 100%);
 	color: #ffffff;
-	box-shadow: 0 4rpx 16rpx rgba(184, 168, 140, 0.3);
-}
-
-.action-btn.primary:active {
-	background: #a69a7d;
-	box-shadow: 0 6rpx 20rpx rgba(184, 168, 140, 0.4);
+	box-shadow: 0 12rpx 24rpx rgba(165, 125, 78, 0.24);
 }
 
 .action-btn.secondary {
 	background: #ffffff;
-	color: #8e8e93;
-	border: 1rpx solid #f0f0f0;
-	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+	color: #726351;
+	border: 1rpx solid #eadfce;
 }
 
-.action-btn.secondary:active {
-	background: #f8f9fa;
-	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
-}
-
-.btn-icon {
-	font-size: 28rpx;
-}
-
-.btn-text {
-	font-size: 28rpx;
-	font-weight: 500;
-}
-
-/* 空状态 */
 .empty-state {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 120rpx 40rpx;
+	padding: 140rpx 40rpx;
 	text-align: center;
 }
 
 .empty-icon {
 	font-size: 120rpx;
-	margin-bottom: 32rpx;
-	opacity: 0.6;
+	margin-bottom: 24rpx;
 }
 
 .empty-text {
 	font-size: 32rpx;
-	color: #8e8e93;
+	color: #8e7f6c;
 	margin-bottom: 40rpx;
 }
 
 .back-btn {
 	padding: 20rpx 40rpx;
-	background: #B8A88C;
-	color: #ffffff;
+	background: #b89467;
 	border-radius: 24rpx;
-	transition: all 0.2s ease;
-}
-
-.back-btn:active {
-	background: #a69a7d;
-	transform: translateY(-2rpx);
 }
 
 .back-text {
 	font-size: 28rpx;
 	font-weight: 500;
-}
-
-/* 响应式设计 */
-@media (max-width: 750rpx) {
-	.detail-content {
-		padding: 16rpx 24rpx 24rpx 24rpx;
-	}
-
-	.header-section {
-		padding: 32rpx 24rpx;
-	}
-
-	.prompt-emoji {
-		font-size: 70rpx;
-	}
-
-	.prompt-title {
-		font-size: 40rpx;
-	}
-
-	.prompt-description {
-		font-size: 28rpx;
-	}
-
-	.content-section {
-		padding: 24rpx;
-	}
-
-	.section-header {
-		margin-bottom: 16rpx;
-	}
-
-	.prompt-content {
-		padding: 20rpx;
-	}
-
-	.content-text {
-		font-size: 26rpx;
-	}
-
-	.action-section {
-		flex-direction: column;
-		gap: 12rpx;
-	}
+	color: #ffffff;
 }
 </style>

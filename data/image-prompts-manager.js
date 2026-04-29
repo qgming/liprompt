@@ -5,7 +5,7 @@ import {
 } from "./remote-config.js";
 import { loadRemoteCollection } from "../utils/remote-json.js";
 
-class PromptsManager {
+class ImagePromptsManager {
   constructor() {
     this.prompts = [];
     this.promptsMap = new Map();
@@ -25,8 +25,8 @@ class PromptsManager {
       return this.loadingPromise;
     }
     this.loadingPromise = loadRemoteCollection({
-      url: REMOTE_DATA_URLS.textPrompts,
-      storageKey: REMOTE_STORAGE_KEYS.textPrompts,
+      url: REMOTE_DATA_URLS.imagePrompts,
+      storageKey: REMOTE_STORAGE_KEYS.imagePrompts,
       maxAge: REMOTE_CACHE_MAX_AGE,
       forceRefresh,
     }).then((prompts) => {
@@ -52,21 +52,22 @@ class PromptsManager {
     const categories = new Set();
     this.prompts.forEach((prompt) => {
       const groups = Array.isArray(prompt.group) ? prompt.group : [];
-      groups.forEach((group) => categories.add(group));
+      groups.forEach((group) => {
+        if (group !== "图片提示") {
+          categories.add(group);
+        }
+      });
     });
-    return Array.from(categories).sort();
+    return ["全部", ...Array.from(categories)];
   }
 
-  getPromptsPaginated(page = 1, pageSize = 20, filters = {}) {
+  getPromptsPaginated(page = 1, pageSize = 12, filters = {}) {
     const prompts = this.filterPrompts(filters);
     const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
     return {
-      data: prompts.slice(startIndex, endIndex),
+      data: prompts.slice(startIndex, startIndex + pageSize),
       total: prompts.length,
-      page,
-      pageSize,
-      hasMore: endIndex < prompts.length,
+      hasMore: startIndex + pageSize < prompts.length,
     };
   }
 
@@ -74,59 +75,42 @@ class PromptsManager {
     return this.prompts.filter((prompt) => {
       const groups = Array.isArray(prompt.group) ? prompt.group : [];
       const matchesCategory =
-        !filters.category || groups.includes(filters.category);
+        !filters.category ||
+        filters.category === "全部" ||
+        groups.includes(filters.category);
       const searchTerm = filters.search
-        ? filters.search.toLowerCase()
+        ? filters.search.trim().toLowerCase()
         : "";
       const matchesSearch =
         !searchTerm ||
-        prompt.name.toLowerCase().includes(searchTerm) ||
-        prompt.description.toLowerCase().includes(searchTerm) ||
-        groups.some((group) => group.toLowerCase().includes(searchTerm));
+        [prompt.name, prompt.description, prompt.prompt, prompt.author]
+          .filter(Boolean)
+          .some((item) => item.toLowerCase().includes(searchTerm));
       return matchesCategory && matchesSearch;
     });
   }
-
-  getStats() {
-    const categories = this.getAllCategories();
-    const categoryStats = {};
-    categories.forEach((category) => {
-      categoryStats[category] = this.prompts.filter((prompt) =>
-        Array.isArray(prompt.group) && prompt.group.includes(category)
-      ).length;
-    });
-    return {
-      totalPrompts: this.prompts.length,
-      totalCategories: categories.length,
-      categories: categoryStats,
-    };
-  }
 }
 
-const promptsManager = new PromptsManager();
+const imagePromptsManager = new ImagePromptsManager();
 
-export function loadPrompts(forceRefresh) {
-  return promptsManager.load(forceRefresh);
+export function loadImagePrompts(forceRefresh) {
+  return imagePromptsManager.load(forceRefresh);
 }
 
-export function getAllPrompts() {
-  return promptsManager.getAllPrompts();
+export function getAllImagePrompts() {
+  return imagePromptsManager.getAllPrompts();
 }
 
-export function getPromptById(id) {
-  return promptsManager.getPromptById(id);
+export function getImagePromptById(id) {
+  return imagePromptsManager.getPromptById(id);
 }
 
-export function getAllCategories() {
-  return promptsManager.getAllCategories();
+export function getImageCategories() {
+  return imagePromptsManager.getAllCategories();
 }
 
-export function getPromptsPaginated(page, pageSize, filters) {
-  return promptsManager.getPromptsPaginated(page, pageSize, filters);
+export function getImagePromptsPaginated(page, pageSize, filters) {
+  return imagePromptsManager.getPromptsPaginated(page, pageSize, filters);
 }
 
-export function getPromptsStats() {
-  return promptsManager.getStats();
-}
-
-export { promptsManager };
+export { imagePromptsManager };

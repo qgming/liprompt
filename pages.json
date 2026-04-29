@@ -8,6 +8,13 @@
 			}
 		},
 		{
+			"path": "pages/image/index",
+			"style": {
+				"navigationBarTitleText": "图片提示",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/category/index",
 			"style": {
 				"navigationBarTitleText": ""
@@ -49,6 +56,12 @@
 				"text": "精选",
 				"iconPath": "static/tabs/star.png",
 				"selectedIconPath": "static/tabs/star-active.png"
+			},
+			{
+				"pagePath": "pages/image/index",
+				"text": "图片",
+				"iconPath": "static/tabs/image.png",
+				"selectedIconPath": "static/tabs/image-active.png"
 			},
 			{
 				"pagePath": "pages/category/index",

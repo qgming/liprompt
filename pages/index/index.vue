@@ -86,7 +86,7 @@
 					</view>
 
 					<!-- 空状态 -->
-					<view v-if="paginatedPrompts.length === 0" class="empty-state">
+					<view v-if="!isLoading && paginatedPrompts.length === 0" class="empty-state">
 						<view class="empty-icon">📝</view>
 						<text class="empty-text">暂无相关提示词</text>
 						<text class="empty-desc">试试其他关键词吧</text>
@@ -117,7 +117,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { getAllPrompts, getAllCategories } from '@/data/prompts-manager.js'
+import { getAllPrompts, getAllCategories, loadPrompts as loadRemotePrompts } from '@/data/prompts-manager.js'
 import PromptCard from '@/components/prompt-card/prompt-card.vue'
 import TrendingCard from '@/components/trending-card/trending-card.vue'
 
@@ -126,6 +126,7 @@ const prompts = ref([])
 const categories = ref([])
 const currentPage = ref(1)
 const pageSize = ref(10)
+const isLoading = ref(true)
 
 // 选择器相关状态
 const showPicker = ref(false)
@@ -277,9 +278,9 @@ const confirmPicker = () => {
 }
 
 // 加载提示词数据
-const loadPrompts = async () => {
+const loadPromptsData = async () => {
 	try {
-		// 直接从数据模块加载所有提示词
+		await loadRemotePrompts()
 		const allPrompts = getAllPrompts()
 		const allCategories = getAllCategories()
 
@@ -290,13 +291,19 @@ const loadPrompts = async () => {
 		console.log('分类:', categories.value)
 	} catch (error) {
 		console.error('加载提示词失败:', error)
+		uni.showToast({
+			title: '提示词加载失败',
+			icon: 'none'
+		})
+	} finally {
+		isLoading.value = false
 	}
 }
 
 
 // 监听来自分类页面的事件
 onMounted(() => {
-	loadPrompts()
+	loadPromptsData()
 
 	// 监听分类页面传递的选中分类
 	uni.$on('selectCategory', (category) => {

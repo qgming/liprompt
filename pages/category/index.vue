@@ -31,7 +31,7 @@
 			</view>
 
 			<!-- 未选择分类时的空状态 -->
-			<view v-else class="empty-state">
+			<view v-else-if="!isLoading" class="empty-state">
 				<view class="empty-emoji">📂</view>
 				<text class="empty-title">选择分类</text>
 				<text class="empty-desc">请从左侧选择一个分类查看提示词</text>
@@ -42,11 +42,12 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { getAllPrompts, getAllCategories } from '@/data/prompts-manager.js'
+import { getAllPrompts, getAllCategories, loadPrompts as loadRemotePrompts } from '@/data/prompts-manager.js'
 
 const selectedCategory = ref('')
 const prompts = ref([])
 const categories = ref([])
+const isLoading = ref(true)
 
 // 计算过滤后的提示词 - 根据分类过滤
 const filteredPrompts = computed(() => {
@@ -86,9 +87,9 @@ const viewPromptDetail = (prompt) => {
 }
 
 // 加载提示词数据 - 使用新的数据加载方式
-const loadPrompts = async () => {
+const loadPromptsData = async () => {
 	try {
-		// 直接从数据模块加载所有提示词和分类
+		await loadRemotePrompts()
 		const allPrompts = getAllPrompts()
 		const allCategories = getAllCategories()
 
@@ -99,11 +100,17 @@ const loadPrompts = async () => {
 		console.log('分类:', categories.value)
 	} catch (error) {
 		console.error('加载提示词失败:', error)
+		uni.showToast({
+			title: '提示词加载失败',
+			icon: 'none'
+		})
+	} finally {
+		isLoading.value = false
 	}
 }
 
 onMounted(() => {
-	loadPrompts()
+	loadPromptsData()
 
 	// 监听来自首页的选中分类事件
 	uni.$on('selectCategory', (category) => {

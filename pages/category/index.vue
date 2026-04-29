@@ -1,5 +1,7 @@
 <template>
 	<view class="container">
+		<page-back-bar />
+
 		<view v-if="isLoading" class="loading-state compact">
 			<view class="loading-card">
 				<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
@@ -8,8 +10,7 @@
 			</view>
 		</view>
 
-		<template v-else>
-			<!-- 左侧分类导航 -->
+		<view v-else class="page-layout">
 			<scroll-view scroll-y class="sidebar" enhanced :show-scrollbar="false">
 				<view class="category-nav">
 					<view class="nav-item" v-for="category in categories" :key="category" @click="selectCategory(category)"
@@ -20,10 +21,8 @@
 				</view>
 			</scroll-view>
 
-			<!-- 右侧内容区域 -->
 			<scroll-view scroll-y class="content-area" enhanced :show-scrollbar="false" :bounces="true">
 				<view v-if="selectedCategory" class="content-wrapper">
-					<!-- 提示词卡片列表 -->
 					<view class="prompt-grid">
 						<view class="prompt-card" v-for="prompt in filteredPrompts" :key="prompt.id"
 							@click="viewPromptDetail(prompt)">
@@ -39,20 +38,20 @@
 					</view>
 				</view>
 
-				<!-- 未选择分类时的空状态 -->
 				<view v-else class="empty-state">
 					<view class="empty-emoji">📂</view>
 					<text class="empty-title">选择分类</text>
 					<text class="empty-desc">请从左侧选择一个分类查看提示词</text>
 				</view>
 			</scroll-view>
-		</template>
+		</view>
 	</view>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { bootstrapRemoteData } from '@/data/bootstrap.js'
+import PageBackBar from '@/components/page-back-bar/page-back-bar.vue'
 import { getAllPrompts, getAllCategories } from '@/data/prompts-manager.js'
 
 const selectedCategory = ref('')
@@ -88,6 +87,16 @@ const autoSelectFirstCategory = () => {
 	}
 }
 
+const resolveInitialCategory = (options = {}) => {
+	const categoryName = decodeURIComponent(options.name || '').trim()
+	if (!categoryName) {
+		autoSelectFirstCategory()
+		return
+	}
+
+	selectedCategory.value = categories.value.includes(categoryName) ? categoryName : categories.value[0]
+}
+
 // 查看提示词详情
 const viewPromptDetail = (prompt) => {
 	// 跳转到详情页面，传递ID参数
@@ -105,7 +114,6 @@ const loadPromptsData = async () => {
 
 		prompts.value = allPrompts
 		categories.value = allCategories
-		autoSelectFirstCategory()
 	} catch (error) {
 		console.error('加载提示词失败:', error)
 		uni.showToast({
@@ -118,7 +126,13 @@ const loadPromptsData = async () => {
 }
 
 onMounted(() => {
-	loadPromptsData()
+	const pages = getCurrentPages()
+	const currentPage = pages[pages.length - 1]
+	const options = currentPage ? currentPage.options : {}
+
+	loadPromptsData().then(() => {
+		resolveInitialCategory(options)
+	})
 
 	// 监听来自首页的选中分类事件
 	uni.$on('selectCategory', (category) => {
@@ -157,15 +171,22 @@ onUnmounted(() => {
 	height: 100vh;
 	background: #ffffff;
 	display: flex;
+	flex-direction: column;
 	font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 	overflow: hidden;
+}
+
+.page-layout {
+	flex: 1;
+	display: flex;
+	min-height: 0;
 }
 
 .loading-state {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 100%;
+	flex: 1;
 	padding: 80rpx 32rpx;
 }
 
@@ -206,6 +227,7 @@ onUnmounted(() => {
 /* 左侧导航栏 */
 .sidebar {
 	width: 160rpx;
+	height: 100%;
 	background: #ffffff;
 	flex-shrink: 0;
 }
@@ -281,6 +303,7 @@ onUnmounted(() => {
 /* 右侧内容区域 */
 .content-area {
 	flex: 1;
+	height: 100%;
 	background: #ffffff;
 	-webkit-overflow-scrolling: touch;
 	scroll-behavior: smooth;

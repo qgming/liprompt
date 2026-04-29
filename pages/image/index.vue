@@ -1,17 +1,8 @@
 <template>
 	<view class="container">
 		<scroll-view scroll-y class="page-scroll" enhanced :show-scrollbar="false">
-			<view class="hero">
-				<text class="hero-eyebrow">GPT-IMAGE-2</text>
-				<text class="hero-title">图片案例库</text>
-			</view>
-
-			<view class="toolbar">
-				<view class="search-box">
-					<input class="search-input" type="text" v-model="searchKeyword" placeholder="搜索案例、作者、提示词..."
-						@input="handleSearch" />
-					<view class="search-icon">🔍</view>
-				</view>
+			<page-hero-search v-model="searchKeyword" eyebrow="GPT-IMAGE-2" title="图片案例库"
+				placeholder="搜索案例、作者、提示词..." @input="handleSearch">
 				<scroll-view scroll-x class="chips" show-scrollbar="false">
 					<view class="chip-list">
 						<view v-for="category in categories" :key="category" class="chip"
@@ -20,7 +11,7 @@
 						</view>
 					</view>
 				</scroll-view>
-			</view>
+			</page-hero-search>
 
 			<view v-if="isLoading" class="loading-state">
 				<view class="loading-card">
@@ -84,6 +75,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { bootstrapRemoteData } from '@/data/bootstrap.js'
+import PageHeroSearch from '@/components/page-hero-search/page-hero-search.vue'
 import { cacheImageBatch, getCachedImageSync } from '@/utils/image-cache.js'
 import {
 	getImageCategories,
@@ -290,28 +282,12 @@ watch(paginatedPrompts, (prompts) => {
 	background: #ffffff;
 }
 
-.hero {
-	padding: 116rpx 32rpx 12rpx;
-}
-
-.hero-title,
+.loading-title,
+.loading-desc,
 .empty-title,
 .empty-desc,
 .page-info {
 	display: block;
-}
-
-.hero-eyebrow {
-	font-size: 22rpx;
-	letter-spacing: 4rpx;
-	color: #9d8560;
-}
-
-.hero-title {
-	margin-top: 10rpx;
-	font-size: 52rpx;
-	font-weight: 700;
-	color: #221c12;
 }
 
 .loading-state {
@@ -350,44 +326,10 @@ watch(paginatedPrompts, (prompts) => {
 	color: #8b7a66;
 }
 
-.toolbar,
 .waterfall,
 .pagination,
 .empty-state {
 	padding: 0 32rpx;
-}
-
-.search-box {
-	position: relative;
-	display: flex;
-	align-items: center;
-}
-
-.search-input {
-	flex: 1;
-	height: 80rpx;
-	padding: 0 80rpx 0 28rpx;
-	background: #f5f5f7;
-	border: none;
-	border-radius: 24rpx;
-	font-size: 30rpx;
-	color: #1d1d1f;
-	transition: all 0.2s ease;
-}
-
-.search-input:focus {
-	background: #e8e8ed;
-}
-
-.search-input::placeholder {
-	color: #8e8e93;
-}
-
-.search-icon {
-	position: absolute;
-	right: 28rpx;
-	font-size: 32rpx;
-	color: #8e8e93;
 }
 
 .chips {

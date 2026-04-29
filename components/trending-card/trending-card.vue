@@ -23,19 +23,19 @@ const handleClick = () => {
 <style>
 .trending-card {
 	background: #ffffff;
-	border-radius: 16rpx;
-	padding: 20rpx 24rpx;
-	min-width: 120rpx;
-	max-width: 200rpx;
-	width: fit-content;
-	text-align: center;
-	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
-	border: 1rpx solid #f0f0f0;
+	border-radius: 22rpx;
+	padding: 12rpx 22rpx;
+	height: 92rpx;
+	box-shadow: 0 10rpx 24rpx rgba(34, 28, 18, 0.06);
+	border: 1rpx solid #efe7da;
 	transition: all 0.2s ease;
 	display: inline-flex;
-	flex-direction: column;
+	flex: 0 0 auto;
+	width: auto;
 	align-items: center;
-	white-space: nowrap;
+	justify-content: flex-start;
+	gap: 14rpx;
+	max-width: 360rpx;
 }
 
 .trending-card:active {
@@ -45,30 +45,32 @@ const handleClick = () => {
 }
 
 .trending-emoji {
-	font-size: 40rpx;
-	margin-bottom: 12rpx;
+	font-size: 42rpx;
 	flex-shrink: 0;
 }
 
 .trending-name {
 	display: block;
-	font-size: 26rpx;
-	font-weight: 500;
-	color: #1d1d1f;
+	font-size: 28rpx;
+	font-weight: 600;
+	color: #241d14;
 	line-height: 1.3;
+	text-align: left;
 	word-break: keep-all;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	max-width: 100%;
+	flex: 0 1 auto;
+	max-width: 250rpx;
 }
 
 /* 响应式设计 */
 @media (max-width: 750rpx) {
 	.trending-card {
-		min-width: 100rpx;
-		max-width: 160rpx;
-		padding: 16rpx 20rpx;
+		height: 88rpx;
+		padding: 10rpx 18rpx;
+		gap: 12rpx;
+		max-width: 320rpx;
 	}
 
 	.trending-emoji {
@@ -76,7 +78,8 @@ const handleClick = () => {
 	}
 
 	.trending-name {
-		font-size: 24rpx;
+		font-size: 26rpx;
+		max-width: 228rpx;
 	}
 }
 </style>

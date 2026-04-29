@@ -8,48 +8,45 @@
 			</view>
 		</view>
 
-		<view v-else-if="prompt" class="detail-content" :style="detailContentStyle">
-			<view class="page-topbar" :style="pageTopbarStyle">
-				<view class="back-pill" @click="goBack">
-					<image class="back-icon" src="/static/icons/back-arrow.svg" mode="aspectFit" />
-					<text class="back-label">返回</text>
+		<template v-else-if="prompt">
+			<page-back-bar />
+
+			<view class="detail-content">
+				<view v-if="isImagePrompt" class="gallery-section">
+					<swiper class="gallery-swiper" :style="gallerySwiperStyle" circular indicator-dots
+						indicator-active-color="#b89467" @change="handleGalleryChange">
+						<swiper-item v-for="(image, index) in galleryImages" :key="image">
+							<image class="gallery-image" :src="image" mode="widthFix"
+								@load="handleGalleryImageLoad(index, $event)" @click="previewImages(index)" />
+						</swiper-item>
+					</swiper>
+					<view class="gallery-tip">点击图片可查看原图，共 {{ galleryImages.length }} 张</view>
 				</view>
-			</view>
 
-			<view v-if="isImagePrompt" class="gallery-section">
-				<swiper class="gallery-swiper" :style="gallerySwiperStyle" circular indicator-dots
-					indicator-active-color="#b89467" @change="handleGalleryChange">
-					<swiper-item v-for="(image, index) in galleryImages" :key="image">
-						<image class="gallery-image" :src="image" mode="widthFix" @load="handleGalleryImageLoad(index, $event)"
-							@click="previewImages(index)" />
-					</swiper-item>
-				</swiper>
-				<view class="gallery-tip">点击图片可查看原图，共 {{ galleryImages.length }} 张</view>
-			</view>
-
-			<view class="header-section">
-				<view v-if="prompt.emoji" class="prompt-emoji">{{ prompt.emoji }}</view>
-				<text class="prompt-title">{{ prompt.name }}</text>
-				<text class="prompt-description" user-select>{{ prompt.description }}</text>
-				<text v-if="isImagePrompt" class="prompt-meta">{{ prompt.author }} · {{ prompt.section }}</text>
-				<view class="prompt-tags">
-					<text class="tag" v-for="tag in prompt.group" :key="tag">{{ tag }}</text>
-				</view>
-			</view>
-
-			<view class="content-section">
-				<view class="section-header">
-					<text class="section-title">完整提示词</text>
-					<view class="section-actions">
-						<button class="share-btn" open-type="share">分享给好友</button>
-						<view class="copy-btn" @click="copyPrompt">复制</view>
+				<view class="header-section">
+					<view v-if="prompt.emoji" class="prompt-emoji">{{ prompt.emoji }}</view>
+					<text class="prompt-title">{{ prompt.name }}</text>
+					<text class="prompt-description" user-select>{{ prompt.description }}</text>
+					<text v-if="isImagePrompt" class="prompt-meta">{{ prompt.author }} · {{ prompt.section }}</text>
+					<view class="prompt-tags">
+						<text class="tag" v-for="tag in prompt.group" :key="tag">{{ tag }}</text>
 					</view>
 				</view>
-				<view class="prompt-content">
-					<text class="content-text" user-select>{{ prompt.prompt }}</text>
+
+				<view class="content-section">
+					<view class="section-header">
+						<text class="section-title">完整提示词</text>
+						<view class="section-actions">
+							<button class="share-btn" open-type="share">分享给好友</button>
+							<view class="copy-btn" @click="copyPrompt">复制</view>
+						</view>
+					</view>
+					<view class="prompt-content">
+						<text class="content-text" user-select>{{ prompt.prompt }}</text>
+					</view>
 				</view>
 			</view>
-		</view>
+		</template>
 
 		<view v-else class="empty-state" :style="emptyStateStyle">
 			<view class="empty-icon">📝</view>
@@ -64,6 +61,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { bootstrapRemoteData } from '@/data/bootstrap.js'
+import PageBackBar from '@/components/page-back-bar/page-back-bar.vue'
 import { cacheImageBatch, getCachedImageSync } from '@/utils/image-cache.js'
 import { getPromptById } from '@/data/prompts-manager.js'
 import { getImagePromptById } from '@/data/image-prompts-manager.js'
@@ -72,7 +70,6 @@ const prompt = ref(null)
 const isLoading = ref(true)
 const cachedImageMap = ref({})
 const topSafeInset = ref(96)
-const topbarHeight = ref(32)
 const currentGalleryIndex = ref(0)
 const galleryWidth = ref(0)
 const galleryRatios = ref({})
@@ -100,12 +97,6 @@ const detailPath = computed(() => {
 	const query = isImagePrompt.value ? '&source=image' : ''
 	return `/pages/detail/index?id=${prompt.value.id}${query}`
 })
-const detailContentStyle = computed(() => ({
-	paddingTop: `${topSafeInset.value}px`
-}))
-const pageTopbarStyle = computed(() => ({
-	minHeight: `${topbarHeight.value}px`
-}))
 const loadingStateStyle = computed(() => ({
 	paddingTop: `${topSafeInset.value + 24}px`
 }))
@@ -223,17 +214,12 @@ const resolveTopSafeInset = () => {
 			if (menuButtonRect?.top) {
 				safeTop = menuButtonRect.top
 			}
-			if (menuButtonRect?.height) {
-				nextTopbarHeight = menuButtonRect.height
-			}
 		}
 
 		topSafeInset.value = Math.max(safeTop, defaultTopInset - nextTopbarHeight - uni.upx2px(24))
-		topbarHeight.value = Math.max(nextTopbarHeight, defaultTopbarHeight)
 		galleryWidth.value = Math.max(viewportWidth - uni.upx2px(DETAIL_HORIZONTAL_PADDING), 200)
 	} catch {
 		topSafeInset.value = defaultTopInset - defaultTopbarHeight - uni.upx2px(24)
-		topbarHeight.value = defaultTopbarHeight
 		galleryWidth.value = 320
 	}
 }
@@ -338,41 +324,6 @@ const onShareTimeline = () => {
 
 .detail-content {
 	padding: 0 32rpx 32rpx;
-}
-
-.page-topbar {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	margin-bottom: 24rpx;
-	position: relative;
-	z-index: 2;
-}
-
-.back-pill {
-	display: inline-flex;
-	align-items: center;
-}
-
-.back-pill {
-	gap: 8rpx;
-	padding: 10rpx 22rpx 10rpx 14rpx;
-	border-radius: 999rpx;
-	background: #ffffff;
-	border: 1rpx solid rgba(0, 0, 0, 0.14);
-}
-
-.back-icon {
-	width: 28rpx;
-	height: 28rpx;
-	display: block;
-}
-
-.back-label {
-	display: block;
-	font-size: 24rpx;
-	font-weight: 500;
-	color: #4b4b4b;
 }
 
 .gallery-section,

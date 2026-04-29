@@ -17,7 +17,8 @@
 		{
 			"path": "pages/category/index",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "分类",
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -63,12 +64,6 @@
 				"text": "图片",
 				"iconPath": "static/tabs/image.png",
 				"selectedIconPath": "static/tabs/image-active.png"
-			},
-			{
-				"pagePath": "pages/category/index",
-				"text": "分类",
-				"iconPath": "static/tabs/category.png",
-				"selectedIconPath": "static/tabs/category-active.png"
 			}
 		]
 	}

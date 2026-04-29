@@ -3,5 +3,6 @@
   "projectname": "liprompt",
   "setting": {
     "compileHotReLoad": true
-  }
+  },
+  "libVersion": "3.10.2"
 }

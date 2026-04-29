@@ -1,0 +1,853 @@
+[
+  {
+    "id": "IMG_poster_case1",
+    "caseKey": "poster_case1",
+    "caseNumber": "1",
+    "name": "2026 年波士顿春季城市海报",
+    "description": "A striking Spring 2026 city poster for Boston with an eleg...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "A striking Spring 2026 city poster for Boston with an elegant celebratory mood and a bold contemporary design. On a clean off-white textured background with large areas of negative space, a miniature single sculler rows across the lower right corner of the image on a narrow ribbon of reflective water. The wake from the oar sweeps upward in a dynamic calligraphic curve, gradually transforming into the Charles River and then into a dreamlike hand-painted panorama of Boston. Inside this flowing river-shaped composition are iconic Boston elements: the Back Bay skyline, Beacon Hill brownstones, Acorn Street, Boston Public Garden, Swan Boats, Zakim Bridge, Fenway-inspired details, historic brick architecture, harbor ferries, and the city’s waterfront atmosphere. Soft morning fog, golden spring light, subtle festive accents in crimson and gold, rich detail, layered depth, sophisticated city-poster aesthetics, fresh and refined, visually powerful but not overcrowded. Elegant typography in the lower left reads “SPRING 2026” with a vertical slogan “BOSTON, A CITY OF RIVER, MEMORY, AND INVENTION”, text clear and beautifully composed, premium graphic design, 9:16",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@BubbleBrain",
+    "sourceUrl": "https://x.com/BubbleBrain/status/2045358053831172358",
+    "authorUrl": "https://x.com/BubbleBrain",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case1/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case1/output.jpg"
+    ],
+    "sortIndex": 85
+  },
+  {
+    "id": "IMG_poster_case2",
+    "caseKey": "poster_case2",
+    "caseNumber": "2",
+    "name": "复古阿马尔菲旅行海报",
+    "description": "Modern pencil illustration of Vintage travel poster illust...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "Modern pencil illustration of Vintage travel poster illustration of the Amalfi Coast, Italy, panoramic coastal cliff road scene, classic 1960s white car driving along a curved seaside road, deep blue Mediterranean sea with small sailboats, colorful pastel hillside village, bright blue sky with soft clouds, lemon tree branches with vibrant yellow lemons framing the foreground, warm summer sunlight, bold vibrant colors, retro 1950s travel poster style, cinematic composition, high detail, screen print texture, graphic illustration. Hand-drawn style, illustration with loose strokes and defined contours. High-contrast color palette, maintaining chromatic harmony between background and elements. Contemporary and decorative aesthetic.",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@WolfRiccardo",
+    "sourceUrl": "https://x.com/WolfRiccardo/status/2044562722491121718",
+    "authorUrl": "https://x.com/WolfRiccardo",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case2/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case2/output.jpg"
+    ],
+    "sortIndex": 86
+  },
+  {
+    "id": "IMG_poster_case3",
+    "caseKey": "poster_case3",
+    "caseNumber": "3",
+    "name": "成都美食地图插画",
+    "description": "一张手绘风格的城市美食地图，以成都为主题。画面以鸟瞰视角的手绘简化城市地图为底，标注主要道路和地标但不追求精确比例而...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "一张手绘风格的城市美食地图，以成都为主题。画面以鸟瞰视角的手绘简化城市地图为底，标注主要道路和地标但不追求精确比例而是追求可爱的手绘感。地图上分布着 12 个美食地点的精致手绘小插画：春熙路的串串香（一把竹签插着各种食材冒着热气）、宽窄巷子的三大炮（三个糯米团子飞向铜盘）、建设路的蛋烘糕（金黄酥脆正在翻面）、玉林路的火锅（九宫格锅翻滚冒泡）等，每个插画约占地图的 5% 面积，旁边用手写体标注店名和一句推荐语\"凌晨两点还在排队的那家\"。地图边缘用手绘藤蔓和辣椒装饰形成边框。右下角有一个手绘指南针和图例说明。左上角标题\"成都·吃货暴走地图\"使用胖圆的手绘美术字配辣椒装饰。整体画风为水彩+彩铅混合的手绘质感，颜色以暖色系（辣椒红、姜黄、翠绿）为主，图片比例 1:1。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@Panda20230902",
+    "sourceUrl": "https://x.com/Panda20230902/status/2045396918965285111",
+    "authorUrl": "https://x.com/Panda20230902",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case3/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case3/output.jpg"
+    ],
+    "sortIndex": 87
+  },
+  {
+    "id": "IMG_poster_case4",
+    "caseKey": "poster_case4",
+    "caseNumber": "4",
+    "name": "中式极简 S 形海报",
+    "description": "极简新中式美学风格，画面以淡雅的灰白色为底，呈现出一种纸艺剪影般的立体感。 一条S形蜿蜒的裂痕状边缘将画面分割，仿佛...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "极简新中式美学风格，画面以淡雅的灰白色为底，呈现出一种纸艺剪影般的立体感。\n一条S形蜿蜒的裂痕状边缘将画面分割，仿佛撕开了一层纸面，露出内部色彩斑斓的东方山水景象。\n裂口内，一条蜿蜒的河流自上而下贯穿整个构图，河水以深浅不一的蓝色渲染，层次分明，仿佛流动的丝带。\n河岸两侧点缀着青翠的山丘与梯田，色彩柔和，绿红交织，展现出田园的宁静之美。\n沿河而建的古风建筑错落有致，飞檐翘角，白墙黛瓦，在光影的映衬下更显古朴典雅。\n岸边树木葱茏，枝叶轻盈，一艘小船静泊于水中央，增添了几分悠然意境。\n整体构图呈S形曲线，富有韵律感，仿佛自然与人文的和谐共生。\n画作边缘采用撕纸效果，营造出立体浮雕般的视觉体验。\n下方题字“东方美学”以黑色楷体书写，日期“2026/04/18”与红色印章相呼应，底部“CHINA”字样庄重醒目，署名“@LIYUE”低调收尾，整体氛围静谧深远，充满诗意与哲思。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@liyue_ai",
+    "sourceUrl": "https://x.com/liyue_ai/status/2045368305079447853",
+    "authorUrl": "https://x.com/liyue_ai",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case4/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case4/output.jpg"
+    ],
+    "sortIndex": 88
+  },
+  {
+    "id": "IMG_poster_case5",
+    "caseKey": "poster_case5",
+    "caseNumber": "5",
+    "name": "2026 年春季广州城市海报",
+    "description": "一张充满新春喜庆氛围但不失高雅格调的 2026 城市宣传海报。 双重曝光，构图延续了S型的流动感； 在纯白的纹理背景...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "一张充满新春喜庆氛围但不失高雅格调的 2026 城市宣传海报。\n双重曝光，构图延续了S型的流动感；\n在纯白的纹理背景右下角，一个身穿中国传统服饰的微缩人物正在挥舞着一条长长的红色丝绸舞带，这条红绸在空中舞动，不仅展现出丝绸的柔顺质感，更在向左上方飘动的过程中，奇幻地变形成了一条壮丽的山脉河流。\n在这条“河流”中，叠加了一个有山有海河的广州城市手绘图，国潮，景色尽在眼底，壮阔雄伟，令人震撼。\n广州的地标建筑(广州塔，珠江新城建筑群，珠江, 广州城里古建筑，游轮，白云山）。\n云雾环绕，仙气缥缈，色彩丰富，结构复杂，细节丰富，但因为大面积的留白，画面依然显得清新脱俗，左下角排版着“SPRING 2026”和竖排的宣传语，整体寓意“千年商都，魅力广州”。\n文字排版优美，大方，字迹清晰完整，尺寸9:16。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@liyue_ai",
+    "sourceUrl": "https://x.com/liyue_ai/status/2045332620352119274",
+    "authorUrl": "https://x.com/liyue_ai",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case5/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case5/output.jpg"
+    ],
+    "sortIndex": 89
+  },
+  {
+    "id": "IMG_poster_case7",
+    "caseKey": "poster_case7",
+    "caseNumber": "7",
+    "name": "涂鸦草图 AI 构建者",
+    "description": "以涂鸦速写风表现【一个厉害的AI builder】，整体呈现快速勾勒、自由变形、即兴手绘与草稿式的视觉效果。线条随手...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "以涂鸦速写风表现【一个厉害的AI builder】，整体呈现快速勾勒、自由变形、即兴手绘与草稿式的视觉效果。线条随手、夸张、可粗细不一，略显凌乱但具有节奏和表现力，强调概括、夸张、趣味和随性，而不是严谨写实或精细刻画。  颜色采用粗糙、干刷感明显的块面表现，可保留不均匀的涂抹痕迹、刷痕、飞白与覆盖感，色彩根据【主题/主体】自动适配，但整体保持涂鸦式、速写式、概括式的表达。不要透明水彩晕染效果，不要细腻水彩过渡，不要纸纹理，不要柔和雾化，不要梦幻质感。  背景以留白为主，保持简洁、轻松、未完成感和设计感，可加入少量辅助性符号、箭头、记号、圈画、重复线、随手写的文字或其他涂鸦元素，以增强速写本或随笔式视觉语言，但不可过于拥挤，不可破坏主体和留白气质。  画面内容不需要预先写清楚，由【一个厉害的AI builder】自动推演并生成最适合的主体形象、动作、相关元素、符号或简化场景，整体保持统一的涂鸦速写风和夸张概括的表现方式，避免复杂写实背景和过度铺陈。 画面中需自然加入专属签名“BlanPlan”，作为画面的一部分，位置低调但清晰，可放在左下角、右下角或标题附近，风格需与整体版式统一，像作品署名或设计落款；签名字体精致、克制、高级，不可过大，不可破坏主体构图，不可显得突兀或廉价。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@blanplan",
+    "sourceUrl": "https://x.com/blanplan/status/2045190582453350748",
+    "authorUrl": "https://x.com/blanplan",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case7/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case7/output.jpg"
+    ],
+    "sortIndex": 90
+  },
+  {
+    "id": "IMG_poster_case8",
+    "caseKey": "poster_case8",
+    "caseNumber": "8",
+    "name": "未来感曼陀罗插画",
+    "description": "曼荼羅の近未来SF版を描いて",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "曼荼羅の近未来SF版を描いて",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@4WEB1",
+    "sourceUrl": "https://x.com/4WEB1/status/2045390207072256179",
+    "authorUrl": "https://x.com/4WEB1",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case8/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case8/output.jpg"
+    ],
+    "sortIndex": 91
+  },
+  {
+    "id": "IMG_poster_case9",
+    "caseKey": "poster_case9",
+    "caseNumber": "9",
+    "name": "超级任天堂海报风格",
+    "description": "小悪魔リリムリリィちゃんが スーパーファミコンのゲームだったときのポスターを考えて",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "小悪魔リリムリリィちゃんが　スーパーファミコンのゲームだったときのポスターを考えて",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@lilimliliychan",
+    "sourceUrl": "https://x.com/lilimliliychan/status/2045114760937804187",
+    "authorUrl": "https://x.com/lilimliliychan",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case9/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case9/output.jpg"
+    ],
+    "sortIndex": 92
+  },
+  {
+    "id": "IMG_poster_case10",
+    "caseKey": "poster_case10",
+    "caseNumber": "10",
+    "name": "浏览器游戏广告创意海报",
+    "description": "以下の文字を必ず入れて、1:1のポスターを作成してください。書籍・講座・イベント告知に使える、プロの広告デザイナーが...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "以下の文字を必ず入れて、1:1のポスターを作成してください。書籍・講座・イベント告知に使える、プロの広告デザイナーが作ったような高品質な仕上がりにしてください。\n\n広告クリエイティブ制作\n思いついたら、もう遊べる。 AI×ブラウザゲームづくりは、マジで楽しい。 むずかしそうで、実ははじめやすい。 コードがわからなくても、はじめの一本は作れる",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@llllegend0620",
+    "sourceUrl": "https://x.com/llllegend0620/status/2045963764466688065",
+    "authorUrl": "https://x.com/llllegend0620",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case10/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case10/output.jpg"
+    ],
+    "sortIndex": 93
+  },
+  {
+    "id": "IMG_poster_case11",
+    "caseKey": "poster_case11",
+    "caseNumber": "11",
+    "name": "超现实鲤鱼星云插画",
+    "description": "一幅超现实主义数字插画风格，采用低角度仰拍视角。画面描绘了一条巨型彩色锦鲤遨游在梦幻般的星云中，四周环绕着色彩鲜艳的...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "一幅超现实主义数字插画风格，采用低角度仰拍视角。画面描绘了一条巨型彩色锦鲤遨游在梦幻般的星云中，四周环绕着色彩鲜艳的星云与气泡。画面中央还站着一个小人，背对观众，神情平静地仰望空中这条巨大的锦鲤，锦鲤头向下看着小人。整体画面呈现出强烈的大小对比，氛围空灵又梦幻。比例9:16",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@liyue_ai",
+    "sourceUrl": "https://x.com/liyue_ai/status/2045875219307655337",
+    "authorUrl": "https://x.com/liyue_ai",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case11/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case11/output.jpg"
+    ],
+    "sortIndex": 94
+  },
+  {
+    "id": "IMG_poster_case12",
+    "caseKey": "poster_case12",
+    "caseNumber": "12",
+    "name": "墨曲广州美学海报",
+    "description": "纯黑深邃底色，一条粗壮有力的墨色书法 S 型曲线自画面一端蜿蜒贯穿至另一端，构成整幅画面的视觉骨架与叙事动线。曲线上...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "纯黑深邃底色，一条粗壮有力的墨色书法 S 型曲线自画面一端蜿蜒贯穿至另一端，构成整幅画面的视觉骨架与叙事动线。曲线上方是一只透明质感的画眉鸟，内部映射传统建筑叠影与蓝绿色光流；沿曲线错落分布广州地标与古典建筑序列，前景有白鹤与湖面，远景为层叠山峦。整体采用非线性透视、冷色调主导、暖色点缀，东方美学与现代意象交融，8K 超高清渲染，比例 9:16。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@liyue_ai",
+    "sourceUrl": "https://x.com/liyue_ai/status/2045873940883808523",
+    "authorUrl": "https://x.com/liyue_ai",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case12/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case12/output.jpg"
+    ],
+    "sortIndex": 95
+  },
+  {
+    "id": "IMG_poster_case13",
+    "caseKey": "poster_case13",
+    "caseNumber": "13",
+    "name": "广东超级联赛邀请海报",
+    "description": "广东省城市足球超级联赛（粤超）邀请函海报设计，比例 9:16。S 型流动构图，以发光足球和动态能量流贯穿画面，沿动线...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "广东省城市足球超级联赛（粤超）邀请函海报设计，比例 9:16。S 型流动构图，以发光足球和动态能量流贯穿画面，沿动线融合广州塔、深圳平安金融中心、珠海渔女雕像、岭南建筑、佛山武术剪影、中山文化符号、潮汕英歌舞与清远山水。现代国潮高级海报风格，中国红主视觉，青蓝辅助，金色高光，带完整中文排版与电影级光影。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@liyue_ai",
+    "sourceUrl": "https://x.com/liyue_ai/status/2045772039521542202",
+    "authorUrl": "https://x.com/liyue_ai",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case13/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case13/output.jpg"
+    ],
+    "sortIndex": 96
+  },
+  {
+    "id": "IMG_poster_case14",
+    "caseKey": "poster_case14",
+    "caseNumber": "14",
+    "name": "2026 年春季广州宣传海报",
+    "description": "一张充满新春喜庆但高雅的 2026 广州城市宣传海报，9:16 竖版，双重曝光，S 型流动构图。纯白纹理背景，右下角...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "一张充满新春喜庆但高雅的 2026 广州城市宣传海报，9:16 竖版，双重曝光，S 型流动构图。纯白纹理背景，右下角微缩传统服饰人物挥舞长红绸，红绸变形成山脉河流，内部叠加广州全景：广州塔、珠江新城、珠江、游轮、古建筑与白云山。左下角排版 “SPRING 2026” 与竖排 “千年商都 魅力广州”。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@grok",
+    "sourceUrl": "https://x.com/grok/status/2046012437086818395",
+    "authorUrl": "https://x.com/grok",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case14/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case14/output.jpg"
+    ],
+    "sortIndex": 97
+  },
+  {
+    "id": "IMG_poster_case15",
+    "caseKey": "poster_case15",
+    "caseNumber": "15",
+    "name": "史诗剪影世界海报",
+    "description": "收藏版史诗海报，人物侧脸剪影中生长出完整世界观与经典场景。整体偏电影海报加梦幻水彩插画风，安静、宏大、神圣、怀旧，带...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "收藏版史诗海报，人物侧脸剪影中生长出完整世界观与经典场景。整体偏电影海报加梦幻水彩插画风，安静、宏大、神圣、怀旧，带纸张颗粒、轻雾感、飞白刷痕与高级留白。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@Ghhhh3owi",
+    "sourceUrl": "https://x.com/Ghhhh3owi/status/2045803217251102897",
+    "authorUrl": "https://x.com/Ghhhh3owi",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case15/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case15/output.jpg"
+    ],
+    "sortIndex": 98
+  },
+  {
+    "id": "IMG_poster_case24",
+    "caseKey": "poster_case24",
+    "caseNumber": "24",
+    "name": "春季广州城市海报",
+    "description": "一张充满新春喜庆氛围但不失高雅格调的 2026 城市宣传海报。 双重曝光，构图延续了S型的流动感； 在纯白的纹理背景...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "一张充满新春喜庆氛围但不失高雅格调的 2026 城市宣传海报。\n双重曝光，构图延续了S型的流动感；\n在纯白的纹理背景右下角，一个身穿中国传统服饰的微缩人物正在挥舞着一条长长的红色丝绸舞带，这条红绸在空中舞动，不仅展现出丝绸的柔顺质感，更在向左上方飘动的过程中，奇幻地变形成了一条壮丽的山脉河流。\n在这条“河流”中，叠加了一个有山有海河的广州城市手绘图，国潮，景色尽在眼底，壮阔雄伟，令人震撼。\n广州的地标建筑(广州塔，珠江新城建筑群，珠江, 广州城里古建筑，游轮，白云山）。\n云雾环绕，仙气缥缈，色彩丰富，结构复杂，细节丰富，但因为大面积的留白，画面依然显得清新脱俗，左下角排版着“SPRING 2026”和竖排的宣传语，整体寓意“千年商都，魅力广州”。\n文字排版优美，大方，字迹清晰完整，尺寸9:16。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@alanlovelq",
+    "sourceUrl": "https://x.com/alanlovelq/status/2045484598487060917",
+    "authorUrl": "https://x.com/alanlovelq",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case24/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case24/output.jpg"
+    ],
+    "sortIndex": 99
+  },
+  {
+    "id": "IMG_poster_case32",
+    "caseKey": "poster_case32",
+    "caseNumber": "32",
+    "name": "科学百科竖版海报",
+    "description": "Generate a high-quality vertical science popularization en...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "Generate a high-quality vertical science popularization encyclopedia image based on [Theme].",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@pfanis",
+    "sourceUrl": "https://x.com/pfanis/status/2046413660147314714",
+    "authorUrl": "https://x.com/pfanis",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case32/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case32/output.jpg"
+    ],
+    "sortIndex": 100
+  },
+  {
+    "id": "IMG_poster_case33",
+    "caseKey": "poster_case33",
+    "caseNumber": "33",
+    "name": "西游记中国漫画",
+    "description": "以中国连环画（小人书）的风格帮我绘制大闹天空",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "以中国连环画（小人书）的风格帮我绘制大闹天空",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@overseas58",
+    "sourceUrl": "https://x.com/overseas58/status/2046271877577097376",
+    "authorUrl": "https://x.com/overseas58",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case33/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case33/output.jpg"
+    ],
+    "sortIndex": 101
+  },
+  {
+    "id": "IMG_poster_case34",
+    "caseKey": "poster_case34",
+    "caseNumber": "34",
+    "name": "人物关系图海报",
+    "description": "请根据【主题】生成一张高设计感的人物关系图海报。",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "请根据【主题】生成一张高设计感的人物关系图海报。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@MrLarus",
+    "sourceUrl": "https://x.com/MrLarus/status/2046263153546174935",
+    "authorUrl": "https://x.com/MrLarus",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case34/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case34/output.jpg"
+    ],
+    "sortIndex": 102
+  },
+  {
+    "id": "IMG_poster_case35",
+    "caseKey": "poster_case35",
+    "caseNumber": "35",
+    "name": "新中式水墨山水海报",
+    "description": "新中式水墨山水海报，竖版9:16构图，东方极简美学风格，大面积留白，主题是春岚一叶红。",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "新中式水墨山水海报，竖版9:16构图，东方极简美学风格，大面积留白，主题是春岚一叶红。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@liyue_ai",
+    "sourceUrl": "https://x.com/liyue_ai/status/2046215276249993720",
+    "authorUrl": "https://x.com/liyue_ai",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case35/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case35/output.jpg"
+    ],
+    "sortIndex": 103
+  },
+  {
+    "id": "IMG_poster_case36",
+    "caseKey": "poster_case36",
+    "caseNumber": "36",
+    "name": "AI 构建者涂鸦草图",
+    "description": "以涂鸦速写风表现【一个厉害的AI builder】。",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "以涂鸦速写风表现【一个厉害的AI builder】。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@opc_8838",
+    "sourceUrl": "https://x.com/opc_8838/status/2046162334440448339",
+    "authorUrl": "https://x.com/opc_8838",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case36/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case36/output.jpg"
+    ],
+    "sortIndex": 104
+  },
+  {
+    "id": "IMG_poster_case38",
+    "caseKey": "poster_case38",
+    "caseNumber": "38",
+    "name": "角色视觉竖版海报",
+    "description": "『神層37区 特級執行官 神巫サバト』この名称のキャラクターと世界観に合ったビジュアルイメージを、プロのデザイナーと...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "『神層37区 特級執行官 神巫サバト』この名称のキャラクターと世界観に合ったビジュアルイメージを、プロのデザイナーとして縦長のポスターイメージとして制作して",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@tebasaki3D",
+    "sourceUrl": "https://x.com/tebasaki3D/status/2046371076402503709",
+    "authorUrl": "https://x.com/tebasaki3D",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case38/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case38/output.jpg"
+    ],
+    "sortIndex": 105
+  },
+  {
+    "id": "IMG_poster_case39",
+    "caseKey": "poster_case39",
+    "caseNumber": "39",
+    "name": "科学百科信息图",
+    "description": "请根据【主题】生成一张高质量竖版「科普百科图」。 这张图不是普通海报,也不是单纯插画,而是一张兼具“图鉴感、百科感、...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "请根据【主题】生成一张高质量竖版「科普百科图」。 \n\n这张图不是普通海报,也不是单纯插画,而是一张兼具“图鉴感、百科感、信息结构感、收藏感”的模块化科普信息图。整体风格参考高级博物图鉴、现代百科书页、生活方式知识卡和社交媒体高传播信息图的结合。\n\n请让画面包含:\n- 一个清晰漂亮的主题主视觉\n- 若干局部特征放大细节\n- 多个圆角模块化信息分区\n- 清楚的标题层级与重点标签\n- 简洁但丰富的百科内容\n- 可视化评分、要点总结或Top 5模块\n\n内容栏目请根据主题自动适配,优先从这些方向中选择并合理组合:\n基础档案、分类信息、外观特征、习性/生态、形成机制/结构组成、生长或使用条件、养护或维护建议、风险与注意事项、适合人群或适用场景、优缺点对比、快速评分卡。\n\n视觉要求:\n浅色干净背景,柔和配色,轻阴影,精致小图标,圆角信息框,整洁排版,信息密度高但不拥挤,阅读体验好。整体必须像真正可以发布、阅读、收藏、系列化生产的科普百科卡,而不是广告图。\n\n请不要做成普通商业宣传海报。要突出“知识整理 + 模块信息 + 图鉴式展示”的特征。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@MrLarus",
+    "sourceUrl": "https://x.com/MrLarus/status/2046231542817497392",
+    "authorUrl": "https://x.com/MrLarus",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case39/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case39/output.jpg"
+    ],
+    "sortIndex": 106
+  },
+  {
+    "id": "IMG_poster_case40",
+    "caseKey": "poster_case40",
+    "caseNumber": "40",
+    "name": "虚构动漫电影海报",
+    "description": "架空のアニメ映画のポスターをGPT image2で作成。",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "架空のアニメ映画のポスターをGPT image2で作成。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@seiiiiiiiiiiru",
+    "sourceUrl": "https://x.com/seiiiiiiiiiiru/status/2046509734954741780",
+    "authorUrl": "https://x.com/seiiiiiiiiiiru",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case40/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case40/output.jpg"
+    ],
+    "sortIndex": 107
+  },
+  {
+    "id": "IMG_poster_case41",
+    "caseKey": "poster_case41",
+    "caseNumber": "41",
+    "name": "产品广告重设计",
+    "description": "この商品広告をプロのデザイナー目線でリデザインして。 今のトレンド、ターゲットに合わせた洗練されたデザインで。",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "この商品広告をプロのデザイナー目線でリデザインして。\n今のトレンド、ターゲットに合わせた洗練されたデザインで。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@genel_ai",
+    "sourceUrl": "https://x.com/genel_ai/status/2046498264774791514",
+    "authorUrl": "https://x.com/genel_ai",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case41/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case41/output.jpg"
+    ],
+    "sortIndex": 108
+  },
+  {
+    "id": "IMG_poster_case42",
+    "caseKey": "poster_case42",
+    "caseNumber": "42",
+    "name": "暗黑奇幻广州城市海报",
+    "description": "平面插画,东方幻想风格高端城市海报设计,竖版9:16构图,整体采用对角线+S型流动构图,从左下向右上延展,画面以深邃...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "平面插画,东方幻想风格高端城市海报设计,竖版9:16构图,整体采用对角线+S型流动构图,从左下向右上延展,画面以深邃黑色为背景,自上而下渐变至浓烈暗红色,形成强烈冷暖对比与空间纵深,背景带微弱星尘与颗粒质感。画面中央一条金色流动能量线条如火焰般蜿蜒贯穿,自底部向上延伸,具有流体质感、粒子光效与渐变高光,局部带细微能量碎屑与体积光。\n\n金色流光中逐层浮现广州城市地标建筑群:广州塔为视觉核心,比例突出,周围融合珠江新城高楼群、猎德大桥及现代与岭南建筑元素,建筑采用“精细线描 + 金色发光体块”表现,轮廓清晰、细节丰富,在金色光晕映衬下仿佛悬浮于虚空,形成超现实空间层次,远景轻微雾化增强纵深感。\n\n画面底部为一位东方白发女性形象,长发飘逸,如烟似雾,与金色流光自然衔接并逐渐融合,发丝半透明带渐变光感,姿态柔美,双目微闭,神情宁静,怀抱一束多彩鲜花,花间点缀微光粒子与星点效果,象征人与城市能量的精神连接,人物细节适度简化以突出整体设计感。\n\n光影集中于金色流线、建筑与人物轮廓,形成强烈明暗对比与视觉聚焦,整体氛围宏大、神秘、具有东方神话意境且略带治愈感。色彩以黑与暗红为基底,高亮鎏金为主视觉强调,金色具备丰富明暗层次,辅以小面积高饱和花束色彩点缀,整体高级克制。\n\n页面文字与画面融合排版:顶部居中宋体大字“广州·中国”,下方小字“2026/04/20”,再下方小字“LIYUE”,文字采用淡金色或柔和暖白色,与整体光影统一。高品质细节,电影级光影表现,体积光与粒子细节丰富,画面干净无噪点,超高清8K分辨率,商业级海报质感。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@liyue_ai",
+    "sourceUrl": "https://x.com/liyue_ai/status/2046243132774494607",
+    "authorUrl": "https://x.com/liyue_ai",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case42/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case42/output.jpg"
+    ],
+    "sortIndex": 109
+  },
+  {
+    "id": "IMG_poster_case45",
+    "caseKey": "poster_case45",
+    "caseNumber": "45",
+    "name": "科幻电影海报",
+    "description": "Create a Science fiction movie poster",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "Create a Science fiction movie poster",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@underwoodxie96",
+    "sourceUrl": "https://x.com/underwoodxie96/status/2046514205529088501",
+    "authorUrl": "https://x.com/underwoodxie96",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case45/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case45/output.jpg"
+    ],
+    "sortIndex": 110
+  },
+  {
+    "id": "IMG_poster_case46",
+    "caseKey": "poster_case46",
+    "caseNumber": "46",
+    "name": "清爽夏日乌冬面广告",
+    "description": "少し暑くなってきた今の時期に、さわやかにさっぱりしたい、みずみずしさ、みたいなところをもっと強く感じたい。冷たいうど...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "少し暑くなってきた今の時期に、さわやかにさっぱりしたい、みずみずしさ、みたいなところをもっと強く感じたい。冷たいうどんやナス、つゆを口に含んだ時の爽快感、みたいなものをもっと感じるように",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@genel_ai",
+    "sourceUrl": "https://x.com/genel_ai/status/2046501692246470871",
+    "authorUrl": "https://x.com/genel_ai",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case46/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case46/output.jpg"
+    ],
+    "sortIndex": 111
+  },
+  {
+    "id": "IMG_poster_case47",
+    "caseKey": "poster_case47",
+    "caseNumber": "47",
+    "name": "手写医疗处方单",
+    "description": "生成一张手写中/西医药方图",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "生成一张手写中/西医药方图",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@MrLarus",
+    "sourceUrl": "https://x.com/MrLarus/status/2046514998965371144",
+    "authorUrl": "https://x.com/MrLarus",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case47/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case47/output.jpg"
+    ],
+    "sortIndex": 112
+  },
+  {
+    "id": "IMG_poster_case48",
+    "caseKey": "poster_case48",
+    "caseNumber": "48",
+    "name": "2026 年硅谷推广海报",
+    "description": "A refined 2026 Silicon Valley city promotional poster with...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "A refined 2026 Silicon Valley city promotional poster with a futuristic yet elegant atmosphere.\n\nDouble exposure composition, preserving an S-shaped sense of flowing movement. On a pure white textured background, in the lower-right corner, a miniature figure dressed in sleek modern techwear is releasing a long ribbon of luminous silver-blue light. The ribbon flows gracefully through the air, showing a soft silk-like texture, and as it drifts toward the upper-left, it magically transforms into a grand landscape of rolling hills, coastline, data streams, and illuminated urban terrain.\n\nWithin this flowing “river of light,” overlay a hand-drawn panoramic map of Silicon Valley, blending technology, nature, innovation, and California sunlight. The scene feels visionary, expansive, sophisticated, and inspiring.\n\nInclude iconic Silicon Valley and Bay Area elements: Stanford University arches, Apple Park, Google campus-inspired buildings, Meta-like glass offices, Tesla-style innovation imagery, venture capital offices on Sand Hill Road, Palo Alto tree-lined streets, San Jose skyline, the Santa Cruz Mountains, San Francisco Bay, highways, autonomous vehicles, startup labs, semiconductor patterns, AI data centers, and subtle circuit-board textures.\n\nSurrounded by soft mist, golden California light, floating clouds, and delicate digital particles. Rich colors, complex structure, highly detailed, grand and breathtaking, yet still fresh and minimal because of the large areas of white space.\n\nIn the lower-left corner, elegant typography reads “SILICON VALLEY 2026” with a vertical promotional slogan: “Where Ideas Shape Tomorrow.” Beautiful editorial layout, graceful spacing, clear and complete lettering, premium city branding poster, cinematic lighting, sophisticated details, 9:16 aspect ratio.",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@carsonyungos",
+    "sourceUrl": "https://x.com/carsonyungos/status/2046523198116889064",
+    "authorUrl": "https://x.com/carsonyungos",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case48/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case48/output.jpg"
+    ],
+    "sortIndex": 113
+  },
+  {
+    "id": "IMG_poster_case49",
+    "caseKey": "poster_case49",
+    "caseNumber": "49",
+    "name": "日式超市促销传单",
+    "description": "『賑やかで魅力的なスーパーマーケットの折り込みチラシの画像。上部には「特売」の大きな文字と今週の日付。カラフルな商品...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "『賑やかで魅力的なスーパーマーケットの折り込みチラシの画像。上部には「特売」の大きな文字と今週の日付。カラフルな商品写真(野菜・果物・牛肉・鮮魚)、赤枠の価格タグ、「超目玉商品」「家計応援」のキャッチ...』",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@weel_corp",
+    "sourceUrl": "https://x.com/weel_corp/status/2046514558064586782",
+    "authorUrl": "https://x.com/weel_corp",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case49/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case49/output.jpg"
+    ],
+    "sortIndex": 114
+  },
+  {
+    "id": "IMG_poster_case50",
+    "caseKey": "poster_case50",
+    "caseNumber": "50",
+    "name": "暗黑史诗概念海报",
+    "description": "围绕【主题】自动生成一张顶级暗黑史诗概念海报 / 电影感信息图海报。 唯一需要输入的变量只有: 【主题】:___特朗...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "围绕【主题】自动生成一张顶级暗黑史诗概念海报 / 电影感信息图海报。\n\n唯一需要输入的变量只有:\n【主题】:___特朗普的思考____ \n\n除【主题】之外,其余全部由 AI 自动适配完成,包括但不限于:\n- 核心主体(自动判断更适合人物、守护者、战士、产品、器物、雕像、抽象象征或其他主视觉对象)\n- 中央承载结构(自动判断更适合王座、石座、祭坛、机械基座、遗迹、高台或其他支撑体)\n- 环境空间(自动判断更适合洞穴、神殿、废墟、深渊、地下宫殿、密室或其他封闭史诗空间)\n- 上方开口与光源形式(自动判断更适合月光、神光、能量束、审判之光、圣光或其他单一强光)\n- 象征元素(自动判断更适合骷髅、徽记、残碑、纹章、符文、能量环、神性符号等)\n- 色彩体系\n- 材质组合\n- 标题、副标题、辅助文案\n- 排版与整体叙事气质\n\n【总风格】\n高预算 90 年代好莱坞史诗大片海报气质,融合 cinematic matte painting、超写实摄影质感、极强明暗对比、厚重空间叙事、暗黑英雄主义与仪式感构图。整体必须像一张真正的电影主海报,而不是普通插画或电商图。\n\n【核心结构锁定】\n整张海报必须保留以下结构基因:\n1. 一个巨大、压迫感极强的黑暗封闭空间\n2. 一束从上方斜向切入的强烈体积光,作为画面的第一视觉秩序\n3. 中央偏右或光束终点位置的核心主体与承载结构\n4. 左下角作为高密度标题与信息锚点\n5. 四周保留大量纯黑或近黑负空间,形成电影感呼吸区\n\n【自动适配规则】\nAI 必须依据【主题】自动推导最适合的视觉系统:\n- 如果【主题】偏暗黑英雄、复仇、正义、孤独、宿命,则自动偏向石质王座、孤高人物、冷色神光、废墟或洞穴感空间\n- 如果【主题】偏神秘、幽灵、潜行、幻影、夜行,则自动偏向月光、迷雾、冷蓝色体积光、深渊式黑暗空间\n- 如果【主题】偏权力、统治、王者、秩序,则自动强化 throne / altar / crown-like symbol / ritual space 的表达\n- 如果【主题】偏科技、AI、未来、机械,则自动将王座和空间替换为机械神座、能量基座、金属洞窟、工业神殿等未来化形态\n- 如果【主题】偏产品、品牌、器物,则自动把核心主体替换为最合适的 hero object,并保留被神光审判式凸显的史诗构图\n\n【画布与色彩系统】\n- 背景底层必须是极深、近乎吞噬一切的黑暗空间\n- 主环境色由 AI 根据【主题】自动决定,但整体必须克制,以暗色为主\n- 强光区域色彩必须高度集中,只服务于体积光与主体高光\n- 主题色 / 强调色只能集中用于主视觉核心,不允许全画面泛滥\n- 必须建立明确的“黑暗底色 + 单一主光 + 少量主题强调色”的层级秩序\n\n【构图与视觉重力】\n- 采用强烈的斜向张力与向中心汇聚的视觉引导\n- 视觉重力从上方光源强势落下,最终压在核心主体之上\n- 主体必须处于被命运、审判、神性或权力照中的位置\n- 边缘必须自然融入黑暗,不能出现无意义背景填充\n- 所有元素必须服务于唯一的主叙事核心\n\n【材质与光影】\n- 不使用轮廓线,不使用平面化描边\n- 完全依赖体积光、阴影切割、反射、高光、雾气、粉尘、湿润岩石或其他真实材质来建构画面\n- 材质必须形成明显对比,例如:\n  粗粝岩石 / 冷硬金属 / 柔韧织物 / 古老石雕 / 湿润表面 / 尘雾光柱\n- 光束必须具有强烈 Tyndall effect,真实、厚重、可感知体积密度\n\n【排版系统】\n- 整体 80% 视觉,20% 文字\n- AI 根据【主题】自动生成主标题、副标题和底部信息块\n- 主标题应尽量简洁、有气势、有电影海报感\n- 若主题更适合中文,则优先中文;若更适合英文,则自动英文;也可双语,但必须统一\n- 主标题可沿光束垂直排布,仿佛由光本身构成\n- 左下角设置一个高密度信息模块,包括副标题、小字信息、电影 credits 风格占位文字或品牌说明\n- 文字必须锐利、干净、真实嵌入环境,不得廉价漂浮\n\n【模块结构 —— 必须严格保持 3 块】\n[MOD 1: TOP-TO-CENTER BEAM]\n从顶部开口斜向切下的巨大体积光柱,作为第一视觉通道,并承载主标题或主视觉文字。\n\n[MOD 2: CENTER-RIGHT CORE]\n位于光束终点的核心主体与承载结构,形成整张海报的权力中心 / 命运中心 / 叙事中心。\n\n[MOD 3: BOTTOM-LEFT TEXT]\n位于左下角负空间中的高密度排版区,包含副标题、说明文字、credits 风格信息块、品牌信息或活动信息。\n\n【作者署名】\n在底部角落自然加入作者署名:\n@a9quant\n署名要小而清晰,精致、克制、高级,不喧宾夺主,像正式电影概念海报或艺术作品落款。\n\n【输出要求】\n输出为单张统一构图海报。\n所有视觉系统必须内部一致,不能有风格污染。\n画面必须具备:暗黑感、史诗感、压迫感、仪式感、命运感、电影完成度。\n最大细节密度,超清,电影级,印刷级,高端成片质感。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@A9Quant",
+    "sourceUrl": "https://x.com/A9Quant/status/2046224777208361126",
+    "authorUrl": "https://x.com/A9Quant",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case50/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case50/output.jpg"
+    ],
+    "sortIndex": 115
+  },
+  {
+    "id": "IMG_poster_case51",
+    "caseKey": "poster_case51",
+    "caseNumber": "51",
+    "name": "普拉提工作室广告海报",
+    "description": "ピラティス教室の広告画像を作成したい テキストはよりユーザーが登録をするのに惹かれるような文言にし、画像内には女性が...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "ピラティス教室の広告画像を作成したい テキストはよりユーザーが登録をするのに惹かれるような文言にし、画像内には女性がピラティスを実際に行っている様子を映して",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@ck_igarashi",
+    "sourceUrl": "https://x.com/ck_igarashi/status/2046528889124728993",
+    "authorUrl": "https://x.com/ck_igarashi",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case51/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case51/output.jpg"
+    ],
+    "sortIndex": 116
+  },
+  {
+    "id": "IMG_poster_case57",
+    "caseKey": "poster_case57",
+    "caseNumber": "52",
+    "name": "6 格时尚大片提示词公式",
+    "description": "Old money Hamptons editorial, tall blonde woman late 20s,...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "Old money Hamptons editorial, tall blonde woman late 20s, serene elegant expression, wearing cream cashmere cable sweater, pleated beige tennis skirt, pearl earrings, Hermès silk scarf, leather flats, Slim Aarons photography style, medium format film photography, sitting on a white wooden porch of a Cape Cod house, golden hour light, ocean in the background",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@anacoding",
+    "sourceUrl": "https://x.com/anacoding/status/2046904999045628114",
+    "authorUrl": "https://x.com/anacoding",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case57/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case57/output.jpg"
+    ],
+    "sortIndex": 117
+  },
+  {
+    "id": "IMG_poster_case58",
+    "caseKey": "poster_case58",
+    "caseNumber": "53",
+    "name": "索尼 A7 爆炸图分解提示词",
+    "description": "Descomposición detallada de una cámara de la marca Sony mo...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "Descomposición detallada de una cámara de la marca Sony modelo A7 indicando todas sus piezas y con sus nombres.",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@iaPulse_",
+    "sourceUrl": "https://x.com/iaPulse_/status/2046903739429097660",
+    "authorUrl": "https://x.com/iaPulse_",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case58/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case58/output.jpg"
+    ],
+    "sortIndex": 118
+  },
+  {
+    "id": "IMG_poster_case59",
+    "caseKey": "poster_case59",
+    "caseNumber": "54",
+    "name": "1900 年伊斯蒂克拉尔大街全景提示词",
+    "description": "360 equirectangular image of Istiklal Street, Istanbul in...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "360 equirectangular image of Istiklal Street, Istanbul in 1900",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@ai_gezgini",
+    "sourceUrl": "https://x.com/ai_gezgini/status/2046903631509705030",
+    "authorUrl": "https://x.com/ai_gezgini",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case59/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case59/output.jpg"
+    ],
+    "sortIndex": 119
+  },
+  {
+    "id": "IMG_poster_case54",
+    "caseKey": "poster_case54",
+    "caseNumber": "57",
+    "name": "主题科学百科卡片",
+    "description": "请根据【主题】生成一张高质量竖版「科普百科图」。 这张图不是普通海报,也不是单纯插画,而是一张兼具“图鉴感、百科感、...",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "请根据【主题】生成一张高质量竖版「科普百科图」。 \n\n这张图不是普通海报,也不是单纯插画,而是一张兼具“图鉴感、百科感、信息结构感、收藏感”的模块化科普信息图。整体风格参考高级博物图鉴、现代百科书页、生活方式知识卡和社交媒体高传播信息图的结合。\n\n请让画面包含:\n- 一个清晰漂亮的主题主视觉\n- 若干局部特征放大细节\n- 多个圆角模块化信息分区\n- 清楚的标题层级与重点标签\n- 简洁但丰富的百科内容\n- 可视化评分、要点总结或Top 5模块\n\n内容栏目请根据主题自动适配,优先从这些方向中选择并合理组合:\n基础档案、分类信息、外观特征、习性/生态、形成机制/结构组成、生长或使用条件、养护或维护建议、风险与注意事项、适合人群或适用场景、优缺点对比、快速评分卡。\n\n视觉要求:\n浅色干净背景,柔和配色,轻阴影,精致小图标,圆角信息框,整洁排版,信息密度高但不拥挤,阅读体验好。整体必须像真正可以发布、阅读、收藏、系列化生产的科普百科卡,而不是广告图。\n\n请不要做成普通商业宣传海报。要突出“知识整理 + 模块信息 + 图鉴式展示”的特征。",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@alanlovelq",
+    "sourceUrl": "https://x.com/alanlovelq/status/2046378199681257920",
+    "authorUrl": "https://x.com/alanlovelq",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case54/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case54/output.jpg"
+    ],
+    "sortIndex": 120
+  },
+  {
+    "id": "IMG_poster_case55",
+    "caseKey": "poster_case55",
+    "caseNumber": "55",
+    "name": "辣椒猪肉烹饪流程图",
+    "description": "帮我制作辣椒炒肉这道菜的详细制作流程图,真实风格,适用于小红书图文比例",
+    "emoji": "🎨",
+    "group": [
+      "图片提示",
+      "海报与插画案例"
+    ],
+    "prompt": "帮我制作辣椒炒肉这道菜的详细制作流程图,真实风格,适用于小红书图文比例",
+    "promptType": "image",
+    "section": "海报与插画案例",
+    "author": "@Kurt_Rousey466",
+    "sourceUrl": "https://x.com/Kurt_Rousey466/status/2046267707881029934",
+    "authorUrl": "https://x.com/Kurt_Rousey466",
+    "coverImage": "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case55/output.jpg",
+    "images": [
+      "https://raw.githubusercontent.com/qgming/awesome-gpt-image-2-prompts/refs/heads/main/images/poster_case55/output.jpg"
+    ],
+    "sortIndex": 121
+  }
+]

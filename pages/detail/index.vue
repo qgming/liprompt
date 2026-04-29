@@ -1,17 +1,21 @@
 <template>
 	<view class="container">
-		<view v-if="isLoading" class="empty-state">
-			<text class="empty-text">正在加载提示词...</text>
+		<view v-if="isLoading" class="loading-state compact">
+			<view class="loading-card">
+				<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
+				<text class="loading-title">正在加载详情</text>
+				<text class="loading-desc">正在准备完整提示词和案例图片</text>
+			</view>
 		</view>
 
 		<view v-else-if="prompt" class="detail-content">
 			<view v-if="isImagePrompt" class="gallery-section">
 				<swiper class="gallery-swiper" circular indicator-dots indicator-active-color="#b89467">
-					<swiper-item v-for="(image, index) in prompt.images" :key="image">
+					<swiper-item v-for="(image, index) in galleryImages" :key="image">
 						<image class="gallery-image" :src="image" mode="aspectFill" @click="previewImages(index)" />
 					</swiper-item>
 				</swiper>
-				<view class="gallery-tip">点击图片可查看原图，共 {{ prompt.images.length }} 张</view>
+				<view class="gallery-tip">点击图片可查看原图，共 {{ galleryImages.length }} 张</view>
 			</view>
 
 			<view class="header-section">
@@ -54,14 +58,26 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { getPromptById, loadPrompts } from '@/data/prompts-manager.js'
-import { getImagePromptById, loadImagePrompts } from '@/data/image-prompts-manager.js'
+import { bootstrapRemoteData } from '@/data/bootstrap.js'
+import { cacheImageBatch, getCachedImageSync } from '@/utils/image-cache.js'
+import { getPromptById } from '@/data/prompts-manager.js'
+import { getImagePromptById } from '@/data/image-prompts-manager.js'
 
 const prompt = ref(null)
 const isLoading = ref(true)
+const cachedImageMap = ref({})
 
 const isImagePrompt = computed(() => {
 	return !!prompt.value && prompt.value.promptType === 'image'
+})
+const galleryImages = computed(() => {
+	if (!isImagePrompt.value || !Array.isArray(prompt.value?.images)) {
+		return []
+	}
+
+	return prompt.value.images.map((image) => {
+		return cachedImageMap.value[image] || getCachedImageSync(image) || image
+	})
 })
 const detailPath = computed(() => {
 	if (!prompt.value) {
@@ -91,8 +107,8 @@ const previewImages = (current = 0) => {
 		return
 	}
 	uni.previewImage({
-		current: prompt.value.images[current],
-		urls: prompt.value.images
+		current: galleryImages.value[current],
+		urls: galleryImages.value
 	})
 }
 
@@ -116,16 +132,37 @@ const resolvePrompt = (options = {}) => {
 	return getPromptById(options.id) || getImagePromptById(options.id)
 }
 
+const cachePromptImages = async (images = []) => {
+	const nextMap = {}
+	images.forEach((image) => {
+		const cached = getCachedImageSync(image)
+		if (cached) {
+			nextMap[image] = cached
+		}
+	})
+	cachedImageMap.value = nextMap
+
+	if (!images.length) {
+		return
+	}
+
+	const result = await cacheImageBatch(images)
+	cachedImageMap.value = {
+		...cachedImageMap.value,
+		...result
+	}
+}
+
 onMounted(() => {
 	const pages = getCurrentPages()
 	const currentPage = pages[pages.length - 1]
 	const options = currentPage ? currentPage.options : {}
-	const loadData = options.source === 'image' || (options.id && options.id.startsWith('IMG_'))
-		? loadImagePrompts()
-		: loadPrompts()
-	loadData
+	bootstrapRemoteData()
 		.then(() => {
 			prompt.value = resolvePrompt(options)
+			if (prompt.value?.promptType === 'image' && Array.isArray(prompt.value.images)) {
+				cachePromptImages(prompt.value.images)
+			}
 		})
 		.catch((error) => {
 			console.error('加载详情失败:', error)
@@ -168,6 +205,48 @@ const onShareTimeline = () => {
 	min-height: 100vh;
 	background: linear-gradient(180deg, #fcfaf6 0%, #ffffff 26%);
 	padding-bottom: 40rpx;
+}
+
+.loading-state {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 120rpx 32rpx 80rpx;
+}
+
+.loading-state.compact {
+	min-height: 60vh;
+	padding-top: 80rpx;
+}
+
+.loading-card {
+	width: 100%;
+	padding: 40rpx 32rpx;
+	border-radius: 28rpx;
+	background: rgba(255, 255, 255, 0.96);
+	border: 1rpx solid #efe3d4;
+	box-shadow: 0 14rpx 32rpx rgba(52, 38, 18, 0.08);
+	text-align: center;
+}
+
+.loading-icon,
+.loading-title,
+.loading-desc {
+	display: block;
+}
+
+.loading-title {
+	margin-top: 18rpx;
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #2a2116;
+}
+
+.loading-desc {
+	margin-top: 14rpx;
+	font-size: 24rpx;
+	line-height: 1.6;
+	color: #8b7a66;
 }
 
 .detail-content {

@@ -1,9 +1,10 @@
 import {
-  REMOTE_CACHE_MAX_AGE,
+  REMOTE_REQUEST_TIMEOUT,
   REMOTE_DATA_URLS,
   REMOTE_STORAGE_KEYS,
 } from "./remote-config.js";
 import { loadRemoteCollection } from "../utils/remote-json.js";
+import { getPreferredRawMirrorUrl } from "../utils/remote-source.js";
 
 class ImagePromptsManager {
   constructor() {
@@ -13,8 +14,22 @@ class ImagePromptsManager {
   }
 
   setPrompts(prompts) {
-    this.prompts = Array.isArray(prompts) ? prompts : [];
+    this.prompts = Array.isArray(prompts)
+      ? prompts.map((prompt) => this.normalizePrompt(prompt))
+      : [];
     this.promptsMap = new Map(this.prompts.map((prompt) => [prompt.id, prompt]));
+  }
+
+  normalizePrompt(prompt = {}) {
+    const images = Array.isArray(prompt.images)
+      ? prompt.images.map((image) => getPreferredRawMirrorUrl(image, "gitee"))
+      : [];
+
+    return {
+      ...prompt,
+      coverImage: getPreferredRawMirrorUrl(prompt.coverImage, "gitee"),
+      images,
+    };
   }
 
   async load(forceRefresh = false) {
@@ -25,9 +40,9 @@ class ImagePromptsManager {
       return this.loadingPromise;
     }
     this.loadingPromise = loadRemoteCollection({
-      url: REMOTE_DATA_URLS.imagePrompts,
+      urls: REMOTE_DATA_URLS.imagePrompts,
       storageKey: REMOTE_STORAGE_KEYS.imagePrompts,
-      maxAge: REMOTE_CACHE_MAX_AGE,
+      requestTimeout: REMOTE_REQUEST_TIMEOUT,
       forceRefresh,
     }).then((prompts) => {
       this.setPrompts(prompts);

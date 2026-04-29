@@ -1,5 +1,5 @@
 import {
-  REMOTE_CACHE_MAX_AGE,
+  REMOTE_REQUEST_TIMEOUT,
   REMOTE_DATA_URLS,
   REMOTE_STORAGE_KEYS,
 } from "./remote-config.js";
@@ -25,9 +25,9 @@ class PromptsManager {
       return this.loadingPromise;
     }
     this.loadingPromise = loadRemoteCollection({
-      url: REMOTE_DATA_URLS.textPrompts,
+      urls: REMOTE_DATA_URLS.textPrompts,
       storageKey: REMOTE_STORAGE_KEYS.textPrompts,
-      maxAge: REMOTE_CACHE_MAX_AGE,
+      requestTimeout: REMOTE_REQUEST_TIMEOUT,
       forceRefresh,
     }).then((prompts) => {
       this.setPrompts(prompts);
@@ -86,21 +86,6 @@ class PromptsManager {
       return matchesCategory && matchesSearch;
     });
   }
-
-  getStats() {
-    const categories = this.getAllCategories();
-    const categoryStats = {};
-    categories.forEach((category) => {
-      categoryStats[category] = this.prompts.filter((prompt) =>
-        Array.isArray(prompt.group) && prompt.group.includes(category)
-      ).length;
-    });
-    return {
-      totalPrompts: this.prompts.length,
-      totalCategories: categories.length,
-      categories: categoryStats,
-    };
-  }
 }
 
 const promptsManager = new PromptsManager();
@@ -123,10 +108,6 @@ export function getAllCategories() {
 
 export function getPromptsPaginated(page, pageSize, filters) {
   return promptsManager.getPromptsPaginated(page, pageSize, filters);
-}
-
-export function getPromptsStats() {
-  return promptsManager.getStats();
 }
 
 export { promptsManager };

@@ -1,13 +1,26 @@
 <script>
+	import { bootstrapRemoteData } from './data/bootstrap.js'
+
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			uni.showLoading({
+				title: '正在加载提示词',
+				mask: true
+			})
+			bootstrapRemoteData().then((result) => {
+			}).catch((error) => {
+				console.error('统一加载提示词失败', error)
+				uni.showToast({
+					title: '提示词加载失败',
+					icon: 'none'
+				})
+			}).finally(() => {
+				uni.hideLoading()
+			})
 		},
 		onShow: function() {
-			console.log('App Show')
 		},
 		onHide: function() {
-			console.log('App Hide')
 		}
 	}
 </script>

@@ -1,48 +1,59 @@
 <template>
 	<view class="container">
-		<!-- 左侧分类导航 -->
-		<scroll-view scroll-y class="sidebar" enhanced :show-scrollbar="false">
-			<view class="category-nav">
-				<view class="nav-item" v-for="category in categories" :key="category" @click="selectCategory(category)"
-					:class="{ active: selectedCategory === category }">
-					<text class="nav-name">{{ category }}</text>
-					<view class="nav-count-badge">{{ getCategoryCount(category) }}</view>
-				</view>
+		<view v-if="isLoading" class="loading-state compact">
+			<view class="loading-card">
+				<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
+				<text class="loading-title">正在加载分类</text>
+				<text class="loading-desc">分类和提示词数据正在统一同步，请稍候片刻</text>
 			</view>
-		</scroll-view>
+		</view>
 
-		<!-- 右侧内容区域 -->
-		<scroll-view scroll-y class="content-area" enhanced :show-scrollbar="false" :bounces="true">
-			<view v-if="selectedCategory" class="content-wrapper">
-				<!-- 提示词卡片列表 -->
-				<view class="prompt-grid">
-					<view class="prompt-card" v-for="prompt in filteredPrompts" :key="prompt.id"
-						@click="viewPromptDetail(prompt)">
-						<view class="card-header">
-							<text class="card-emoji">{{ prompt.emoji }}</text>
-							<text class="card-name">{{ prompt.name }}</text>
-						</view>
-						<text class="card-desc">{{ prompt.description }}</text>
-						<view class="card-tags">
-							<text class="tag" v-for="tag in prompt.group" :key="tag">{{ tag }}</text>
+		<template v-else>
+			<!-- 左侧分类导航 -->
+			<scroll-view scroll-y class="sidebar" enhanced :show-scrollbar="false">
+				<view class="category-nav">
+					<view class="nav-item" v-for="category in categories" :key="category" @click="selectCategory(category)"
+						:class="{ active: selectedCategory === category }">
+						<text class="nav-name">{{ category }}</text>
+						<view class="nav-count-badge">{{ getCategoryCount(category) }}</view>
+					</view>
+				</view>
+			</scroll-view>
+
+			<!-- 右侧内容区域 -->
+			<scroll-view scroll-y class="content-area" enhanced :show-scrollbar="false" :bounces="true">
+				<view v-if="selectedCategory" class="content-wrapper">
+					<!-- 提示词卡片列表 -->
+					<view class="prompt-grid">
+						<view class="prompt-card" v-for="prompt in filteredPrompts" :key="prompt.id"
+							@click="viewPromptDetail(prompt)">
+							<view class="card-header">
+								<text class="card-emoji">{{ prompt.emoji }}</text>
+								<text class="card-name">{{ prompt.name }}</text>
+							</view>
+							<text class="card-desc">{{ prompt.description }}</text>
+							<view class="card-tags">
+								<text class="tag" v-for="tag in prompt.group" :key="tag">{{ tag }}</text>
+							</view>
 						</view>
 					</view>
 				</view>
-			</view>
 
-			<!-- 未选择分类时的空状态 -->
-			<view v-else-if="!isLoading" class="empty-state">
-				<view class="empty-emoji">📂</view>
-				<text class="empty-title">选择分类</text>
-				<text class="empty-desc">请从左侧选择一个分类查看提示词</text>
-			</view>
-		</scroll-view>
+				<!-- 未选择分类时的空状态 -->
+				<view v-else class="empty-state">
+					<view class="empty-emoji">📂</view>
+					<text class="empty-title">选择分类</text>
+					<text class="empty-desc">请从左侧选择一个分类查看提示词</text>
+				</view>
+			</scroll-view>
+		</template>
 	</view>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { getAllPrompts, getAllCategories, loadPrompts as loadRemotePrompts } from '@/data/prompts-manager.js'
+import { bootstrapRemoteData } from '@/data/bootstrap.js'
+import { getAllPrompts, getAllCategories } from '@/data/prompts-manager.js'
 
 const selectedCategory = ref('')
 const prompts = ref([])
@@ -79,7 +90,6 @@ const autoSelectFirstCategory = () => {
 
 // 查看提示词详情
 const viewPromptDetail = (prompt) => {
-	console.log('分类页面传递提示词ID到详情页面:', prompt.id)
 	// 跳转到详情页面，传递ID参数
 	uni.navigateTo({
 		url: `/pages/detail/index?id=${prompt.id}`
@@ -89,15 +99,13 @@ const viewPromptDetail = (prompt) => {
 // 加载提示词数据 - 使用新的数据加载方式
 const loadPromptsData = async () => {
 	try {
-		await loadRemotePrompts()
+		await bootstrapRemoteData()
 		const allPrompts = getAllPrompts()
 		const allCategories = getAllCategories()
 
 		prompts.value = allPrompts
 		categories.value = allCategories
-
-		console.log('成功加载', prompts.value.length, '个提示词')
-		console.log('分类:', categories.value)
+		autoSelectFirstCategory()
 	} catch (error) {
 		console.error('加载提示词失败:', error)
 		uni.showToast({
@@ -116,9 +124,6 @@ onMounted(() => {
 	uni.$on('selectCategory', (category) => {
 		selectedCategory.value = category
 	})
-
-	// 自动选择第一个分类
-	autoSelectFirstCategory()
 })
 
 // 分享给好友
@@ -154,6 +159,48 @@ onUnmounted(() => {
 	display: flex;
 	font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 	overflow: hidden;
+}
+
+.loading-state {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 80rpx 32rpx;
+}
+
+.loading-state.compact {
+	min-height: 60vh;
+}
+
+.loading-card {
+	width: 100%;
+	padding: 40rpx 32rpx;
+	border-radius: 28rpx;
+	background: rgba(255, 255, 255, 0.96);
+	border: 1rpx solid #efe3d4;
+	box-shadow: 0 14rpx 32rpx rgba(52, 38, 18, 0.08);
+	text-align: center;
+}
+
+.loading-icon,
+.loading-title,
+.loading-desc {
+	display: block;
+}
+
+.loading-title {
+	margin-top: 18rpx;
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #2a2116;
+}
+
+.loading-desc {
+	margin-top: 14rpx;
+	font-size: 24rpx;
+	line-height: 1.6;
+	color: #8b7a66;
 }
 
 /* 左侧导航栏 */

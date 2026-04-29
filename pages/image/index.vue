@@ -3,7 +3,6 @@
 		<scroll-view scroll-y class="page-scroll" enhanced :show-scrollbar="false">
 			<view class="hero">
 				<text class="hero-title">GPT-Image-2 案例库</text>
-				<text class="hero-desc">收录 {{ prompts.length }} 条图片案例，图片已切换为 GitHub 直链。</text>
 			</view>
 
 			<view class="toolbar">
@@ -20,30 +19,28 @@
 				</scroll-view>
 			</view>
 
-			<view class="summary">
-				<view class="summary-card">
-					<text class="summary-label">当前结果</text>
-					<text class="summary-value">{{ filteredCount }}</text>
-				</view>
-				<view class="summary-card">
-					<text class="summary-label">当前分类</text>
-					<text class="summary-value small">{{ selectedCategory }}</text>
+			<view v-if="isLoading" class="loading-state">
+				<view class="loading-card">
+					<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
+					<text class="loading-title">正在加载图片案例</text>
+					<text class="loading-desc">图片提示词和封面数据正在统一同步，请稍候片刻</text>
 				</view>
 			</view>
 
-			<view v-if="paginatedPrompts.length" class="grid">
-				<view v-for="prompt in paginatedPrompts" :key="prompt.id" class="card" @click="viewPromptDetail(prompt)">
-					<view class="cover-wrap">
-						<image class="cover" :src="prompt.coverImage" mode="aspectFill" lazy-load />
-						<view class="badge">{{ prompt.section }}</view>
-						<view v-if="getImageCount(prompt) > 1" class="count">{{ getImageCount(prompt) }} 图</view>
-					</view>
-					<view class="card-content">
-						<text class="card-title">{{ prompt.name }}</text>
-						<text class="card-desc">{{ prompt.description }}</text>
-						<view class="card-meta">
-							<text class="card-author">{{ prompt.author }}</text>
-							<text class="card-case">Case {{ prompt.caseNumber }}</text>
+			<view v-else-if="paginatedPrompts.length" class="waterfall">
+				<view v-for="(column, columnIndex) in waterfallColumns" :key="columnIndex" class="waterfall-column">
+					<view v-for="prompt in column" :key="prompt.id" class="card waterfall-card" @click="viewPromptDetail(prompt)">
+						<view class="cover-wrap">
+							<image class="cover" :src="getPromptCoverSrc(prompt)" mode="widthFix" lazy-load
+								@load="handleImageLoad(prompt.id, $event)" />
+							<view class="badge">{{ prompt.section }}</view>
+							<view v-if="getImageCount(prompt) > 1" class="count">{{ getImageCount(prompt) }} 图</view>
+						</view>
+						<view class="card-content">
+							<text class="card-title">{{ prompt.name }}</text>
+							<view class="card-meta">
+								<text class="card-author">{{ prompt.author }}</text>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -65,21 +62,26 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
+import { bootstrapRemoteData } from '@/data/bootstrap.js'
+import { cacheImageBatch, getCachedImageSync } from '@/utils/image-cache.js'
 import {
-	getAllImagePrompts,
 	getImageCategories,
-	getImagePromptsPaginated,
-	loadImagePrompts
+	getImagePromptsPaginated
 } from '@/data/image-prompts-manager.js'
 
-const prompts = ref([])
+const COLUMN_COUNT = 2
+const DEFAULT_IMAGE_RATIO = 1.2
+const CARD_CONTENT_WEIGHT = 0.42
+
 const categories = ref([])
 const searchKeyword = ref('')
 const selectedCategory = ref('全部')
 const currentPage = ref(1)
 const pageSize = ref(12)
 const isLoading = ref(true)
+const imageRatios = ref({})
+const cachedImageMap = ref({})
 
 const paginationData = computed(() =>
 	getImagePromptsPaginated(currentPage.value, pageSize.value, {
@@ -89,8 +91,31 @@ const paginationData = computed(() =>
 )
 
 const paginatedPrompts = computed(() => paginationData.value.data)
-const filteredCount = computed(() => paginationData.value.total)
-const totalPages = computed(() => Math.max(1, Math.ceil(filteredCount.value / pageSize.value)))
+const totalPages = computed(() => Math.max(1, Math.ceil(paginationData.value.total / pageSize.value)))
+
+const getShortestColumnIndex = (heights) => {
+	return heights.reduce((bestIndex, currentHeight, currentIndex) => {
+		return currentHeight < heights[bestIndex] ? currentIndex : bestIndex
+	}, 0)
+}
+
+const getPromptWeight = (prompt) => {
+	const ratio = imageRatios.value[prompt.id] || DEFAULT_IMAGE_RATIO
+	return ratio + CARD_CONTENT_WEIGHT
+}
+
+const waterfallColumns = computed(() => {
+	const columns = Array.from({ length: COLUMN_COUNT }, () => [])
+	const heights = Array(COLUMN_COUNT).fill(0)
+
+	paginatedPrompts.value.forEach((prompt) => {
+		const targetIndex = getShortestColumnIndex(heights)
+		columns[targetIndex].push(prompt)
+		heights[targetIndex] += getPromptWeight(prompt)
+	})
+
+	return columns
+})
 
 const resetPage = () => {
 	currentPage.value = 1
@@ -109,11 +134,66 @@ const getImageCount = (prompt) => {
 	return Array.isArray(prompt.images) ? prompt.images.length : 0
 }
 
+const getPromptCoverSrc = (prompt) => {
+	return cachedImageMap.value[prompt.coverImage] || getCachedImageSync(prompt.coverImage) || prompt.coverImage
+}
+
+const handleImageLoad = (id, event) => {
+	const { width, height } = event.detail || {}
+	if (!width || !height) {
+		return
+	}
+
+	const nextRatio = Number((height / width).toFixed(4))
+	if (imageRatios.value[id] === nextRatio) {
+		return
+	}
+
+	imageRatios.value = {
+		...imageRatios.value,
+		[id]: nextRatio
+	}
+}
+
+let visibleBatchId = 0
+
+const seedVisibleCache = (prompts = []) => {
+	const nextMap = { ...cachedImageMap.value }
+	prompts.forEach((prompt) => {
+		const cached = getCachedImageSync(prompt.coverImage)
+		if (cached) {
+			nextMap[prompt.coverImage] = cached
+		}
+	})
+	cachedImageMap.value = nextMap
+}
+
+const cacheVisibleCovers = async (prompts = []) => {
+	const coverUrls = prompts.map((prompt) => prompt.coverImage).filter(Boolean)
+	seedVisibleCache(prompts)
+	if (!coverUrls.length) {
+		return
+	}
+
+	const currentBatchId = ++visibleBatchId
+	const result = await cacheImageBatch(coverUrls)
+	if (currentBatchId !== visibleBatchId) {
+		return
+	}
+
+	cachedImageMap.value = {
+		...cachedImageMap.value,
+		...result
+	}
+}
+
 const loadImagePromptsData = async () => {
 	try {
-		await loadImagePrompts()
-		prompts.value = getAllImagePrompts()
+		await bootstrapRemoteData()
+		imageRatios.value = {}
+		cachedImageMap.value = {}
 		categories.value = getImageCategories()
+		cacheVisibleCovers(paginatedPrompts.value)
 	} catch (error) {
 		console.error('加载图片提示失败:', error)
 		uni.showToast({
@@ -146,6 +226,12 @@ const nextPage = () => {
 onMounted(() => {
 	loadImagePromptsData()
 })
+
+watch(paginatedPrompts, (prompts) => {
+	if (!isLoading.value) {
+		cacheVisibleCovers(prompts)
+	}
+})
 </script>
 
 <style>
@@ -157,13 +243,10 @@ onMounted(() => {
 }
 
 .hero {
-	padding: 116rpx 32rpx 24rpx;
+	padding: 116rpx 32rpx 20rpx;
 }
 
 .hero-title,
-.hero-desc,
-.summary-label,
-.summary-value,
 .empty-title,
 .empty-desc,
 .page-text {
@@ -177,22 +260,49 @@ onMounted(() => {
 }
 
 .hero-title {
-	margin-top: 12rpx;
 	font-size: 52rpx;
 	font-weight: 700;
 	color: #221c12;
 }
 
-.hero-desc {
-	margin-top: 16rpx;
-	font-size: 26rpx;
+.loading-state {
+	display: flex;
+	justify-content: center;
+	padding: 80rpx 32rpx 24rpx;
+}
+
+.loading-card {
+	width: 100%;
+	padding: 40rpx 32rpx;
+	border-radius: 28rpx;
+	background: rgba(255, 255, 255, 0.96);
+	border: 1rpx solid #efe3d4;
+	box-shadow: 0 14rpx 32rpx rgba(52, 38, 18, 0.08);
+	text-align: center;
+}
+
+.loading-icon,
+.loading-title,
+.loading-desc {
+	display: block;
+}
+
+.loading-title {
+	margin-top: 18rpx;
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #2a2116;
+}
+
+.loading-desc {
+	margin-top: 14rpx;
+	font-size: 24rpx;
 	line-height: 1.6;
-	color: #766957;
+	color: #8b7a66;
 }
 
 .toolbar,
-.summary,
-.grid,
+.waterfall,
 .pagination,
 .empty-state {
 	padding: 0 32rpx;
@@ -238,42 +348,18 @@ onMounted(() => {
 	box-shadow: 0 10rpx 24rpx rgba(169, 131, 85, 0.22);
 }
 
-.summary {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 16rpx;
-	margin-top: 24rpx;
-}
-
-.summary-card {
-	padding: 22rpx 24rpx;
-	border-radius: 24rpx;
-	background: #fffdf9;
-	border: 1rpx solid #efe5d7;
-}
-
-.summary-label {
-	font-size: 22rpx;
-	color: #9b8b73;
-}
-
-.summary-value {
-	margin-top: 10rpx;
-	font-size: 36rpx;
-	font-weight: 700;
-	color: #231c12;
-}
-
-.summary-value.small {
-	font-size: 28rpx;
-}
-
-.grid {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+.waterfall {
+	display: flex;
 	gap: 18rpx;
-	margin-top: 24rpx;
+	margin-top: 28rpx;
 	padding-bottom: 24rpx;
+}
+
+.waterfall-column {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 18rpx;
 }
 
 .card {
@@ -284,19 +370,23 @@ onMounted(() => {
 	box-shadow: 0 10rpx 30rpx rgba(34, 28, 18, 0.06);
 }
 
+.waterfall-card {
+	break-inside: avoid;
+}
+
 .card:active {
 	transform: translateY(-2rpx);
 }
 
 .cover-wrap {
 	position: relative;
-	height: 320rpx;
+	min-height: 220rpx;
 	background: linear-gradient(135deg, #f3eee5 0%, #faf8f4 100%);
 }
 
 .cover {
 	width: 100%;
-	height: 100%;
+	display: block;
 }
 
 .badge,
@@ -320,13 +410,11 @@ onMounted(() => {
 }
 
 .card-content {
-	padding: 22rpx 22rpx 24rpx;
+	padding: 22rpx 22rpx 22rpx;
 }
 
 .card-title,
-.card-desc,
-.card-author,
-.card-case {
+.card-author {
 	display: block;
 }
 
@@ -335,13 +423,6 @@ onMounted(() => {
 	font-weight: 600;
 	line-height: 1.4;
 	color: #1f1a14;
-}
-
-.card-desc {
-	margin-top: 10rpx;
-	font-size: 23rpx;
-	line-height: 1.5;
-	color: #7b6f60;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -351,13 +432,10 @@ onMounted(() => {
 .card-meta {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	gap: 12rpx;
-	margin-top: 18rpx;
+	margin-top: 14rpx;
 }
 
-.card-author,
-.card-case {
+.card-author {
 	font-size: 22rpx;
 	color: #9a8f80;
 }

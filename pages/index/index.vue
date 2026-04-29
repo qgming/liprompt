@@ -11,6 +11,15 @@
 
 			<!-- 内容区域 -->
 			<view class="content-wrapper">
+				<view v-if="isLoading" class="loading-state">
+					<view class="loading-card">
+						<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
+						<text class="loading-title">正在加载提示词</text>
+						<text class="loading-desc">首页和图片库数据正在统一同步，请稍候片刻</text>
+					</view>
+				</view>
+
+				<template v-else>
 				<!-- 搜索栏 -->
 				<view class="search-section">
 					<view class="search-box">
@@ -92,6 +101,7 @@
 						<text class="empty-desc">试试其他关键词吧</text>
 					</view>
 				</view>
+				</template>
 			</view>
 		</scroll-view>
 
@@ -116,14 +126,14 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { getAllPrompts, getAllCategories, loadPrompts as loadRemotePrompts } from '@/data/prompts-manager.js'
+import { ref, computed, onMounted } from 'vue'
+import { bootstrapRemoteData } from '@/data/bootstrap.js'
+import { getAllPrompts } from '@/data/prompts-manager.js'
 import PromptCard from '@/components/prompt-card/prompt-card.vue'
 import TrendingCard from '@/components/trending-card/trending-card.vue'
 
 const searchKeyword = ref('')
 const prompts = ref([])
-const categories = ref([])
 const currentPage = ref(1)
 const pageSize = ref(10)
 const isLoading = ref(true)
@@ -223,7 +233,6 @@ const goToCategory = (category) => {
 
 // 查看提示词详情
 const viewPromptDetail = (prompt) => {
-	console.log('传递提示词ID到详情页面:', prompt.id)
 	// 跳转到详情页面，传递ID参数
 	uni.navigateTo({
 		url: `/pages/detail/index?id=${prompt.id}`
@@ -245,8 +254,6 @@ const nextPage = () => {
 
 // 显示页数选择器
 const showPageSelector = () => {
-	console.log('总页数:', totalPages.value)
-
 	// 设置选择器初始值为当前页
 	pickerValue.value = [currentPage.value - 1]
 	showPicker.value = true
@@ -266,7 +273,6 @@ const onPickerChange = (e) => {
 const confirmPicker = () => {
 	const selectedPage = pickerPages.value[pickerValue.value[0]]
 	currentPage.value = selectedPage
-	console.log('跳转到页数:', currentPage.value)
 
 	hidePicker()
 
@@ -280,15 +286,10 @@ const confirmPicker = () => {
 // 加载提示词数据
 const loadPromptsData = async () => {
 	try {
-		await loadRemotePrompts()
+		await bootstrapRemoteData()
 		const allPrompts = getAllPrompts()
-		const allCategories = getAllCategories()
 
 		prompts.value = allPrompts
-		categories.value = allCategories
-
-		console.log('成功加载', prompts.value.length, '个提示词')
-		console.log('分类:', categories.value)
 	} catch (error) {
 		console.error('加载提示词失败:', error)
 		uni.showToast({
@@ -304,12 +305,6 @@ const loadPromptsData = async () => {
 // 监听来自分类页面的事件
 onMounted(() => {
 	loadPromptsData()
-
-	// 监听分类页面传递的选中分类
-	uni.$on('selectCategory', (category) => {
-		searchKeyword.value = ''
-		// 这里可以处理选中分类的逻辑
-	})
 })
 
 // 分享给好友
@@ -331,10 +326,6 @@ const onShareTimeline = () => {
 	}
 }
 
-// 组件卸载时移除事件监听
-onUnmounted(() => {
-	uni.$off('selectCategory')
-})
 </script>
 
 <style>
@@ -366,6 +357,42 @@ onUnmounted(() => {
 /* 内容区域 */
 .content-wrapper {
 	background: #ffffff;
+}
+
+.loading-state {
+	display: flex;
+	justify-content: center;
+	padding: 80rpx 32rpx 40rpx;
+}
+
+.loading-card {
+	width: 100%;
+	padding: 40rpx 32rpx;
+	border-radius: 28rpx;
+	background: rgba(255, 255, 255, 0.96);
+	border: 1rpx solid #efe3d4;
+	box-shadow: 0 14rpx 32rpx rgba(52, 38, 18, 0.08);
+	text-align: center;
+}
+
+.loading-icon,
+.loading-title,
+.loading-desc {
+	display: block;
+}
+
+.loading-title {
+	margin-top: 18rpx;
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #2a2116;
+}
+
+.loading-desc {
+	margin-top: 14rpx;
+	font-size: 24rpx;
+	line-height: 1.6;
+	color: #8b7a66;
 }
 
 /* 隐藏滚动条 */

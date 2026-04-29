@@ -13,21 +13,25 @@
 
 			<view class="detail-content">
 				<view v-if="isImagePrompt" class="gallery-section">
-					<swiper class="gallery-swiper" :style="gallerySwiperStyle" circular indicator-dots
-						indicator-active-color="#b89467" @change="handleGalleryChange">
-						<swiper-item v-for="(image, index) in galleryImages" :key="image">
-							<image class="gallery-image" :src="image" mode="widthFix"
-								@load="handleGalleryImageLoad(index, $event)" @click="previewImages(index)" />
-						</swiper-item>
-					</swiper>
-					<view class="gallery-tip">点击图片可查看原图，共 {{ galleryImages.length }} 张</view>
-				</view>
+						<swiper class="gallery-swiper" :style="gallerySwiperStyle" circular indicator-dots
+							indicator-active-color="#b89467" @change="handleGalleryChange">
+							<swiper-item v-for="(image, index) in galleryImages" :key="image">
+								<image class="gallery-image" :src="image" mode="widthFix"
+									@load="handleGalleryImageLoad(index, $event)" @click="previewImages(index)" />
+							</swiper-item>
+						</swiper>
+					</view>
 
 				<view class="header-section">
-					<view v-if="prompt.emoji" class="prompt-emoji">{{ prompt.emoji }}</view>
+					<view class="header-top">
+						<view v-if="prompt.emoji" class="prompt-emoji">{{ prompt.emoji }}</view>
+						<view class="favorite-btn" :class="{ active: isFavorite }" @click="toggleFavorite">
+							{{ isFavorite ? '已收藏' : '收藏' }}
+						</view>
+					</view>
 					<text class="prompt-title">{{ prompt.name }}</text>
 					<text class="prompt-description" user-select>{{ prompt.description }}</text>
-					<text v-if="isImagePrompt" class="prompt-meta">{{ prompt.author }} · {{ prompt.section }}</text>
+					<text v-if="isImagePrompt && prompt.author" class="prompt-meta">{{ prompt.author }}</text>
 					<view class="prompt-tags">
 						<text class="tag" v-for="tag in prompt.group" :key="tag">{{ tag }}</text>
 					</view>
@@ -65,9 +69,11 @@ import PageBackBar from '@/components/page-back-bar/page-back-bar.vue'
 import { cacheImageBatch, getCachedImageSync } from '@/utils/image-cache.js'
 import { getPromptById } from '@/data/prompts-manager.js'
 import { getImagePromptById } from '@/data/image-prompts-manager.js'
+import { isFavoritePrompt, toggleFavoritePrompt } from '@/data/favorites-manager.js'
 
 const prompt = ref(null)
 const isLoading = ref(true)
+const isFavorite = ref(false)
 const cachedImageMap = ref({})
 const topSafeInset = ref(96)
 const currentGalleryIndex = ref(0)
@@ -124,6 +130,16 @@ const copyPrompt = () => {
 		success: () => showToast('已复制到剪贴板'),
 		fail: () => showToast('复制失败', 'none')
 	})
+}
+
+const toggleFavorite = () => {
+	if (!prompt.value) {
+		return
+	}
+
+	const result = toggleFavoritePrompt(prompt.value)
+	isFavorite.value = result.isFavorite
+	showToast(result.isFavorite ? '已加入收藏' : '已取消收藏')
 }
 
 const previewImages = (current = 0) => {
@@ -232,6 +248,7 @@ onMounted(() => {
 	bootstrapRemoteData()
 		.then(() => {
 			prompt.value = resolvePrompt(options)
+			isFavorite.value = prompt.value ? isFavoritePrompt(prompt.value.id) : false
 			currentGalleryIndex.value = 0
 			galleryRatios.value = {}
 			if (prompt.value?.promptType === 'image' && Array.isArray(prompt.value.images)) {
@@ -347,7 +364,6 @@ const onShareTimeline = () => {
 	display: block;
 }
 
-.gallery-tip,
 .prompt-title,
 .prompt-description,
 .prompt-meta,
@@ -358,16 +374,16 @@ const onShareTimeline = () => {
 	display: block;
 }
 
-.gallery-tip {
-	padding: 18rpx 24rpx 22rpx;
-	font-size: 24rpx;
-	color: #866f4d;
-	background: #fffaf1;
-}
-
 .header-section {
 	padding: 40rpx 32rpx;
 	text-align: left;
+}
+
+.header-top {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 20rpx;
 }
 
 .prompt-emoji {
@@ -375,7 +391,24 @@ const onShareTimeline = () => {
 	margin-bottom: 18rpx;
 }
 
+.favorite-btn {
+	flex-shrink: 0;
+	padding: 14rpx 22rpx;
+	border-radius: 999rpx;
+	font-size: 24rpx;
+	line-height: 1;
+	color: #7d6d5a;
+	background: #f5efe4;
+}
+
+.favorite-btn.active {
+	color: #ffffff;
+	background: linear-gradient(135deg, #c9b08b 0%, #a98355 100%);
+	box-shadow: 0 10rpx 24rpx rgba(169, 131, 85, 0.22);
+}
+
 .prompt-title {
+	margin-top: 12rpx;
 	font-size: 42rpx;
 	font-weight: 700;
 	line-height: 1.35;

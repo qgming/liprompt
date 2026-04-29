@@ -15,6 +15,13 @@
 			}
 		},
 		{
+			"path": "pages/mine/index",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/category/index",
 			"style": {
 				"navigationBarTitleText": "分类",
@@ -64,6 +71,12 @@
 				"text": "图片",
 				"iconPath": "static/tabs/image.png",
 				"selectedIconPath": "static/tabs/image-active.png"
+			},
+			{
+				"pagePath": "pages/mine/index",
+				"text": "我的",
+				"iconPath": "static/tabs/mine.png",
+				"selectedIconPath": "static/tabs/mine-active.png"
 			}
 		]
 	}

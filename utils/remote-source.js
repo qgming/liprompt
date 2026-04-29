@@ -1,5 +1,6 @@
 const GITHUB_RAW_HOST = "https://raw.githubusercontent.com";
-const GITEE_RAW_HOST = "https://raw.giteeusercontent.com";
+const GITEE_RAW_HOST = "https://gitee.com";
+const GITEE_LEGACY_RAW_HOST = "https://raw.giteeusercontent.com";
 
 function splitUrlSegments(url, prefix) {
   if (typeof url !== "string" || !url.startsWith(prefix)) {
@@ -35,7 +36,9 @@ function parseGithubRawUrl(url) {
 }
 
 function parseGiteeRawUrl(url) {
-  const segments = splitUrlSegments(url, GITEE_RAW_HOST);
+  const segments =
+    splitUrlSegments(url, GITEE_RAW_HOST) ||
+    splitUrlSegments(url, GITEE_LEGACY_RAW_HOST);
   if (!segments || segments.length < 5) {
     return null;
   }

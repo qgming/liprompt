@@ -1,8 +1,8 @@
 <template>
 	<view class="container">
 		<scroll-view scroll-y class="page-scroll" enhanced :show-scrollbar="false">
-			<page-hero-search v-model="searchKeyword" eyebrow="GPT-IMAGE-2" title="图片案例库"
-				placeholder="搜索案例、作者、提示词..." @input="handleSearch">
+			<page-hero-search v-model="searchKeyword" eyebrow="GPT-IMAGE-2" title="图片提示库"
+				placeholder="搜索图片、作者、提示词..." @input="handleSearch">
 				<scroll-view scroll-x class="chips" show-scrollbar="false">
 					<view class="chip-list">
 						<view v-for="category in categories" :key="category" class="chip"
@@ -16,7 +16,7 @@
 			<view v-if="isLoading" class="loading-state">
 				<view class="loading-card">
 					<icon class="loading-icon" type="waiting" size="36" color="#8e8e93" />
-					<text class="loading-title">正在加载图片案例</text>
+					<text class="loading-title">正在加载图片提示</text>
 					<text class="loading-desc">图片提示词和封面数据正在统一同步，请稍候片刻</text>
 				</view>
 			</view>
@@ -42,7 +42,7 @@
 
 			<view v-else-if="!isLoading" class="empty-state">
 				<text class="empty-icon">🖼️</text>
-				<text class="empty-title">没有找到匹配案例</text>
+				<text class="empty-title">没有找到匹配内容</text>
 				<text class="empty-desc">换个关键词或分类会更快找到灵感。</text>
 			</view>
 

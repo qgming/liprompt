@@ -100,7 +100,7 @@ async function requestJsonWithFallback(urls, requestTimeout) {
   throw lastError || new Error("远程数据加载失败");
 }
 
-function normalizeRequestGroups(requestUrls) {
+function normalizeRequestGroups(requestUrls, mergeSources = false) {
   if (!Array.isArray(requestUrls)) {
     return [[requestUrls]];
   }
@@ -109,11 +109,35 @@ function normalizeRequestGroups(requestUrls) {
     return requestUrls.map((group) => Array.isArray(group) ? group : [group]);
   }
 
+  if (mergeSources) {
+    return requestUrls.map((url) => [url]);
+  }
+
   return [requestUrls];
 }
 
-async function requestCollectionData(requestUrls, requestTimeout) {
-  const groups = normalizeRequestGroups(requestUrls);
+async function requestCollectionData(requestUrls, requestTimeout, mergeSources = false) {
+  const groups = normalizeRequestGroups(requestUrls, mergeSources);
+  if (mergeSources) {
+    const settledResults = await Promise.allSettled(
+      groups.map((group) => requestJsonWithFallback(group, requestTimeout))
+    );
+    const data = settledResults
+      .filter((result) => result.status === "fulfilled")
+      .map((result) => result.value)
+      .flat();
+
+    if (data.length || settledResults.some((result) => result.status === "fulfilled")) {
+      settledResults
+        .filter((result) => result.status === "rejected")
+        .forEach((result) => console.warn("部分远程数据源加载失败，已合并可用数据", result.reason));
+      return data;
+    }
+
+    throw settledResults.find((result) => result.status === "rejected")?.reason ||
+      new Error("远程数据加载失败");
+  }
+
   const results = await Promise.all(
     groups.map((group) => requestJsonWithFallback(group, requestTimeout))
   );
@@ -126,7 +150,7 @@ async function requestCollectionData(requestUrls, requestTimeout) {
 }
 
 export async function loadRemoteCollection(options) {
-  const { url, urls, storageKey, requestTimeout, forceRefresh = false } = options;
+  const { url, urls, storageKey, requestTimeout, forceRefresh = false, mergeSources = false } = options;
   const requestUrls = urls || url;
   if (!requestUrls || (Array.isArray(requestUrls) && !requestUrls.length)) {
     throw new Error("远程数据地址未配置");
@@ -145,7 +169,7 @@ export async function loadRemoteCollection(options) {
   }
 
   try {
-    const data = await requestCollectionData(requestUrls, requestTimeout);
+    const data = await requestCollectionData(requestUrls, requestTimeout, mergeSources);
     setMemoryCache(storageKey, data);
     writeStorageCache(storageKey, data);
     return data;

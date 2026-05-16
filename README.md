@@ -132,6 +132,21 @@ cd liprompt
    - `remote-data/text-prompts.json`
    - `remote-data/image-prompts.json`
 
+   图片提示词 JSON 保持精简结构即可，单条记录只需要：
+
+   - `id`
+   - `name`
+   - `description`
+   - `emoji`
+   - `group`
+   - `prompt`
+   - `author`
+   - `coverImage`
+
+   `group` 默认只保留真实分类，例如 `["电商案例"]`。需要放入精选时，手工追加 `精选`，例如 `["电商案例", "精选"]`。
+
+   运行时会自动补齐 `promptType`、`section`、`images`；单图案例不需要手工维护 `images`。如果后续出现多图案例，可额外添加 `images` 数组。
+
 2. 将这两个 JSON 发布到：
 
    - `https://pages.qgming.com/ljprompt/textprompt.json`

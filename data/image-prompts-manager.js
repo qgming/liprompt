@@ -6,6 +6,32 @@ import {
 import { loadRemoteCollection } from "../utils/remote-json.js";
 import { getPreferredRawMirrorUrl } from "../utils/remote-source.js";
 
+const ALL_CATEGORY = "全部";
+const FEATURED_CATEGORY = "精选";
+const LEGACY_IMAGE_CATEGORY = "图片提示";
+
+function uniqueById(prompts = []) {
+  const seen = new Set();
+  return prompts.filter((prompt) => {
+    if (!prompt?.id) {
+      return true;
+    }
+    if (seen.has(prompt.id)) {
+      return false;
+    }
+    seen.add(prompt.id);
+    return true;
+  });
+}
+
+function normalizeCategoryName(category) {
+  return typeof category === "string" ? category.replace(/案例/g, "").trim() : "";
+}
+
+function getPrimaryCategory(groups = []) {
+  return groups.find((item) => item !== FEATURED_CATEGORY) || groups[0] || "";
+}
+
 class ImagePromptsManager {
   constructor() {
     this.prompts = [];
@@ -15,19 +41,43 @@ class ImagePromptsManager {
 
   setPrompts(prompts) {
     this.prompts = Array.isArray(prompts)
-      ? prompts.map((prompt) => this.normalizePrompt(prompt))
+      ? uniqueById(prompts.map((prompt) => this.normalizePrompt(prompt)))
       : [];
     this.promptsMap = new Map(this.prompts.map((prompt) => [prompt.id, prompt]));
   }
 
   normalizePrompt(prompt = {}) {
-    const images = Array.isArray(prompt.images)
-      ? prompt.images.map((image) => getPreferredRawMirrorUrl(image, "gitee"))
+    const group = Array.isArray(prompt.group)
+      ? prompt.group
+          .map((item) => normalizeCategoryName(item))
+          .filter((item) => item && item !== LEGACY_IMAGE_CATEGORY)
       : [];
+    const normalizedSection = normalizeCategoryName(prompt.section);
+    const section =
+      getPrimaryCategory(group) ||
+      normalizedSection ||
+      "";
+    const sourceImages =
+      Array.isArray(prompt.images) && prompt.images.length
+        ? prompt.images
+        : prompt.coverImage
+          ? [prompt.coverImage]
+          : [];
+    const images = Array.from(
+      new Set(
+        sourceImages
+          .map((image) => getPreferredRawMirrorUrl(image, "gitee"))
+          .filter(Boolean)
+      )
+    );
 
     return {
       ...prompt,
-      coverImage: getPreferredRawMirrorUrl(prompt.coverImage, "gitee"),
+      group,
+      promptType: "image",
+      section,
+      coverImage:
+        images[0] || getPreferredRawMirrorUrl(prompt.coverImage, "gitee"),
       images,
     };
   }
@@ -44,6 +94,7 @@ class ImagePromptsManager {
       storageKey: REMOTE_STORAGE_KEYS.imagePrompts,
       requestTimeout: REMOTE_REQUEST_TIMEOUT,
       forceRefresh,
+      mergeSources: true,
     }).then((prompts) => {
       this.setPrompts(prompts);
       this.loadingPromise = null;
@@ -67,17 +118,19 @@ class ImagePromptsManager {
     const categories = new Set();
     this.prompts.forEach((prompt) => {
       const groups = Array.isArray(prompt.group) ? prompt.group : [];
-      groups.forEach((group) => {
-        if (group !== "图片提示") {
-          categories.add(group);
-        }
-      });
+      groups.forEach((group) => categories.add(group));
     });
-    return ["全部", ...Array.from(categories)];
+    const orderedCategories = Array.from(categories);
+    const categoriesWithoutFeatured = orderedCategories.filter(
+      (category) => category !== FEATURED_CATEGORY
+    );
+    return categories.has(FEATURED_CATEGORY)
+      ? [ALL_CATEGORY, FEATURED_CATEGORY, ...categoriesWithoutFeatured]
+      : [ALL_CATEGORY, ...categoriesWithoutFeatured];
   }
 
   getPromptsPaginated(page = 1, pageSize = 12, filters = {}) {
-    const prompts = this.filterPrompts(filters);
+    const prompts = this.sortPromptsForDisplay(this.filterPrompts(filters), filters);
     const startIndex = (page - 1) * pageSize;
     return {
       data: prompts.slice(startIndex, startIndex + pageSize),
@@ -91,7 +144,7 @@ class ImagePromptsManager {
       const groups = Array.isArray(prompt.group) ? prompt.group : [];
       const matchesCategory =
         !filters.category ||
-        filters.category === "全部" ||
+        filters.category === ALL_CATEGORY ||
         groups.includes(filters.category);
       const searchTerm = filters.search
         ? filters.search.trim().toLowerCase()
@@ -103,6 +156,31 @@ class ImagePromptsManager {
           .some((item) => item.toLowerCase().includes(searchTerm));
       return matchesCategory && matchesSearch;
     });
+  }
+
+  sortPromptsForDisplay(prompts = [], filters = {}) {
+    if (filters.category && filters.category !== ALL_CATEGORY) {
+      return prompts;
+    }
+
+    const categories = this.getAllCategories().slice(1);
+    const categoryOrderMap = new Map(
+      categories.map((category, index) => [category, index])
+    );
+
+    return prompts.slice().sort((left, right) => {
+      const leftIndex = this.getPromptCategoryOrder(left, categoryOrderMap);
+      const rightIndex = this.getPromptCategoryOrder(right, categoryOrderMap);
+      return leftIndex - rightIndex;
+    });
+  }
+
+  getPromptCategoryOrder(prompt = {}, categoryOrderMap = new Map()) {
+    const groups = Array.isArray(prompt.group) ? prompt.group : [];
+    const category = getPrimaryCategory(groups) || prompt.section || "";
+    return categoryOrderMap.has(category)
+      ? categoryOrderMap.get(category)
+      : Number.MAX_SAFE_INTEGER;
   }
 }
 

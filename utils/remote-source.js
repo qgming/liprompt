@@ -76,12 +76,12 @@ export function buildRepositoryRawUrls(parts, preferred = "github") {
 }
 
 export function getRawMirrorCandidates(url, preferred = "github") {
-  const parsed = parseSupportedRawUrl(url);
-  if (!parsed) {
+  const parsedGithubUrl = parseGithubRawUrl(url);
+  if (!parsedGithubUrl) {
     return [url];
   }
 
-  return buildRepositoryRawUrls(parsed, preferred);
+  return buildRepositoryRawUrls(parsedGithubUrl, preferred);
 }
 
 export function getPreferredRawMirrorUrl(url, preferred = "github") {

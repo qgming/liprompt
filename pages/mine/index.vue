@@ -62,11 +62,11 @@
 					</view>
 				</view>
 
-				<view class="section last-section">
+				<view class="section">
 					<view class="section-header"><text class="section-title">关于</text></view>
 					<view class="surface about-card">
 						<text class="about-title">流金提示词</text>
-						<text class="about-desc">一个聚合文本提示词与图片案例的小程序，方便你随时收藏、回看和复用灵感。</text>
+						<text class="about-desc">一个聚合文本提示词与图片提示的小程序，方便你随时收藏、回看和复用灵感。</text>
 						<view class="about-divider"></view>
 						<text class="about-subtitle">参考开源项目</text>
 						<view class="project-list">
@@ -74,6 +74,18 @@
 								<text class="project-name">{{ project.name }}</text>
 								<text class="project-url">{{ project.url }}</text>
 							</view>
+						</view>
+					</view>
+				</view>
+
+				<view class="section update-section">
+					<view class="surface update-card">
+						<view class="update-copy">
+							<text class="update-title">内容更新</text>
+							<text class="update-desc">云端 JSON · 本地缓存</text>
+						</view>
+						<view class="update-button" :class="{ refreshing: isRefreshingContent }" @click="handleContentRefresh">
+							{{ isRefreshingContent ? '更新中' : '立即更新' }}
 						</view>
 					</view>
 				</view>
@@ -94,6 +106,7 @@ const COLUMN_COUNT = 2
 const BASE_CARD_WEIGHT = 1
 
 const isLoading = ref(true)
+const isRefreshingContent = ref(false)
 const favorites = ref([])
 const stats = ref({ text: 0, image: 0 })
 const openSourceProjects = [
@@ -154,6 +167,29 @@ const loadPageData = async () => {
 	} catch (error) {
 		console.error('加载我的页面失败:', error)
 		uni.showToast({ title: '页面加载失败', icon: 'none' })
+	}
+}
+
+const handleContentRefresh = async () => {
+	if (isRefreshingContent.value) {
+		return
+	}
+
+	isRefreshingContent.value = true
+	uni.showLoading({ title: '更新中', mask: true })
+	let toastOptions = { title: '内容已更新', icon: 'success' }
+
+	try {
+		await bootstrapRemoteData(true)
+		syncStats()
+		syncFavorites()
+	} catch (error) {
+		console.error('强制更新内容失败:', error)
+		toastOptions = { title: '更新失败，请稍后再试', icon: 'none' }
+	} finally {
+		isRefreshingContent.value = false
+		uni.hideLoading()
+		uni.showToast(toastOptions)
 	}
 }
 
@@ -233,7 +269,9 @@ onShow(() => {
 .about-desc,
 .about-subtitle,
 .project-name,
-.project-url {
+.project-url,
+.update-title,
+.update-desc {
 	display: block;
 }
 
@@ -285,7 +323,8 @@ onShow(() => {
 
 .loading-desc,
 .about-desc,
-.empty-desc {
+.empty-desc,
+.update-desc {
 	margin-top: 14rpx;
 	font-size: 24rpx;
 	line-height: 1.7;
@@ -294,10 +333,6 @@ onShow(() => {
 
 .section {
 	margin-top: 30rpx;
-}
-
-.last-section {
-	padding-bottom: 56rpx;
 }
 
 .section-header,
@@ -518,5 +553,61 @@ onShow(() => {
 	line-height: 1.6;
 	color: $lp-text-secondary;
 	word-break: break-all;
+}
+
+.update-section {
+	padding-bottom: 56rpx;
+}
+
+.update-card {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 22rpx;
+	padding: 28rpx;
+}
+
+.update-copy {
+	flex: 1;
+	min-width: 0;
+}
+
+.update-title {
+	font-size: 30rpx;
+	font-weight: 600;
+	color: $lp-text-primary;
+}
+
+.update-desc {
+	margin-top: 8rpx;
+}
+
+.update-button {
+	@include lp-primary-control($lp-radius-control);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	min-width: 148rpx;
+	min-height: 72rpx;
+	padding: 0 24rpx;
+	font-size: 26rpx;
+	font-weight: 600;
+	line-height: 1;
+}
+
+.update-button:active {
+	background: $lp-accent-bg-active;
+	color: $lp-accent-text;
+}
+
+.update-button.refreshing {
+	background: $lp-fill-bg-active;
+	color: $lp-text-tertiary;
+}
+
+.update-button.refreshing:active {
+	background: $lp-fill-bg-active;
+	color: $lp-text-tertiary;
 }
 </style>

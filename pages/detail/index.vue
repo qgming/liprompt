@@ -4,7 +4,7 @@
 			<view class="loading-card">
 				<icon class="loading-icon" type="waiting" size="36" color="#8e8e93" />
 				<text class="loading-title">正在加载详情</text>
-				<text class="loading-desc">正在准备完整提示词和案例图片</text>
+				<text class="loading-desc">正在准备完整提示词和图片</text>
 			</view>
 		</view>
 

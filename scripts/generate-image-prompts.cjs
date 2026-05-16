@@ -10,43 +10,43 @@ const imageBase =
 const sources = [
   {
     file: "ecommerce_zh-CN.md",
-    section: "电商案例",
+    section: "电商",
     emoji: "🛍️",
     prefix: "ecommerce",
   },
   {
     file: "ad-creative_zh-CN.md",
-    section: "广告创意案例",
+    section: "广告创意",
     emoji: "📣",
     prefix: "ad-creative",
   },
   {
     file: "portrait_zh-CN.md",
-    section: "人像与摄影案例",
+    section: "人像与摄影",
     emoji: "📷",
     prefix: "portrait",
   },
   {
     file: "poster_zh-CN.md",
-    section: "海报与插画案例",
+    section: "海报与插画",
     emoji: "🎨",
     prefix: "poster",
   },
   {
     file: "character_zh-CN.md",
-    section: "角色设计案例",
+    section: "角色设计",
     emoji: "🧙",
     prefix: "character",
   },
   {
     file: "ui_zh-CN.md",
-    section: "UI 与社交媒体截图案例",
+    section: "UI 与社交媒体截图",
     emoji: "🖥️",
     prefix: "ui",
   },
   {
     file: "comparison_zh-CN.md",
-    section: "模型对比与社区案例",
+    section: "模型对比与社区",
     emoji: "🧪",
     prefix: "comparison",
   },
@@ -69,6 +69,10 @@ function normalizeImageUrl(value) {
 
 function unique(values) {
   return Array.from(new Set(values.filter(Boolean)));
+}
+
+function normalizeSection(value) {
+  return typeof value === "string" ? value.replace(/案例/g, "").trim() : "";
 }
 
 function extractImages(block) {
@@ -160,6 +164,7 @@ function parseSource(meta) {
   const markdown = fs.readFileSync(sourcePath, "utf8");
   const lines = markdown.split(/\r?\n/);
   const cases = [];
+  const section = normalizeSection(meta.section);
   let activeCase = null;
   let activeCaseStart = -1;
 
@@ -193,10 +198,8 @@ function parseSource(meta) {
       name: activeCase.name,
       description: makeDescription(prompt),
       emoji: meta.emoji,
-      group: ["图片提示", meta.section],
       prompt,
-      promptType: "image",
-      section: meta.section,
+      section,
       author: activeCase.author,
       sourceUrl: activeCase.sourceUrl,
       authorUrl: activeCase.authorUrl,
@@ -225,17 +228,12 @@ function parseSource(meta) {
 
 function validateCases(cases) {
   const ids = new Set();
-  const caseKeys = new Set();
 
   for (const item of cases) {
     if (ids.has(item.id)) {
       throw new Error(`Duplicate id: ${item.id}`);
     }
-    if (caseKeys.has(item.caseKey)) {
-      throw new Error(`Duplicate caseKey: ${item.caseKey}`);
-    }
     ids.add(item.id);
-    caseKeys.add(item.caseKey);
   }
 }
 
@@ -263,10 +261,32 @@ function assignUniqueIds(cases) {
   });
 }
 
+function toPublicPrompt(item) {
+  const images = Array.isArray(item.images) ? item.images : [];
+  const section = normalizeSection(item.section);
+  const prompt = {
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    emoji: item.emoji,
+    group: [section],
+    prompt: item.prompt,
+    author: item.author,
+    coverImage: images[0] || "",
+  };
+
+  if (images.length > 1) {
+    prompt.images = images;
+  }
+
+  return prompt;
+}
+
 function summarize(cases) {
   const counts = new Map();
   for (const item of cases) {
-    counts.set(item.section, (counts.get(item.section) || 0) + 1);
+    const section = Array.isArray(item.group) ? item.group[0] : "";
+    counts.set(section, (counts.get(section) || 0) + 1);
   }
   return Array.from(counts.entries())
     .map(([section, count]) => `  ${section}: ${count}`)
@@ -277,10 +297,7 @@ function main() {
   const [, , outputArg] = process.argv;
   const outputPath = path.resolve(root, outputArg || outputDefault);
   const parsed = sources.flatMap(parseSource);
-  const cases = assignUniqueIds(parsed).map((item, index) => ({
-    ...item,
-    sortIndex: index + 1,
-  }));
+  const cases = assignUniqueIds(parsed).map(toPublicPrompt);
 
   validateCases(cases);
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });

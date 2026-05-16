@@ -2,7 +2,7 @@
 	<view class="container">
 		<view v-if="isLoading" class="loading-state compact" :style="loadingStateStyle">
 			<view class="loading-card">
-				<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
+				<icon class="loading-icon" type="waiting" size="36" color="#8e8e93" />
 				<text class="loading-title">正在加载详情</text>
 				<text class="loading-desc">正在准备完整提示词和案例图片</text>
 			</view>
@@ -14,7 +14,7 @@
 			<view class="detail-content">
 				<view v-if="isImagePrompt" class="gallery-section">
 						<swiper class="gallery-swiper" :style="gallerySwiperStyle" circular indicator-dots
-							indicator-active-color="#b89467" @change="handleGalleryChange">
+							indicator-active-color="#a66f24" @change="handleGalleryChange">
 							<swiper-item v-for="(image, index) in galleryImages" :key="image">
 								<image class="gallery-image" :src="image" mode="widthFix"
 									@load="handleGalleryImageLoad(index, $event)" @click="previewImages(index)" />
@@ -219,9 +219,9 @@ const resolveTopSafeInset = () => {
 	const defaultTopbarHeight = uni.upx2px(64)
 
 	try {
-		const systemInfo = uni.getSystemInfoSync ? uni.getSystemInfoSync() : {}
-		const statusBarHeight = Number(systemInfo.statusBarHeight) || 0
-		const viewportWidth = Number(systemInfo.windowWidth) || 0
+		const windowInfo = wx.getWindowInfo()
+		const statusBarHeight = Number(windowInfo.statusBarHeight) || 0
+		const viewportWidth = Number(windowInfo.windowWidth) || 0
 		let safeTop = statusBarHeight + 8
 		let nextTopbarHeight = defaultTopbarHeight
 
@@ -291,10 +291,10 @@ const onShareTimeline = () => {
 }
 </script>
 
-<style>
+<style lang="scss">
 .container {
+	@include lp-page;
 	min-height: 100vh;
-	background: #ffffff;
 	padding-bottom: 40rpx;
 }
 
@@ -310,12 +310,9 @@ const onShareTimeline = () => {
 }
 
 .loading-card {
+	@include lp-card;
 	width: 100%;
 	padding: 40rpx 32rpx;
-	border-radius: 28rpx;
-	background: rgba(255, 255, 255, 0.96);
-	border: 1rpx solid #efe3d4;
-	box-shadow: 0 14rpx 32rpx rgba(52, 38, 18, 0.08);
 	text-align: center;
 }
 
@@ -329,33 +326,30 @@ const onShareTimeline = () => {
 	margin-top: 18rpx;
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #2a2116;
+	color: $lp-text-primary;
 }
 
 .loading-desc {
 	margin-top: 14rpx;
 	font-size: 24rpx;
 	line-height: 1.6;
-	color: #8b7a66;
+	color: $lp-text-secondary;
 }
 
 .detail-content {
-	padding: 0 32rpx 32rpx;
+	padding: 0 30rpx 36rpx;
 }
 
 .gallery-section,
 .header-section,
 .content-section {
-	background: #ffffff;
-	border-radius: 28rpx;
-	border: 1rpx solid #efe6d8;
-	box-shadow: 0 8rpx 24rpx rgba(44, 31, 14, 0.05);
+	@include lp-card;
 	margin-bottom: 24rpx;
 	overflow: hidden;
 }
 
 .gallery-swiper {
-	background: #f5efe5;
+	background: $lp-media-bg;
 	transition: height 0.24s ease;
 }
 
@@ -375,7 +369,7 @@ const onShareTimeline = () => {
 }
 
 .header-section {
-	padding: 40rpx 32rpx;
+	padding: 38rpx 32rpx 34rpx;
 	text-align: left;
 }
 
@@ -392,19 +386,16 @@ const onShareTimeline = () => {
 }
 
 .favorite-btn {
+	@include lp-fill-control;
 	flex-shrink: 0;
-	padding: 14rpx 22rpx;
-	border-radius: 999rpx;
+	padding: 13rpx 22rpx;
 	font-size: 24rpx;
 	line-height: 1;
-	color: #7d6d5a;
-	background: #f5efe4;
+	color: $lp-accent-text;
 }
 
 .favorite-btn.active {
-	color: #ffffff;
-	background: linear-gradient(135deg, #c9b08b 0%, #a98355 100%);
-	box-shadow: 0 10rpx 24rpx rgba(169, 131, 85, 0.22);
+	@include lp-primary-control;
 }
 
 .prompt-title {
@@ -412,20 +403,20 @@ const onShareTimeline = () => {
 	font-size: 42rpx;
 	font-weight: 700;
 	line-height: 1.35;
-	color: #1f1a14;
+	color: $lp-text-primary;
 }
 
 .prompt-description {
 	margin-top: 14rpx;
 	font-size: 28rpx;
 	line-height: 1.6;
-	color: #7c6e5b;
+	color: $lp-text-secondary;
 }
 
 .prompt-meta {
 	margin-top: 16rpx;
 	font-size: 24rpx;
-	color: #a18b6a;
+	color: $lp-text-tertiary;
 }
 
 .prompt-tags {
@@ -437,11 +428,10 @@ const onShareTimeline = () => {
 }
 
 .tag {
-	padding: 8rpx 16rpx;
-	border-radius: 999rpx;
+	@include lp-fill-control;
+	padding: 7rpx 15rpx;
 	font-size: 22rpx;
-	color: #7d6d5a;
-	background: #f6f0e6;
+	color: $lp-text-secondary;
 }
 
 .content-section {
@@ -459,7 +449,7 @@ const onShareTimeline = () => {
 .section-title {
 	font-size: 30rpx;
 	font-weight: 600;
-	color: #1f1a14;
+	color: $lp-text-primary;
 }
 
 .section-actions {
@@ -470,11 +460,10 @@ const onShareTimeline = () => {
 
 .share-btn,
 .copy-btn {
+	@include lp-fill-control($lp-radius-control);
 	padding: 12rpx 22rpx;
-	border-radius: 18rpx;
 	font-size: 24rpx;
-	color: #7b6c59;
-	background: #f5efe4;
+	color: $lp-accent-text;
 	line-height: 1;
 }
 
@@ -484,16 +473,14 @@ const onShareTimeline = () => {
 }
 
 .prompt-content {
-	padding: 24rpx;
-	border-radius: 20rpx;
-	background: #fbfaf7;
-	border: 1rpx solid #f0eadf;
+	@include lp-fill-control($lp-radius-control);
+	padding: 28rpx;
 }
 
 .content-text {
 	font-size: 27rpx;
 	line-height: 1.72;
-	color: #241d14;
+	color: $lp-text-primary;
 	white-space: pre-wrap;
 	word-break: break-word;
 }
@@ -514,19 +501,18 @@ const onShareTimeline = () => {
 
 .empty-text {
 	font-size: 32rpx;
-	color: #8e7f6c;
+	color: $lp-text-secondary;
 	margin-bottom: 40rpx;
 }
 
 .back-btn {
+	@include lp-primary-control($lp-radius-card);
 	padding: 20rpx 40rpx;
-	background: #b89467;
-	border-radius: 24rpx;
 }
 
 .back-text {
 	font-size: 28rpx;
 	font-weight: 500;
-	color: #ffffff;
+	color: inherit;
 }
 </style>

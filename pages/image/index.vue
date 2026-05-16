@@ -15,7 +15,7 @@
 
 			<view v-if="isLoading" class="loading-state">
 				<view class="loading-card">
-					<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
+					<icon class="loading-icon" type="waiting" size="36" color="#8e8e93" />
 					<text class="loading-title">正在加载图片案例</text>
 					<text class="loading-desc">图片提示词和封面数据正在统一同步，请稍候片刻</text>
 				</view>
@@ -27,13 +27,13 @@
 						<view class="cover-wrap">
 							<image class="cover" :src="getPromptCoverSrc(prompt)" mode="widthFix" lazy-load
 								@load="handleImageLoad(prompt.id, $event)" />
-							<view class="badge">{{ prompt.section }}</view>
 							<view v-if="getImageCount(prompt) > 1" class="count">{{ getImageCount(prompt) }} 图</view>
 						</view>
 						<view class="card-content">
 							<text class="card-title">{{ prompt.name }}</text>
 							<view class="card-meta">
 								<text class="card-author">{{ prompt.author }}</text>
+								<text v-if="prompt.section" class="card-section">#{{ prompt.section }}</text>
 							</view>
 						</view>
 					</view>
@@ -274,12 +274,10 @@ watch(paginatedPrompts, (prompts) => {
 })
 </script>
 
-<style>
+<style lang="scss">
 .container,
 .page-scroll {
-	width: 100vw;
-	height: 100vh;
-	background: #ffffff;
+	@include lp-viewport-page;
 }
 
 .loading-title,
@@ -297,12 +295,9 @@ watch(paginatedPrompts, (prompts) => {
 }
 
 .loading-card {
+	@include lp-card;
 	width: 100%;
 	padding: 40rpx 32rpx;
-	border-radius: 28rpx;
-	background: rgba(255, 255, 255, 0.96);
-	border: 1rpx solid #efe3d4;
-	box-shadow: 0 14rpx 32rpx rgba(52, 38, 18, 0.08);
 	text-align: center;
 }
 
@@ -316,20 +311,20 @@ watch(paginatedPrompts, (prompts) => {
 	margin-top: 18rpx;
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #2a2116;
+	color: $lp-text-primary;
 }
 
 .loading-desc {
 	margin-top: 14rpx;
 	font-size: 24rpx;
 	line-height: 1.6;
-	color: #8b7a66;
+	color: $lp-text-secondary;
 }
 
 .waterfall,
 .pagination,
 .empty-state {
-	padding: 0 32rpx;
+	padding: 0 $lp-page-padding;
 }
 
 .chips {
@@ -339,58 +334,57 @@ watch(paginatedPrompts, (prompts) => {
 
 .chip-list {
 	display: inline-flex;
-	gap: 14rpx;
-	padding-bottom: 6rpx;
+	gap: 12rpx;
+	padding: 2rpx 2rpx 8rpx;
 }
 
 .chip {
-	padding: 14rpx 24rpx;
-	border-radius: 999rpx;
-	background: #f5efe4;
+	@include lp-control;
+	padding: 13rpx 22rpx;
 	font-size: 24rpx;
-	color: #7a6b57;
+	color: $lp-text-secondary;
 }
 
 .chip.active {
-	background: linear-gradient(135deg, #c9b08b 0%, #a98355 100%);
-	color: #ffffff;
-	box-shadow: 0 10rpx 24rpx rgba(169, 131, 85, 0.22);
+	@include lp-accent-fill;
+	font-weight: 600;
 }
 
 .waterfall {
 	display: flex;
-	gap: 18rpx;
-	margin-top: 28rpx;
-	padding-bottom: 24rpx;
+	gap: 16rpx;
+	margin-top: 26rpx;
+	padding-bottom: 28rpx;
 }
 
 .waterfall-column {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	gap: 18rpx;
+	gap: 16rpx;
 }
 
 .card {
-	background: #ffffff;
-	border-radius: 28rpx;
+	@include lp-card;
+	width: 100%;
+	min-width: 0;
 	overflow: hidden;
-	border: 1rpx solid #efe7da;
-	box-shadow: 0 10rpx 30rpx rgba(34, 28, 18, 0.06);
+	transition: background-color 0.16s ease;
 }
 
 .waterfall-card {
 	break-inside: avoid;
+	box-sizing: border-box;
 }
 
 .card:active {
-	transform: translateY(-2rpx);
+	@include lp-card-active;
 }
 
 .cover-wrap {
 	position: relative;
 	min-height: 220rpx;
-	background: linear-gradient(135deg, #f3eee5 0%, #faf8f4 100%);
+	background: $lp-media-bg;
 }
 
 .cover {
@@ -398,20 +392,12 @@ watch(paginatedPrompts, (prompts) => {
 	display: block;
 }
 
-.badge,
 .count {
+	@include lp-overlay-pill;
 	position: absolute;
 	top: 18rpx;
-	padding: 8rpx 16rpx;
-	border-radius: 999rpx;
+	padding: 8rpx 15rpx;
 	font-size: 20rpx;
-	color: #ffffff;
-	background: rgba(26, 21, 16, 0.7);
-}
-
-.badge {
-	left: 18rpx;
-	max-width: 220rpx;
 }
 
 .count {
@@ -419,11 +405,14 @@ watch(paginatedPrompts, (prompts) => {
 }
 
 .card-content {
-	padding: 22rpx 22rpx 22rpx;
+	padding: 22rpx 22rpx 24rpx;
+	min-width: 0;
+	overflow: hidden;
 }
 
 .card-title,
-.card-author {
+.card-author,
+.card-section {
 	display: block;
 }
 
@@ -431,7 +420,7 @@ watch(paginatedPrompts, (prompts) => {
 	font-size: 28rpx;
 	font-weight: 600;
 	line-height: 1.4;
-	color: #1f1a14;
+	color: $lp-text-primary;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -441,12 +430,28 @@ watch(paginatedPrompts, (prompts) => {
 .card-meta {
 	display: flex;
 	align-items: center;
+	gap: 10rpx;
+	width: 100%;
 	margin-top: 14rpx;
+	min-width: 0;
+	overflow: hidden;
 }
 
 .card-author {
+	flex-shrink: 0;
 	font-size: 22rpx;
-	color: #9a8f80;
+	color: $lp-text-secondary;
+	white-space: nowrap;
+}
+
+.card-section {
+	display: block;
+	flex: 1 1 0;
+	width: 0;
+	min-width: 0;
+	font-size: 22rpx;
+	color: $lp-text-secondary;
+	@include lp-text-ellipsis;
 }
 
 .empty-state {
@@ -463,13 +468,13 @@ watch(paginatedPrompts, (prompts) => {
 .empty-title {
 	margin-top: 24rpx;
 	font-size: 32rpx;
-	color: #251d13;
+	color: $lp-text-primary;
 }
 
 .empty-desc {
 	margin-top: 12rpx;
 	font-size: 24rpx;
-	color: #8f806d;
+	color: $lp-text-secondary;
 }
 
 .pagination {
@@ -481,11 +486,10 @@ watch(paginatedPrompts, (prompts) => {
 }
 
 .page-btn {
+	@include lp-control;
 	padding: 16rpx 24rpx;
-	border-radius: 20rpx;
-	background: #f6f0e5;
 	font-size: 24rpx;
-	color: #6f614f;
+	color: $lp-text-secondary;
 }
 
 .page-btn.disabled {
@@ -493,11 +497,10 @@ watch(paginatedPrompts, (prompts) => {
 }
 
 .page-info {
+	@include lp-control;
 	padding: 16rpx 24rpx;
-	border-radius: 20rpx;
-	background: #f6f0e5;
 	font-size: 24rpx;
-	color: #7b6d5c;
+	color: $lp-accent-text;
 	cursor: pointer;
 }
 
@@ -510,13 +513,12 @@ watch(paginatedPrompts, (prompts) => {
 	z-index: 9999;
 	display: flex;
 	align-items: flex-end;
-	background: rgba(0, 0, 0, 0.5);
+	background: $lp-mask-bg;
 }
 
 .picker-content {
+	@include lp-bottom-sheet;
 	width: 100%;
-	background: #ffffff;
-	border-radius: 24rpx 24rpx 0 0;
 	overflow: hidden;
 }
 
@@ -525,26 +527,26 @@ watch(paginatedPrompts, (prompts) => {
 	align-items: center;
 	justify-content: space-between;
 	padding: 32rpx;
-	border-bottom: 1rpx solid #f0f0f0;
+	border-bottom: 1rpx solid $lp-border-subtle;
 }
 
 .picker-cancel,
 .picker-confirm {
 	padding: 8rpx 16rpx;
 	font-size: 32rpx;
-	color: #007aff;
+	color: $lp-accent-text;
 }
 
 .picker-title {
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #1d1d1f;
+	color: $lp-text-primary;
 }
 
 .picker-view {
 	width: 100%;
 	height: 500rpx;
-	background: #ffffff;
+	background: $lp-card-bg;
 }
 
 .picker-item {
@@ -553,6 +555,6 @@ watch(paginatedPrompts, (prompts) => {
 	justify-content: center;
 	height: 80rpx;
 	font-size: 32rpx;
-	color: #1d1d1f;
+	color: $lp-text-primary;
 }
 </style>

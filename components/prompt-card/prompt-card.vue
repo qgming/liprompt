@@ -34,40 +34,17 @@ const handleTagClick = (tag) => {
 }
 </script>
 
-<style>
+<style lang="scss">
 .prompt-card {
-	background: #ffffff;
-	border-radius: 20rpx;
-	padding: 24rpx 28rpx;
-	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
-	border: 1rpx solid #f0f0f0;
-	transition: all 0.2s ease;
+	@include lp-card;
+	padding: 26rpx 28rpx;
+	transition: background-color 0.16s ease;
 	position: relative;
 	overflow: hidden;
 }
 
 .prompt-card:active {
-	transform: translateY(-2rpx);
-	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
-	background: #f8f9fa;
-}
-
-.prompt-card::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 165, 0, 0.02) 100%);
-	border-radius: 20rpx;
-	opacity: 0;
-	transition: opacity 0.2s ease;
-	pointer-events: none;
-}
-
-.prompt-card:active::after {
-	opacity: 1;
+	@include lp-card-active;
 }
 
 .prompt-header {
@@ -94,7 +71,7 @@ const handleTagClick = (tag) => {
 	display: block;
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #1d1d1f;
+	color: $lp-text-primary;
 	margin-bottom: 8rpx;
 	word-break: break-all;
 	overflow-wrap: break-word;
@@ -104,8 +81,8 @@ const handleTagClick = (tag) => {
 .prompt-desc {
 	display: block;
 	font-size: 26rpx;
-	color: #8e8e93;
-	line-height: 1.4;
+	color: $lp-text-secondary;
+	line-height: 1.55;
 	word-break: break-all;
 	overflow-wrap: break-word;
 }
@@ -117,18 +94,17 @@ const handleTagClick = (tag) => {
 }
 
 .tag {
-	background: #f2f2f7;
-	color: #8e8e93;
+	@include lp-fill-control;
+	color: $lp-text-secondary;
 	font-size: 24rpx;
-	padding: 8rpx 16rpx;
-	border-radius: 16rpx;
-	transition: all 0.2s ease;
+	padding: 7rpx 15rpx;
 	flex-shrink: 0;
 }
 
 .tag:active {
-	background: #B8A88C;
-	color: #ffffff;
+	background: $lp-fill-bg-active;
+	color: $lp-text-primary;
+	border-color: transparent;
 }
 
 /* 没有标签时的样式调整 */

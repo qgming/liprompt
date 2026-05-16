@@ -36,17 +36,15 @@ const handleTagClick = (tag) => {
 }
 </script>
 
-<style>
+<style lang="scss">
 .card {
-	background: #ffffff;
-	border-radius: 28rpx;
+	@include lp-card;
 	padding: 24rpx 24rpx 22rpx;
-	border: 1rpx solid #efe7da;
-	box-shadow: 0 10rpx 30rpx rgba(34, 28, 18, 0.06);
+	transition: background-color 0.16s ease;
 }
 
 .card:active {
-	transform: translateY(-2rpx);
+	@include lp-card-active;
 }
 
 .emoji,
@@ -57,7 +55,7 @@ const handleTagClick = (tag) => {
 
 .emoji {
 	width: 100%;
-	font-size: 52rpx;
+	font-size: 50rpx;
 	line-height: 1.05;
 	text-align: left;
 }
@@ -66,8 +64,8 @@ const handleTagClick = (tag) => {
 	margin-top: 16rpx;
 	font-size: 30rpx;
 	font-weight: 600;
-	line-height: 1.4;
-	color: #1f1a14;
+	line-height: 1.42;
+	color: $lp-text-primary;
 	word-break: break-word;
 }
 
@@ -75,7 +73,7 @@ const handleTagClick = (tag) => {
 	margin-top: 10rpx;
 	font-size: 24rpx;
 	line-height: 1.6;
-	color: #7d6f5d;
+	color: $lp-text-secondary;
 	word-break: break-word;
 	display: -webkit-box;
 	-webkit-line-clamp: 4;
@@ -87,14 +85,13 @@ const handleTagClick = (tag) => {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10rpx;
-	margin-top: 18rpx;
+	margin-top: 20rpx;
 }
 
 .tag {
-	padding: 8rpx 16rpx;
-	border-radius: 999rpx;
+	@include lp-fill-control;
+	padding: 7rpx 14rpx;
 	font-size: 22rpx;
-	color: #7d6d5a;
-	background: #f6f0e6;
+	color: $lp-text-secondary;
 }
 </style>

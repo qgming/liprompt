@@ -89,9 +89,9 @@ const resolveSafeArea = () => {
 	const defaultTopbarHeight = uni.upx2px(64)
 
 	try {
-		const systemInfo = uni.getSystemInfoSync ? uni.getSystemInfoSync() : {}
-		const statusBarHeight = Number(systemInfo.statusBarHeight) || 0
-		const windowWidth = Number(systemInfo.windowWidth) || 0
+		const windowInfo = wx.getWindowInfo()
+		const statusBarHeight = Number(windowInfo.statusBarHeight) || 0
+		const windowWidth = Number(windowInfo.windowWidth) || 0
 		let nextSafeTop = statusBarHeight + 8
 		let nextTopbarHeight = defaultTopbarHeight
 		let nextSideInset = uni.upx2px(props.paddingHorizontalRpx)
@@ -124,7 +124,7 @@ onMounted(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 .page-topbar {
 	display: flex;
 	align-items: center;
@@ -135,12 +135,14 @@ onMounted(() => {
 }
 
 .back-pill {
+	@include lp-card($lp-radius-pill);
 	display: inline-flex;
 	align-items: center;
 	gap: 10rpx;
-	background: #ffffff;
-	border: 1rpx solid rgba(0, 0, 0, 0.06);
-	box-sizing: border-box;
+}
+
+.back-pill:active {
+	@include lp-card-active;
 }
 
 .back-icon {
@@ -154,7 +156,7 @@ onMounted(() => {
 	display: block;
 	font-size: 28rpx;
 	font-weight: 500;
-	color: #4b4b4b;
+	color: $lp-text-primary;
 	line-height: 1;
 }
 </style>

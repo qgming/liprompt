@@ -4,7 +4,7 @@
 
 		<view v-if="isLoading" class="loading-state compact">
 			<view class="loading-card">
-				<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
+				<icon class="loading-icon" type="waiting" size="36" color="#8e8e93" />
 				<text class="loading-title">正在加载分类</text>
 				<text class="loading-desc">分类和提示词数据正在统一同步，请稍候片刻</text>
 			</view>
@@ -165,11 +165,11 @@ onUnmounted(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 .container {
+	@include lp-page;
 	width: 100vw;
 	height: 100vh;
-	background: #ffffff;
 	display: flex;
 	flex-direction: column;
 	font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
@@ -195,12 +195,9 @@ onUnmounted(() => {
 }
 
 .loading-card {
+	@include lp-card;
 	width: 100%;
 	padding: 40rpx 32rpx;
-	border-radius: 28rpx;
-	background: rgba(255, 255, 255, 0.96);
-	border: 1rpx solid #efe3d4;
-	box-shadow: 0 14rpx 32rpx rgba(52, 38, 18, 0.08);
 	text-align: center;
 }
 
@@ -214,35 +211,37 @@ onUnmounted(() => {
 	margin-top: 18rpx;
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #2a2116;
+	color: $lp-text-primary;
 }
 
 .loading-desc {
 	margin-top: 14rpx;
 	font-size: 24rpx;
 	line-height: 1.6;
-	color: #8b7a66;
+	color: $lp-text-secondary;
 }
 
 /* 左侧导航栏 */
 .sidebar {
-	width: 160rpx;
+	width: 168rpx;
 	height: 100%;
-	background: #ffffff;
+	@include lp-page;
+	border-right: 1rpx solid $lp-border-subtle;
 	flex-shrink: 0;
+	box-sizing: border-box;
 }
 
 .category-nav {
-	padding-top: 0;
+	padding: 6rpx 8rpx 28rpx;
 }
 
 .nav-item {
 	display: flex;
 	align-items: center;
 	padding: 16rpx 12rpx;
-	margin: 8rpx 8rpx;
-	border-radius: 16rpx;
-	transition: all 0.2s ease;
+	margin: 8rpx 0;
+	border-radius: $lp-radius-control;
+	transition: background-color 0.16s ease;
 	position: relative;
 	gap: 8rpx;
 	min-height: 60rpx;
@@ -250,9 +249,8 @@ onUnmounted(() => {
 }
 
 .nav-item.active {
-	background: linear-gradient(135deg, #f8f4e6 0%, #f0e6d2 100%);
-	color: #B8A88C;
-	box-shadow: 0 2rpx 8rpx rgba(184, 168, 140, 0.15);
+	@include lp-card($lp-radius-control);
+	@include lp-accent-fill;
 }
 
 .nav-item.active::before {
@@ -263,7 +261,7 @@ onUnmounted(() => {
 	transform: translateY(-50%);
 	width: 4rpx;
 	height: 36rpx;
-	background: #B8A88C;
+	background: $lp-accent;
 	border-radius: 0 2rpx 2rpx 0;
 	z-index: 1;
 }
@@ -271,7 +269,7 @@ onUnmounted(() => {
 .nav-name {
 	font-size: 26rpx;
 	font-weight: 600;
-	color: #1d1d1f;
+	color: $lp-text-primary;
 	line-height: 1.3;
 	flex: 1;
 	overflow: hidden;
@@ -280,62 +278,57 @@ onUnmounted(() => {
 }
 
 .nav-count-badge {
-	background: #f2f2f7;
-	color: #8e8e93;
+	@include lp-fill-control(12rpx);
+	background: $lp-fill-bg;
+	color: $lp-text-tertiary;
 	font-size: 20rpx;
 	font-weight: 500;
 	padding: 4rpx 10rpx;
-	border-radius: 12rpx;
 	min-width: 32rpx;
 	text-align: center;
-	transition: all 0.2s ease;
 }
 
 .nav-item.active .nav-name {
-	color: #B8A88C;
+	color: $lp-accent-text;
 }
 
 .nav-item.active .nav-count-badge {
-	background: #B8A88C;
-	color: #ffffff;
+	@include lp-fill-control(12rpx);
+	box-sizing: border-box;
+	color: $lp-accent-text;
 }
 
 /* 右侧内容区域 */
 .content-area {
 	flex: 1;
 	height: 100%;
-	background: #ffffff;
+	@include lp-page;
 	-webkit-overflow-scrolling: touch;
 	scroll-behavior: smooth;
 }
 
 .content-wrapper {
-	padding: 20rpx;
-	padding-right: 32rpx;
+	padding: 18rpx 30rpx 32rpx 20rpx;
 }
 
 /* 提示词网格 */
 .prompt-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300rpx, 1fr));
-	gap: 24rpx;
+	gap: 18rpx;
 }
 
 .prompt-card {
-	background: #ffffff;
-	border-radius: 20rpx;
-	padding: 28rpx;
-	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
-	border: 1rpx solid #f0f0f0;
-	transition: all 0.2s ease;
+	@include lp-card;
+	padding: 26rpx;
+	transition: background-color 0.16s ease;
 	will-change: transform;
 	backface-visibility: hidden;
 	cursor: pointer;
 }
 
 .prompt-card:active {
-	transform: translateY(-4rpx);
-	box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
+	@include lp-card-active;
 }
 
 .card-header {
@@ -352,15 +345,15 @@ onUnmounted(() => {
 .card-name {
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #1d1d1f;
+	color: $lp-text-primary;
 	line-height: 1.3;
 }
 
 .card-desc {
 	display: block;
 	font-size: 26rpx;
-	color: #8e8e93;
-	line-height: 1.5;
+	color: $lp-text-secondary;
+	line-height: 1.58;
 	margin-bottom: 20rpx;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -376,12 +369,10 @@ onUnmounted(() => {
 }
 
 .tag {
-	background: #f2f2f7;
-	color: #8e8e93;
+	@include lp-fill-control;
+	color: $lp-text-secondary;
 	font-size: 22rpx;
 	padding: 6rpx 12rpx;
-	border-radius: 12rpx;
-	transition: all 0.2s ease;
 }
 
 /* 空状态 */
@@ -403,13 +394,13 @@ onUnmounted(() => {
 .empty-title {
 	font-size: 36rpx;
 	font-weight: 600;
-	color: #1d1d1f;
+	color: $lp-text-primary;
 	margin-bottom: 16rpx;
 }
 
 .empty-desc {
 	font-size: 28rpx;
-	color: #8e8e93;
+	color: $lp-text-secondary;
 	text-align: center;
 	line-height: 1.5;
 }
@@ -417,7 +408,7 @@ onUnmounted(() => {
 /* 响应式设计 */
 @media (max-width: 750rpx) {
 	.sidebar {
-		width: 140rpx;
+		width: 150rpx;
 	}
 
 	.nav-item {
@@ -433,7 +424,7 @@ onUnmounted(() => {
 	.nav-count-badge {
 		font-size: 18rpx;
 		padding: 3rpx 8rpx;
-		border-radius: 10rpx;
+		border-radius: 14rpx;
 		min-width: 28rpx;
 	}
 
@@ -442,7 +433,7 @@ onUnmounted(() => {
 	}
 
 	.content-wrapper {
-		padding: 24rpx;
+		padding: 22rpx;
 		padding-top: 16rpx;
 	}
 
@@ -477,7 +468,7 @@ onUnmounted(() => {
 	.tag {
 		font-size: 20rpx;
 		padding: 4rpx 10rpx;
-		border-radius: 10rpx;
+		border-radius: 14rpx;
 	}
 }
 

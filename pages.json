@@ -40,7 +40,7 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "灵感提示词",
 		"navigationBarBackgroundColor": "#ffffff",
-		"backgroundColor": "#fafbfc",
+		"backgroundColor": "#f5f5f7",
 		"app-plus": {
 			"titleNView": {
 				"titleSize": "36rpx",
@@ -51,8 +51,8 @@
 		}
 	},
 	"tabBar": {
-		"color": "#8e8e93",
-		"selectedColor": "#B8A88C",
+		"color": "#8b8176",
+		"selectedColor": "#a66f24",
 		"borderStyle": "white",
 		"backgroundColor": "#ffffff",
 		"height": "98rpx",

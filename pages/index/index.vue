@@ -6,7 +6,7 @@
 
 			<view v-if="isLoading" class="loading-state">
 				<view class="loading-card">
-					<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
+					<icon class="loading-icon" type="waiting" size="36" color="#8e8e93" />
 					<text class="loading-title">正在加载提示词</text>
 					<text class="loading-desc">首页和图片库数据正在统一同步，请稍候片刻</text>
 				</view>
@@ -226,12 +226,10 @@ const onShareTimeline = () => {
 }
 </script>
 
-<style>
+<style lang="scss">
 .container,
 .page-scroll {
-	width: 100vw;
-	height: 100vh;
-	background: #ffffff;
+	@include lp-viewport-page;
 }
 
 .results-title,
@@ -249,11 +247,11 @@ const onShareTimeline = () => {
 .waterfall,
 .pagination,
 .empty-state {
-	padding: 0 32rpx;
+	padding: 0 $lp-page-padding;
 }
 
 .recommend-section {
-	margin-top: 20rpx;
+	margin-top: 24rpx;
 }
 
 .recommend-header {
@@ -263,7 +261,7 @@ const onShareTimeline = () => {
 .recommend-title {
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #241d14;
+	color: $lp-text-primary;
 }
 
 .recommend-scroll {
@@ -272,8 +270,8 @@ const onShareTimeline = () => {
 
 .recommend-list {
 	display: inline-flex;
-	gap: 16rpx;
-	padding-bottom: 8rpx;
+	gap: 18rpx;
+	padding: 2rpx 2rpx 10rpx;
 }
 
 .loading-state {
@@ -283,12 +281,9 @@ const onShareTimeline = () => {
 }
 
 .loading-card {
+	@include lp-card;
 	width: 100%;
 	padding: 40rpx 32rpx;
-	border-radius: 28rpx;
-	background: rgba(255, 255, 255, 0.96);
-	border: 1rpx solid #efe3d4;
-	box-shadow: 0 14rpx 32rpx rgba(52, 38, 18, 0.08);
 	text-align: center;
 }
 
@@ -296,50 +291,49 @@ const onShareTimeline = () => {
 	margin-top: 18rpx;
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #2a2116;
+	color: $lp-text-primary;
 }
 
 .loading-desc {
 	margin-top: 14rpx;
 	font-size: 24rpx;
 	line-height: 1.6;
-	color: #8b7a66;
+	color: $lp-text-secondary;
 }
 
 .results-bar {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-top: 24rpx;
+	margin-top: 30rpx;
 }
 
 .results-title {
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #241d14;
+	color: $lp-text-primary;
 }
 
 .results-action {
-	padding: 14rpx 22rpx;
-	border-radius: 999rpx;
-	background: #f6f0e5;
+	@include lp-control;
+	@include lp-accent-fill;
+	padding: 13rpx 22rpx;
 	font-size: 24rpx;
 	font-weight: 500;
-	color: #7b6d5c;
 }
 
 .waterfall {
 	display: flex;
-	gap: 18rpx;
-	margin-top: 24rpx;
-	padding-bottom: 24rpx;
+	gap: 16rpx;
+	margin-top: 22rpx;
+	padding-bottom: 28rpx;
 }
 
 .waterfall-column {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	gap: 18rpx;
+	gap: 16rpx;
 }
 
 .empty-state {
@@ -356,33 +350,32 @@ const onShareTimeline = () => {
 .empty-title {
 	margin-top: 24rpx;
 	font-size: 32rpx;
-	color: #251d13;
+	color: $lp-text-primary;
 }
 
 .empty-desc {
 	margin-top: 12rpx;
 	font-size: 24rpx;
-	color: #8f806d;
+	color: $lp-text-secondary;
 }
 
 .pagination {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 18rpx;
-	padding-bottom: 48rpx;
+	gap: 16rpx;
+	padding-bottom: 56rpx;
 }
 
 .page-btn,
 .page-info {
+	@include lp-control;
 	padding: 16rpx 24rpx;
-	border-radius: 20rpx;
-	background: #f6f0e5;
 	font-size: 24rpx;
 }
 
 .page-btn {
-	color: #6f614f;
+	color: $lp-text-secondary;
 }
 
 .page-btn.disabled {
@@ -390,7 +383,7 @@ const onShareTimeline = () => {
 }
 
 .page-info {
-	color: #7b6d5c;
+	color: $lp-accent-text;
 }
 
 .picker-mask {
@@ -402,13 +395,12 @@ const onShareTimeline = () => {
 	z-index: 9999;
 	display: flex;
 	align-items: flex-end;
-	background: rgba(0, 0, 0, 0.5);
+	background: $lp-mask-bg;
 }
 
 .picker-content {
+	@include lp-bottom-sheet;
 	width: 100%;
-	background: #ffffff;
-	border-radius: 24rpx 24rpx 0 0;
 	overflow: hidden;
 }
 
@@ -417,26 +409,26 @@ const onShareTimeline = () => {
 	align-items: center;
 	justify-content: space-between;
 	padding: 32rpx;
-	border-bottom: 1rpx solid #f0f0f0;
+	border-bottom: 1rpx solid $lp-border-subtle;
 }
 
 .picker-cancel,
 .picker-confirm {
 	padding: 8rpx 16rpx;
 	font-size: 32rpx;
-	color: #007aff;
+	color: $lp-accent-text;
 }
 
 .picker-title {
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #1d1d1f;
+	color: $lp-text-primary;
 }
 
 .picker-view {
 	width: 100%;
 	height: 500rpx;
-	background: #ffffff;
+	background: $lp-card-bg;
 }
 
 .picker-item {
@@ -445,6 +437,6 @@ const onShareTimeline = () => {
 	justify-content: center;
 	height: 80rpx;
 	font-size: 32rpx;
-	color: #1d1d1f;
+	color: $lp-text-primary;
 }
 </style>

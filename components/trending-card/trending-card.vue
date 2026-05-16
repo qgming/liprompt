@@ -20,15 +20,12 @@ const handleClick = () => {
 }
 </script>
 
-<style>
+<style lang="scss">
 .trending-card {
-	background: #ffffff;
-	border-radius: 22rpx;
+	@include lp-card;
 	padding: 12rpx 22rpx;
 	height: 92rpx;
-	box-shadow: 0 10rpx 24rpx rgba(34, 28, 18, 0.06);
-	border: 1rpx solid #efe7da;
-	transition: all 0.2s ease;
+	transition: background-color 0.16s ease;
 	display: inline-flex;
 	flex: 0 0 auto;
 	width: auto;
@@ -39,9 +36,7 @@ const handleClick = () => {
 }
 
 .trending-card:active {
-	transform: translateY(-2rpx);
-	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
-	background: #f8f9fa;
+	@include lp-card-active;
 }
 
 .trending-emoji {
@@ -53,7 +48,7 @@ const handleClick = () => {
 	display: block;
 	font-size: 28rpx;
 	font-weight: 600;
-	color: #241d14;
+	color: $lp-text-primary;
 	line-height: 1.3;
 	text-align: left;
 	word-break: keep-all;

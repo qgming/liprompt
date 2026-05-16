@@ -44,9 +44,13 @@ const handleInput = (event) => {
 }
 </script>
 
-<style>
+<style lang="scss">
+.hero-shell {
+	@include lp-page;
+}
+
 .hero {
-	padding: 116rpx 32rpx 12rpx;
+	padding: 116rpx $lp-page-padding 16rpx;
 }
 
 .hero-eyebrow,
@@ -56,19 +60,20 @@ const handleInput = (event) => {
 
 .hero-eyebrow {
 	font-size: 22rpx;
-	letter-spacing: 4rpx;
-	color: #9d8560;
+	letter-spacing: 3rpx;
+	color: $lp-text-tertiary;
 }
 
 .hero-title {
-	margin-top: 10rpx;
-	font-size: 52rpx;
+	margin-top: 12rpx;
+	font-size: 54rpx;
 	font-weight: 700;
-	color: #221c12;
+	line-height: 1.12;
+	color: $lp-text-primary;
 }
 
 .toolbar {
-	padding: 0 32rpx 6rpx;
+	padding: 0 $lp-page-padding 12rpx;
 }
 
 .search-box {
@@ -78,24 +83,23 @@ const handleInput = (event) => {
 }
 
 .search-input {
+	@include lp-card;
 	flex: 1;
-	height: 80rpx;
-	padding: 0 80rpx 0 28rpx;
-	background: #f5f5f7;
-	border: none;
-	border-radius: 24rpx;
+	height: 88rpx;
+	padding: 0 86rpx 0 30rpx;
 	font-size: 30rpx;
-	color: #1d1d1f;
+	color: $lp-text-primary;
 }
 
 .search-input::placeholder {
-	color: #8e8e93;
+	color: $lp-text-tertiary;
 }
 
 .search-icon {
 	position: absolute;
-	right: 28rpx;
+	right: 30rpx;
 	width: 36rpx;
 	height: 36rpx;
+	opacity: 0.72;
 }
 </style>

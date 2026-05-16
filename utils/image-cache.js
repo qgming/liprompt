@@ -139,7 +139,7 @@ function removeSavedFile(filePath) {
       return;
     }
 
-    uni.removeSavedFile({
+    wx.getFileSystemManager().removeSavedFile({
       filePath,
       complete: () => resolve(),
     });

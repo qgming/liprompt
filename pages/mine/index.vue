@@ -8,7 +8,7 @@
 
 			<view v-if="isLoading" class="loading-state">
 				<view class="surface loading-card">
-					<icon class="loading-icon" type="waiting" size="36" color="#b89467" />
+					<icon class="loading-icon" type="waiting" size="36" color="#8e8e93" />
 					<text class="loading-title">正在整理我的提示词</text>
 					<text class="loading-desc">收藏记录和提示词总量正在同步</text>
 				</view>
@@ -202,57 +202,321 @@ onShow(() => {
 })
 </script>
 
-<style>
-.container,.page-scroll{width:100vw;height:100vh;min-height:100vh;background:linear-gradient(180deg,#fcfaf7 0%,#ffffff 28%);box-sizing:border-box}
-.hero,.section,.loading-state{padding:0 32rpx}
-.eyebrow,.title,.section-title,.section-meta,.loading-title,.loading-desc,.stat-label,.stat-value,.card-title,.card-meta,.empty-title,.empty-desc,.about-title,.about-desc,.about-subtitle,.project-name,.project-url{display:block}
-.hero{padding-top:116rpx}
-.eyebrow{font-size:22rpx;letter-spacing:6rpx;color:#a89376}
-.title{margin-top:18rpx;font-size:52rpx;font-weight:700;color:#201910}
-.loading-state{padding-top:40rpx}
-.surface{background:#fff;border:1rpx solid #efe6d8;border-radius:28rpx;box-shadow:0 10rpx 30rpx rgba(34,28,18,.06)}
-.loading-card,.stat-card,.favorite-card,.about-card,.empty-state{padding:28rpx}
-.loading-card{padding:40rpx 32rpx;text-align:center}
-.loading-title{margin-top:18rpx;font-size:32rpx;font-weight:600;color:#2a2116}
-.loading-desc,.about-desc,.empty-desc{margin-top:14rpx;font-size:24rpx;line-height:1.7;color:#7c6e5a}
-.section{margin-top:28rpx}
-.last-section{padding-bottom:56rpx}
-.section-header,.card-top{display:flex;align-items:center;justify-content:space-between}
-.section-header{margin-bottom:20rpx}
-.section-title{font-size:32rpx;font-weight:600;color:#241d14}
-.section-meta,.card-meta{font-size:24rpx;color:#9a8b78}
-.stats-row{display:flex;gap:18rpx}
-.stats-row .stat-card{flex:1;text-align:center}
-.waterfall{display:flex;justify-content:space-between;align-items:flex-start}
-.waterfall-column{width:calc((100% - 18rpx)/2);display:flex;flex-direction:column;min-width:0}
-.stat-label{font-size:24rpx;color:#917b5e}
-.stat-value{margin-top:18rpx;font-size:56rpx;font-weight:700;line-height:1;color:#201910}
-.favorite-card{width:100%;box-sizing:border-box;margin-bottom:18rpx}
-.waterfall-column .favorite-card:last-child{margin-bottom:0}
-.favorite-card:active{transform:translateY(-2rpx)}
-.type-badge,.favorite-action,.tag{border-radius:999rpx;font-size:22rpx;line-height:1}
-.type-badge,.favorite-action{padding:10rpx 18rpx}
-.type-badge{color:#7b6954;background:#f5ede2}
-.type-badge.image{color:#8b5c2f;background:#f9efe4}
-.type-badge.text{color:#6d5d4e;background:#f4f1ea}
-.favorite-action{color:#fff;background:linear-gradient(135deg,#c7ad87 0%,#a47e4d 100%)}
-.emoji{margin-top:18rpx;font-size:48rpx;line-height:1}
-.card-title{margin-top:16rpx;font-size:30rpx;font-weight:600;line-height:1.4;color:#1f1a14;word-break:break-word}
-.card-meta{margin-top:12rpx}
-.tags{display:flex;flex-wrap:wrap;gap:10rpx;margin-top:18rpx}
-.tag{padding:8rpx 16rpx;color:#7d6d5a;background:#f6f0e6}
-.empty-state{text-align:center}
-.empty-title,.about-title{font-size:30rpx;font-weight:600;color:#251d13}
-.empty-action{display:inline-flex;align-items:center;justify-content:center;margin-top:24rpx;padding:18rpx 24rpx;border-radius:20rpx;background:linear-gradient(135deg,#c7ad87 0%,#a47e4d 100%);font-size:26rpx;font-weight:600;color:#fff}
-.about-card{text-align:left;padding:34rpx 30rpx 30rpx}
-.about-title{font-size:34rpx;color:#201910}
-.about-desc{max-width:100%;line-height:1.8}
-.about-divider{height:1rpx;margin:24rpx 0 20rpx;background:#efe6d8}
-.about-subtitle{font-size:22rpx;font-weight:600;letter-spacing:2rpx;color:#9b8a73}
-.project-list{display:flex;flex-direction:column;margin-top:18rpx;text-align:left}
-.project-item{padding:18rpx 0;border-bottom:1rpx solid #f1eadf}
-.project-item:last-child{padding-bottom:0;border-bottom:none}
-.project-item:active{opacity:.72}
-.project-name{font-size:24rpx;font-weight:600;color:#5f4b31}
-.project-url{margin-top:8rpx;font-size:22rpx;line-height:1.6;color:#8b7a66;word-break:break-all}
+<style lang="scss">
+.container,
+.page-scroll {
+	@include lp-viewport-page;
+	width: 100vw;
+	height: 100vh;
+	min-height: 100vh;
+}
+
+.hero,
+.section,
+.loading-state {
+	padding: 0 $lp-page-padding;
+}
+
+.eyebrow,
+.title,
+.section-title,
+.section-meta,
+.loading-title,
+.loading-desc,
+.stat-label,
+.stat-value,
+.card-title,
+.card-meta,
+.empty-title,
+.empty-desc,
+.about-title,
+.about-desc,
+.about-subtitle,
+.project-name,
+.project-url {
+	display: block;
+}
+
+.hero {
+	padding-top: 116rpx;
+}
+
+.eyebrow {
+	font-size: 22rpx;
+	letter-spacing: 3rpx;
+	color: $lp-text-tertiary;
+}
+
+.title {
+	margin-top: 14rpx;
+	font-size: 54rpx;
+	font-weight: 700;
+	line-height: 1.12;
+	color: $lp-text-primary;
+}
+
+.loading-state {
+	padding-top: 40rpx;
+}
+
+.surface {
+	@include lp-card;
+}
+
+.loading-card,
+.stat-card,
+.favorite-card,
+.about-card,
+.empty-state {
+	padding: 28rpx;
+}
+
+.loading-card {
+	padding: 40rpx 32rpx;
+	text-align: center;
+}
+
+.loading-title {
+	margin-top: 18rpx;
+	font-size: 32rpx;
+	font-weight: 600;
+	color: $lp-text-primary;
+}
+
+.loading-desc,
+.about-desc,
+.empty-desc {
+	margin-top: 14rpx;
+	font-size: 24rpx;
+	line-height: 1.7;
+	color: $lp-text-secondary;
+}
+
+.section {
+	margin-top: 30rpx;
+}
+
+.last-section {
+	padding-bottom: 56rpx;
+}
+
+.section-header,
+.card-top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.section-header {
+	margin-bottom: 20rpx;
+}
+
+.section-title {
+	font-size: 32rpx;
+	font-weight: 600;
+	color: $lp-text-primary;
+}
+
+.section-meta,
+.card-meta {
+	font-size: 24rpx;
+	color: $lp-text-tertiary;
+}
+
+.stats-row {
+	display: flex;
+	gap: 16rpx;
+}
+
+.stats-row .stat-card {
+	flex: 1;
+	text-align: center;
+}
+
+.stat-label {
+	font-size: 24rpx;
+	color: $lp-text-secondary;
+}
+
+.stat-value {
+	margin-top: 18rpx;
+	font-size: 56rpx;
+	font-weight: 700;
+	line-height: 1;
+	color: $lp-text-primary;
+}
+
+.waterfall {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 16rpx;
+}
+
+.waterfall-column {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	gap: 16rpx;
+}
+
+.favorite-card {
+	width: 100%;
+	box-sizing: border-box;
+	transition: background-color 0.16s ease;
+}
+
+.favorite-card:active {
+	@include lp-card-active;
+}
+
+.type-badge,
+.favorite-action,
+.tag {
+	border-radius: 999rpx;
+	font-size: 22rpx;
+	line-height: 1;
+}
+
+.type-badge,
+.favorite-action {
+	padding: 10rpx 18rpx;
+}
+
+.type-badge {
+	@include lp-fill-control;
+	color: $lp-text-secondary;
+}
+
+.type-badge.image {
+	color: $lp-text-secondary;
+	background: $lp-fill-bg;
+}
+
+.type-badge.text {
+	color: $lp-accent-text;
+	background: $lp-fill-bg;
+	border-color: transparent;
+}
+
+.favorite-action {
+	@include lp-primary-control;
+}
+
+.emoji {
+	margin-top: 18rpx;
+	font-size: 48rpx;
+	line-height: 1;
+}
+
+.card-title {
+	margin-top: 16rpx;
+	font-size: 30rpx;
+	font-weight: 600;
+	line-height: 1.42;
+	color: $lp-text-primary;
+	word-break: break-word;
+}
+
+.card-meta {
+	margin-top: 12rpx;
+}
+
+.tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10rpx;
+	margin-top: 18rpx;
+}
+
+.tag {
+	@include lp-fill-control;
+	padding: 7rpx 14rpx;
+	color: $lp-text-secondary;
+}
+
+.empty-state {
+	text-align: center;
+}
+
+.empty-title,
+.about-title {
+	font-size: 30rpx;
+	font-weight: 600;
+	color: $lp-text-primary;
+}
+
+.empty-action {
+	@include lp-primary-control($lp-radius-control);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 24rpx;
+	padding: 18rpx 24rpx;
+	font-size: 26rpx;
+	font-weight: 600;
+}
+
+.about-card {
+	text-align: left;
+	padding: 34rpx 30rpx 30rpx;
+}
+
+.about-title {
+	font-size: 34rpx;
+}
+
+.about-desc {
+	max-width: 100%;
+	line-height: 1.8;
+}
+
+.about-divider {
+	height: 1rpx;
+	margin: 24rpx 0 20rpx;
+	background: $lp-border-subtle;
+}
+
+.about-subtitle {
+	font-size: 22rpx;
+	font-weight: 600;
+	letter-spacing: 2rpx;
+	color: $lp-text-tertiary;
+}
+
+.project-list {
+	display: flex;
+	flex-direction: column;
+	margin-top: 18rpx;
+	text-align: left;
+}
+
+.project-item {
+	padding: 18rpx 0;
+	border-bottom: 1rpx solid $lp-border-subtle;
+}
+
+.project-item:last-child {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.project-item:active {
+	opacity: 0.72;
+}
+
+.project-name {
+	font-size: 24rpx;
+	font-weight: 600;
+	color: $lp-text-primary;
+}
+
+.project-url {
+	margin-top: 8rpx;
+	font-size: 22rpx;
+	line-height: 1.6;
+	color: $lp-text-secondary;
+	word-break: break-all;
+}
 </style>

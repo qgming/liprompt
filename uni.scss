@@ -1,76 +1,95 @@
-/**
- * 这里是uni-app内置的常用样式变量
- *
- * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
- * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
- *
- */
+/* LiPrompt design tokens */
+$lp-page-bg: #f5f5f7;
+$lp-card-bg: #ffffff;
+$lp-fill-bg: #f2f2f7;
+$lp-fill-bg-active: #e5e5ea;
+$lp-accent-bg: #f4ead8;
+$lp-accent-bg-active: #ead8bb;
+$lp-media-bg: #ece2d1;
+$lp-text-primary: #1d1d1f;
+$lp-text-secondary: #6e6e73;
+$lp-text-tertiary: #8e8e93;
+$lp-accent: #a66f24;
+$lp-accent-text: #7a4e18;
+$lp-danger: #ff3b30;
+$lp-border-subtle: rgba(60, 60, 67, 0.08);
+$lp-border-regular: rgba(60, 60, 67, 0.12);
+$lp-mask-bg: rgba(0, 0, 0, 0.42);
+$lp-overlay-bg: rgba(29, 29, 31, 0.72);
+$lp-radius-card: 28rpx;
+$lp-radius-control: 22rpx;
+$lp-radius-pill: 999rpx;
+$lp-page-padding: 32rpx;
+$lp-column-gap: 16rpx;
+$lp-section-gap: 24rpx;
 
-/**
- * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
- *
- * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
- */
+@mixin lp-page {
+	background: $lp-page-bg;
+}
 
-/* 颜色变量 */
+@mixin lp-viewport-page {
+	width: 100vw;
+	height: 100vh;
+	background: $lp-page-bg;
+	box-sizing: border-box;
+}
 
-/* 行为相关颜色 */
-$uni-color-primary: #007aff;
-$uni-color-success: #4cd964;
-$uni-color-warning: #f0ad4e;
-$uni-color-error: #dd524d;
+@mixin lp-card($radius: $lp-radius-card) {
+	background: $lp-card-bg;
+	border: 1rpx solid $lp-border-subtle;
+	border-radius: $radius;
+	box-shadow: none;
+	box-sizing: border-box;
+}
 
-/* 文字基本颜色 */
-$uni-text-color:#333;//基本色
-$uni-text-color-inverse:#fff;//反色
-$uni-text-color-grey:#999;//辅助灰色，如加载更多的提示信息
-$uni-text-color-placeholder: #808080;
-$uni-text-color-disable:#c0c0c0;
+@mixin lp-card-active {
+	background: $lp-accent-bg;
+}
 
-/* 背景颜色 */
-$uni-bg-color:#ffffff;
-$uni-bg-color-grey:#f8f8f8;
-$uni-bg-color-hover:#f1f1f1;//点击状态颜色
-$uni-bg-color-mask:rgba(0, 0, 0, 0.4);//遮罩颜色
+@mixin lp-control {
+	background: $lp-card-bg;
+	border: 1rpx solid $lp-border-subtle;
+	border-radius: $lp-radius-control;
+	box-shadow: none;
+	box-sizing: border-box;
+}
 
-/* 边框颜色 */
-$uni-border-color:#c8c7cc;
+@mixin lp-fill-control($radius: $lp-radius-pill) {
+	background: $lp-fill-bg;
+	border: 1rpx solid transparent;
+	border-radius: $radius;
+	box-sizing: border-box;
+}
 
-/* 尺寸变量 */
+@mixin lp-primary-control($radius: $lp-radius-pill) {
+	background: $lp-accent;
+	border: 1rpx solid transparent;
+	border-radius: $radius;
+	box-shadow: none;
+	box-sizing: border-box;
+	color: #ffffff;
+}
 
-/* 文字尺寸 */
-$uni-font-size-sm:12px;
-$uni-font-size-base:14px;
-$uni-font-size-lg:16px;
+@mixin lp-accent-fill {
+	background: $lp-accent-bg;
+	border-color: transparent;
+	color: $lp-accent-text;
+}
 
-/* 图片尺寸 */
-$uni-img-size-sm:20px;
-$uni-img-size-base:26px;
-$uni-img-size-lg:40px;
+@mixin lp-overlay-pill {
+	background: $lp-overlay-bg;
+	border-radius: $lp-radius-pill;
+	color: #ffffff;
+}
 
-/* Border Radius */
-$uni-border-radius-sm: 2px;
-$uni-border-radius-base: 3px;
-$uni-border-radius-lg: 6px;
-$uni-border-radius-circle: 50%;
+@mixin lp-bottom-sheet {
+	background: $lp-card-bg;
+	border-radius: 32rpx 32rpx 0 0;
+	box-shadow: none;
+}
 
-/* 水平间距 */
-$uni-spacing-row-sm: 5px;
-$uni-spacing-row-base: 10px;
-$uni-spacing-row-lg: 15px;
-
-/* 垂直间距 */
-$uni-spacing-col-sm: 4px;
-$uni-spacing-col-base: 8px;
-$uni-spacing-col-lg: 12px;
-
-/* 透明度 */
-$uni-opacity-disabled: 0.3; // 组件禁用态的透明度
-
-/* 文章场景相关 */
-$uni-color-title: #2C405A; // 文章标题颜色
-$uni-font-size-title:20px;
-$uni-color-subtitle: #555555; // 二级标题颜色
-$uni-font-size-subtitle:26px;
-$uni-color-paragraph: #3F536E; // 文章段落颜色
-$uni-font-size-paragraph:15px;
+@mixin lp-text-ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

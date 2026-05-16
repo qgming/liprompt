@@ -1,10 +1,9 @@
+const TEXT_PROMPTS_URL = "https://pages.qgming.com/ljprompt/textprompt.json";
+const IMAGE_PROMPTS_URL = "https://pages.qgming.com/ljprompt/gptimage.json";
+
 export const REMOTE_DATA_URLS = {
-  textPrompts: [
-    "https://www.qgming.com/json/text-prompts.json",
-  ],
-  imagePrompts: [
-    "https://www.qgming.com/json/image-prompts.json",
-  ],
+  textPrompts: [TEXT_PROMPTS_URL],
+  imagePrompts: [IMAGE_PROMPTS_URL],
 };
 
 export const REMOTE_STORAGE_KEYS = {

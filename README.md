@@ -134,8 +134,8 @@ cd liprompt
 
 2. 将这两个 JSON 发布到：
 
-   - `https://www.qgming.com/json/text-prompts.json`
-   - `https://www.qgming.com/json/image-prompts.json`
+   - `https://pages.qgming.com/ljprompt/textprompt.json`
+   - `https://pages.qgming.com/ljprompt/gptimage.json`
 
 3. 确认 `data/remote-config.js` 中的固定地址保持一致。
 

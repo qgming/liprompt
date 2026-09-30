@@ -1,0 +1,88 @@
+@use '../../styles/mixins' as *;
+
+.card {
+  @include lp-card;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.card-hover {
+  @include lp-card-active;
+}
+
+.cover-wrap {
+  position: relative;
+  min-height: 200rpx;
+  background: $lp-media-bg;
+}
+
+.cover {
+  width: 100%;
+  display: block;
+}
+
+.cover-fallback {
+  height: 220rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fallback-text {
+  font-size: 22rpx;
+  color: $lp-text-tertiary;
+}
+
+.count {
+  @include lp-overlay-pill;
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  padding: 8rpx 15rpx;
+  font-size: 20rpx;
+}
+
+.card-content {
+  padding: 20rpx 22rpx 24rpx;
+  min-width: 0;
+}
+
+.card-title,
+.card-author,
+.card-section {
+  display: block;
+}
+
+.card-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 1.4;
+  color: $lp-text-primary;
+  @include lp-line-clamp(2);
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  width: 100%;
+  margin-top: 12rpx;
+  min-width: 0;
+}
+
+.card-author {
+  flex-shrink: 0;
+  font-size: 22rpx;
+  color: $lp-text-secondary;
+  white-space: nowrap;
+}
+
+.card-section {
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  font-size: 22rpx;
+  color: $lp-text-secondary;
+  @include lp-text-ellipsis;
+}

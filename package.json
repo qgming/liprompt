@@ -1,0 +1,30 @@
+{
+  "name": "liprompt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "流金提示词 · 微信小程序（原生 TypeScript + Sass）",
+  "scripts": {
+    "build": "node scripts/build.cjs",
+    "watch": "node scripts/build.cjs --watch",
+    "clean": "node scripts/build.cjs --clean",
+    "typecheck": "tsc --noEmit",
+    "verify": "node scripts/verify-refs.cjs",
+    "check": "npm run typecheck && npm run verify && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qgming/liprompt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qgming/liprompt/issues"
+  },
+  "homepage": "https://github.com/qgming/liprompt#readme",
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "sass": "^1.105.1",
+    "typescript": "^7.0.2"
+  }
+}

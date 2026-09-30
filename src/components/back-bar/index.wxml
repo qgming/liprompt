@@ -1,0 +1,6 @@
+<view class="back-bar" style="padding-top:{{safeTop}}px;">
+  <view class="back-pill" style="height:{{barHeight}}px;" bindtap="onBack" hover-class="pill-hover">
+    <view class="back-arrow"></view>
+    <text class="back-label">{{label}}</text>
+  </view>
+</view>

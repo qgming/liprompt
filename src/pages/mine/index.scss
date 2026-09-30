@@ -1,0 +1,306 @@
+@use '../../styles/mixins' as *;
+
+.container,
+.page-scroll {
+  @include lp-viewport-page;
+}
+
+.hero,
+.section {
+  padding-left: $lp-page-padding;
+  padding-right: $lp-page-padding;
+}
+
+.eyebrow,
+.title,
+.section-title,
+.section-meta,
+.stat-label,
+.stat-value,
+.card-title,
+.card-meta,
+.about-title,
+.about-desc,
+.about-subtitle,
+.project-name,
+.project-url,
+.update-title,
+.update-desc {
+  display: block;
+}
+
+.hero {
+  padding-top: 116rpx;
+}
+
+.eyebrow {
+  font-size: 22rpx;
+  letter-spacing: 3rpx;
+  color: $lp-text-tertiary;
+}
+
+.title {
+  margin-top: 14rpx;
+  font-size: 54rpx;
+  font-weight: 700;
+  line-height: 1.12;
+  color: $lp-text-primary;
+}
+
+.surface {
+  @include lp-card;
+}
+
+.stat-card,
+.favorite-card,
+.about-card {
+  padding: 28rpx;
+}
+
+.section {
+  margin-top: 30rpx;
+}
+
+.section-header,
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-header {
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: $lp-text-primary;
+}
+
+.section-meta,
+.card-meta {
+  font-size: 24rpx;
+  color: $lp-text-tertiary;
+}
+
+.stats-row {
+  display: flex;
+  gap: 16rpx;
+}
+
+.stats-row .stat-card {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: $lp-text-secondary;
+}
+
+.stat-value {
+  margin-top: 18rpx;
+  font-size: 56rpx;
+  font-weight: 700;
+  line-height: 1;
+  color: $lp-text-primary;
+}
+
+.waterfall {
+  display: flex;
+  align-items: flex-start;
+  gap: $lp-column-gap;
+}
+
+.waterfall-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $lp-column-gap;
+}
+
+.favorite-card {
+  width: 100%;
+}
+
+.favorite-card:active {
+  @include lp-card-active;
+}
+
+.type-badge,
+.favorite-action,
+.tag {
+  border-radius: $lp-radius-pill;
+  font-size: 22rpx;
+  line-height: 1;
+}
+
+.type-badge,
+.favorite-action {
+  padding: 10rpx 18rpx;
+}
+
+.type-badge {
+  @include lp-fill-control;
+  color: $lp-text-secondary;
+}
+
+.type-badge.text {
+  color: $lp-accent-text;
+}
+
+.favorite-action {
+  @include lp-primary-control;
+}
+
+.emoji {
+  margin-top: 18rpx;
+  font-size: 48rpx;
+  line-height: 1;
+}
+
+.card-title {
+  margin-top: 16rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 1.42;
+  color: $lp-text-primary;
+  word-break: break-word;
+}
+
+.card-meta {
+  margin-top: 12rpx;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 18rpx;
+}
+
+.tag {
+  @include lp-fill-control;
+  padding: 7rpx 14rpx;
+  color: $lp-text-secondary;
+}
+
+.about-card {
+  padding: 34rpx 30rpx 30rpx;
+}
+
+.about-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: $lp-text-primary;
+}
+
+.about-desc {
+  margin-top: 14rpx;
+  font-size: 24rpx;
+  line-height: 1.8;
+  color: $lp-text-secondary;
+}
+
+.about-divider {
+  height: 1rpx;
+  margin: 24rpx 0 20rpx;
+  background: $lp-border-subtle;
+}
+
+.about-subtitle {
+  font-size: 22rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  color: $lp-text-tertiary;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 18rpx;
+}
+
+.project-item {
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid $lp-border-subtle;
+}
+
+.project-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.project-item:active {
+  opacity: 0.72;
+}
+
+.project-name {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: $lp-text-primary;
+}
+
+.project-url {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  line-height: 1.6;
+  color: $lp-text-secondary;
+  word-break: break-all;
+}
+
+.update-section {
+  padding-bottom: 56rpx;
+}
+
+.update-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22rpx;
+  padding: 28rpx;
+}
+
+.update-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.update-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: $lp-text-primary;
+}
+
+.update-desc {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: $lp-text-secondary;
+}
+
+.update-button {
+  @include lp-primary-control($lp-radius-control);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 148rpx;
+  min-height: 72rpx;
+  padding: 0 24rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.update-button:active {
+  background: $lp-accent-bg-active;
+  color: $lp-accent-text;
+}
+
+.update-button.refreshing {
+  background: $lp-fill-bg-active;
+  color: $lp-text-tertiary;
+}

@@ -1,0 +1,68 @@
+<view class="container">
+  <lp-loading-card wx:if="{{loading}}" title="正在加载详情" desc="提示词与图片按需加载" />
+
+  <block wx:elif="{{item}}">
+    <lp-back-bar />
+
+    <view class="detail-content">
+      <view class="gallery-section" wx:if="{{isImage && images.length}}">
+        <swiper
+          class="gallery-swiper"
+          style="height:{{galleryHeight}}px;"
+          circular="{{true}}"
+          indicator-dots="{{images.length > 1}}"
+          indicator-active-color="#a66f24"
+          bindchange="onGalleryChange"
+        >
+          <swiper-item wx:for="{{images}}" wx:for-item="img" wx:for-index="idx" wx:key="idx">
+            <image
+              class="gallery-image"
+              src="{{img}}"
+              mode="widthFix"
+              data-index="{{idx}}"
+              bindload="onGalleryImageLoad"
+              bindtap="onPreview"
+            />
+          </swiper-item>
+        </swiper>
+      </view>
+
+      <view class="header-section">
+        <view class="header-top">
+          <view class="prompt-emoji" wx:if="{{item.emoji}}">{{item.emoji}}</view>
+          <view
+            class="favorite-btn {{isFavorite ? 'active' : ''}}"
+            bindtap="onToggleFavorite"
+          >{{isFavorite ? '已收藏' : '收藏'}}</view>
+        </view>
+        <text class="prompt-title">{{item.name}}</text>
+        <text class="prompt-description" user-select="{{true}}">{{item.description}}</text>
+        <text class="prompt-meta" wx:if="{{isImage && item.author}}">{{item.author}}</text>
+        <view class="prompt-tags" wx:if="{{item.group.length}}">
+          <text class="tag" wx:for="{{item.group}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+        </view>
+      </view>
+
+      <view class="content-section">
+        <view class="section-header">
+          <text class="section-title">完整提示词</text>
+          <view class="section-actions">
+            <button class="share-btn" open-type="share">分享给好友</button>
+            <view class="copy-btn" bindtap="onCopy">复制</view>
+          </view>
+        </view>
+        <view class="prompt-content">
+          <text class="content-text" user-select="{{true}}">{{promptText}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:else class="empty-state" style="padding-top:{{emptyTop}}px;">
+    <view class="empty-icon">{{error ? '⚠️' : '📭'}}</view>
+    <text class="empty-text">{{error ? error : '提示词不存在或已下线'}}</text>
+    <view class="back-btn" bindtap="onTabHome">
+      <text class="back-text">返回首页</text>
+    </view>
+  </view>
+</view>

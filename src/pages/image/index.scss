@@ -1,0 +1,62 @@
+@use '../../styles/mixins' as *;
+
+.container,
+.page-scroll {
+  @include lp-viewport-page;
+}
+
+.waterfall,
+.list-footer {
+  padding-left: $lp-page-padding;
+  padding-right: $lp-page-padding;
+}
+
+.chips {
+  margin-top: 20rpx;
+  white-space: nowrap;
+}
+
+.chip-list {
+  display: inline-flex;
+  gap: 12rpx;
+  padding: 2rpx 2rpx 8rpx;
+}
+
+.chip {
+  @include lp-control;
+  padding: 13rpx 22rpx;
+  font-size: 24rpx;
+  color: $lp-text-secondary;
+}
+
+.chip.active {
+  @include lp-accent-fill;
+  font-weight: 600;
+}
+
+.waterfall {
+  display: flex;
+  align-items: flex-start;
+  gap: $lp-column-gap;
+  margin-top: 26rpx;
+  padding-bottom: 28rpx;
+}
+
+.waterfall-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $lp-column-gap;
+}
+
+.list-footer {
+  padding-bottom: 48rpx;
+  text-align: center;
+}
+
+.footer-text {
+  display: block;
+  font-size: 24rpx;
+  color: $lp-text-tertiary;
+}

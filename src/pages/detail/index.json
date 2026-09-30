@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "lp-back-bar": "/components/back-bar/index",
+    "lp-loading-card": "/components/loading-card/index"
+  }
+}

@@ -1,0 +1,4 @@
+<view class="trending-card" bindtap="onTap" hover-class="trending-hover">
+  <view class="trending-emoji" wx:if="{{item.emoji}}">{{item.emoji}}</view>
+  <text class="trending-name">{{item.name}}</text>
+</view>

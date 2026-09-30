@@ -1,0 +1,29 @@
+# 依赖
+node_modules/
+
+# 构建产物：由 src/ 编译生成，不参与版本管理
+/app.js
+/app.json
+/app.wxss
+/sitemap.json
+/pages/
+/components/
+/core/
+/models/
+/repositories/
+/features/
+
+# 旧跨端框架的编译目录
+unpackage/
+
+# 编辑器与系统
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~

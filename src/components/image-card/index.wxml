@@ -1,0 +1,25 @@
+<view class="card" bindtap="onTap" hover-class="card-hover">
+  <view class="cover-wrap">
+    <image
+      wx:if="{{cover && !failed}}"
+      class="cover"
+      src="{{cover}}"
+      mode="widthFix"
+      lazy-load="{{true}}"
+      bindload="onLoad"
+      binderror="onError"
+    />
+    <view wx:else class="cover-fallback">
+      <text class="fallback-text">封面加载失败</text>
+    </view>
+    <view class="count" wx:if="{{item.images > 1}}">{{item.images}} 图</view>
+  </view>
+
+  <view class="card-content">
+    <text class="card-title">{{item.name}}</text>
+    <view class="card-meta">
+      <text class="card-author">{{item.author}}</text>
+      <text class="card-section" wx:if="{{item.section}}">#{{item.section}}</text>
+    </view>
+  </view>
+</view>

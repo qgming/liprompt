@@ -1,0 +1,41 @@
+@use '../../styles/mixins' as *;
+
+.back-bar {
+  display: flex;
+  align-items: flex-start;
+  padding-left: $lp-page-padding;
+  padding-right: $lp-page-padding;
+  padding-bottom: 16rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.back-pill {
+  @include lp-card($lp-radius-pill);
+  display: inline-flex;
+  align-items: center;
+  padding-left: 20rpx;
+  padding-right: 26rpx;
+  gap: 10rpx;
+}
+
+.pill-hover {
+  @include lp-card-active;
+}
+
+.back-arrow {
+  width: 18rpx;
+  height: 18rpx;
+  border-left: 3rpx solid $lp-text-primary;
+  border-bottom: 3rpx solid $lp-text-primary;
+  transform: rotate(45deg);
+  margin-left: 4rpx;
+  flex-shrink: 0;
+}
+
+.back-label {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: $lp-text-primary;
+  line-height: 1;
+}

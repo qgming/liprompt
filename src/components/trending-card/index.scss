@@ -1,0 +1,31 @@
+@use '../../styles/mixins' as *;
+
+.trending-card {
+  @include lp-card;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 14rpx;
+  height: 92rpx;
+  max-width: 360rpx;
+  padding: 12rpx 22rpx;
+}
+
+.trending-hover {
+  @include lp-card-active;
+}
+
+.trending-emoji {
+  flex-shrink: 0;
+  font-size: 42rpx;
+}
+
+.trending-name {
+  flex: 0 1 auto;
+  max-width: 250rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 1.3;
+  color: $lp-text-primary;
+  @include lp-text-ellipsis;
+}

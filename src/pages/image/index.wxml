@@ -1,0 +1,70 @@
+<view class="container">
+  <scroll-view
+    class="page-scroll"
+    scroll-y="{{true}}"
+    enhanced="{{true}}"
+    show-scrollbar="{{false}}"
+    lower-threshold="240"
+    bindscrolltolower="onScrollToLower"
+  >
+    <lp-hero-search
+      eyebrow="GPT-IMAGE-2"
+      title="图片提示库"
+      placeholder="搜索图片、作者、提示词..."
+      bind:input="onSearchInput"
+    >
+      <scroll-view class="chips" scroll-x="{{true}}" show-scrollbar="{{false}}" wx:if="{{categories.length}}">
+        <view class="chip-list">
+          <view
+            class="chip {{selectedCategory === item ? 'active' : ''}}"
+            wx:for="{{categories}}"
+            wx:key="*this"
+            data-category="{{item}}"
+            bindtap="onSelectCategory"
+          >{{item}}</view>
+        </view>
+      </scroll-view>
+    </lp-hero-search>
+
+    <lp-loading-card
+      wx:if="{{loading}}"
+      title="正在加载图片提示"
+      desc="索引按需加载，封面走本地缓存"
+    />
+
+    <lp-empty-state
+      wx:elif="{{error}}"
+      icon="⚠️"
+      title="加载失败"
+      desc="{{error}}"
+      action-text="重新加载"
+      bind:action="onRetry"
+    />
+
+    <block wx:else>
+      <view class="waterfall" wx:if="{{total}}">
+        <view class="waterfall-column" wx:for="{{columns}}" wx:for-item="column" wx:key="key">
+          <lp-image-card
+            wx:for="{{column.items}}"
+            wx:for-item="prompt"
+            wx:key="id"
+            item="{{prompt}}"
+            bind:cardtap="onCardTap"
+            bind:measured="onCardMeasured"
+          />
+        </view>
+      </view>
+
+      <lp-empty-state
+        wx:else
+        icon="🖼️"
+        title="没有找到匹配内容"
+        desc="换个关键词或分类会更快找到灵感"
+      />
+
+      <view class="list-footer" wx:if="{{total}}">
+        <text class="footer-text" wx:if="{{!hasMore}}">已经到底了</text>
+      </view>
+    </block>
+  </scroll-view>
+</view>

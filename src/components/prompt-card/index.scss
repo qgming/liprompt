@@ -1,0 +1,62 @@
+@use '../../styles/mixins' as *;
+
+.card {
+  @include lp-card;
+  padding: 24rpx 24rpx 22rpx;
+  overflow: hidden;
+}
+
+.card-hover {
+  @include lp-card-active;
+}
+
+.emoji,
+.title,
+.desc {
+  display: block;
+}
+
+.emoji {
+  width: 100%;
+  font-size: 50rpx;
+  line-height: 1.05;
+  text-align: left;
+}
+
+.title {
+  margin-top: 16rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 1.42;
+  color: $lp-text-primary;
+  word-break: break-word;
+}
+
+.desc {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: $lp-text-secondary;
+  word-break: break-word;
+  @include lp-line-clamp(4);
+}
+
+.hit {
+  color: $lp-accent-text;
+  background: $lp-accent-bg;
+  border-radius: 4rpx;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 20rpx;
+}
+
+.tag {
+  @include lp-fill-control;
+  padding: 7rpx 14rpx;
+  font-size: 22rpx;
+  color: $lp-text-secondary;
+}

@@ -1,0 +1,34 @@
+<view class="card" bindtap="onTap" hover-class="card-hover">
+  <text class="emoji" wx:if="{{item.emoji}}">{{item.emoji}}</text>
+
+  <text class="title">
+    <text
+      wx:for="{{item.nameParts}}"
+      wx:for-item="part"
+      wx:for-index="pi"
+      wx:key="pi"
+      class="{{part.hit ? 'hit' : ''}}"
+    >{{part.text}}</text>
+  </text>
+
+  <text class="desc">
+    <text
+      wx:for="{{item.descParts}}"
+      wx:for-item="part"
+      wx:for-index="di"
+      wx:key="di"
+      class="{{part.hit ? 'hit' : ''}}"
+    >{{part.text}}</text>
+  </text>
+
+  <view class="tags" wx:if="{{item.tags.length}}">
+    <text
+      class="tag"
+      wx:for="{{item.tags}}"
+      wx:for-item="tag"
+      wx:key="*this"
+      data-tag="{{tag}}"
+      catchtap="onTag"
+    >{{tag}}</text>
+  </view>
+</view>

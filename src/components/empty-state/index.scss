@@ -1,0 +1,44 @@
+@use '../../styles/mixins' as *;
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 40rpx 80rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 88rpx;
+  line-height: 1;
+}
+
+.empty-title,
+.empty-desc {
+  display: block;
+}
+
+.empty-title {
+  margin-top: 24rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: $lp-text-primary;
+}
+
+.empty-desc {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: $lp-text-secondary;
+}
+
+.empty-action {
+  @include lp-primary-control($lp-radius-control);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 28rpx;
+  padding: 18rpx 32rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+}

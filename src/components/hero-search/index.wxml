@@ -1,0 +1,21 @@
+<view class="hero-shell" style="padding-top:{{safeTop}}px;">
+  <view class="hero">
+    <text class="eyebrow" wx:if="{{eyebrow}}">{{eyebrow}}</text>
+    <text class="title">{{title}}</text>
+  </view>
+
+  <view class="search-box">
+    <input
+      class="search-input"
+      value="{{innerValue}}"
+      placeholder="{{placeholder}}"
+      placeholder-class="search-placeholder"
+      bindinput="onInput"
+      confirm-type="search"
+    />
+    <view class="search-icon" wx:if="{{!innerValue}}"></view>
+    <view class="clear-btn" wx:else bindtap="onClear">×</view>
+  </view>
+
+  <slot />
+</view>

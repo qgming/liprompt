@@ -1,0 +1,27 @@
+@use './styles/mixins' as *;
+
+page {
+  @include lp-page;
+  color: $lp-text-primary;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+view,
+text,
+image,
+input,
+scroll-view,
+swiper,
+swiper-item {
+  box-sizing: border-box;
+}
+
+/* 隐藏滚动条 */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}

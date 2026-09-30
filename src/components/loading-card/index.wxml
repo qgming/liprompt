@@ -1,0 +1,7 @@
+<view class="loading-state">
+  <view class="loading-card">
+    <view class="spinner"></view>
+    <text class="loading-title">{{title}}</text>
+    <text class="loading-desc" wx:if="{{desc}}">{{desc}}</text>
+  </view>
+</view>

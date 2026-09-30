@@ -1,0 +1,68 @@
+<view class="container">
+  <lp-back-bar />
+
+  <lp-loading-card wx:if="{{loading}}" title="正在加载分类" desc="按分类整理提示词索引" />
+
+  <view wx:elif="{{error}}" class="error-wrap">
+    <lp-empty-state icon="⚠️" title="加载失败" desc="{{error}}" action-text="重新加载" bind:action="onRetry" />
+  </view>
+
+  <view wx:else class="page-layout">
+    <scroll-view class="sidebar" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+      <view class="category-nav">
+        <view
+          class="nav-item {{selected === nav.name ? 'active' : ''}}"
+          wx:for="{{navItems}}"
+          wx:for-item="nav"
+          wx:key="name"
+          data-name="{{nav.name}}"
+          bindtap="onSelectCategory"
+        >
+          <text class="nav-name">{{nav.name}}</text>
+          <view class="nav-count-badge">{{nav.count}}</view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <scroll-view
+      class="content-area"
+      scroll-y="{{true}}"
+      enhanced="{{true}}"
+      show-scrollbar="{{false}}"
+      scroll-top="{{contentScrollTop}}"
+      lower-threshold="240"
+      bindscrolltolower="onScrollToLower"
+    >
+      <view class="content-wrapper" wx:if="{{selected}}">
+        <view
+          class="prompt-card"
+          wx:for="{{list}}"
+          wx:for-item="prompt"
+          wx:key="id"
+          data-id="{{prompt.id}}"
+          bindtap="onOpenDetail"
+        >
+          <view class="card-header">
+            <text class="card-emoji" wx:if="{{prompt.emoji}}">{{prompt.emoji}}</text>
+            <text class="card-name">{{prompt.name}}</text>
+          </view>
+          <text class="card-desc">{{prompt.description}}</text>
+          <view class="card-tags" wx:if="{{prompt.group.length}}">
+            <text class="tag" wx:for="{{prompt.group}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+          </view>
+        </view>
+
+        <view class="list-footer" wx:if="{{total}}">
+          <text class="footer-text">{{hasMore ? '上拉加载更多' : '本分类共 ' + total + ' 条'}}</text>
+        </view>
+      </view>
+
+      <lp-empty-state
+        wx:else
+        icon="📂"
+        title="选择分类"
+        desc="请从左侧选择一个分类查看提示词"
+      />
+    </scroll-view>
+  </view>
+</view>

@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "lp-hero-search": "/components/hero-search/index",
+    "lp-loading-card": "/components/loading-card/index",
+    "lp-empty-state": "/components/empty-state/index",
+    "lp-trending-card": "/components/trending-card/index",
+    "lp-prompt-card": "/components/prompt-card/index"
+  }
+}

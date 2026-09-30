@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "lp-loading-card": "/components/loading-card/index",
+    "lp-empty-state": "/components/empty-state/index"
+  }
+}

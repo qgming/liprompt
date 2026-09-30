@@ -1,0 +1,112 @@
+<view class="container">
+  <scroll-view
+    class="page-scroll"
+    scroll-y="{{true}}"
+    enhanced="{{true}}"
+    show-scrollbar="{{false}}"
+  >
+    <view class="hero">
+      <text class="eyebrow">MY PROMPTS</text>
+      <text class="title">我的</text>
+    </view>
+
+    <lp-loading-card wx:if="{{loading}}" title="正在整理我的提示词" desc="读取收藏与提示词总量" />
+
+    <block wx:else>
+      <view class="section">
+        <view class="stats-row">
+          <view class="surface stat-card">
+            <text class="stat-label">文本提示词</text>
+            <text class="stat-value">{{stats.text}}</text>
+          </view>
+          <view class="surface stat-card">
+            <text class="stat-label">图片提示词</text>
+            <text class="stat-value">{{stats.image}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-header">
+          <text class="section-title">收藏</text>
+          <text class="section-meta">{{favoriteCount}} 条</text>
+        </view>
+
+        <view class="waterfall" wx:if="{{favoriteCount}}">
+          <view class="waterfall-column" wx:for="{{columns}}" wx:for-item="column" wx:key="key">
+            <view
+              class="surface favorite-card"
+              wx:for="{{column.items}}"
+              wx:for-item="fav"
+              wx:key="id"
+              data-id="{{fav.id}}"
+              bindtap="onOpenFavorite"
+            >
+              <view class="card-top">
+                <view class="type-badge {{fav.promptType === 'image' ? 'image' : 'text'}}">
+                  {{fav.promptType === 'image' ? '图片提示' : '文本提示'}}
+                </view>
+                <view class="favorite-action" data-id="{{fav.id}}" catchtap="onRemoveFavorite">已收藏</view>
+              </view>
+
+              <view class="emoji" wx:if="{{fav.emoji}}">{{fav.emoji}}</view>
+              <text class="card-title">{{fav.name}}</text>
+              <text class="card-meta" wx:if="{{fav.author && fav.promptType !== 'image'}}">{{fav.author}}</text>
+
+              <view class="tags" wx:if="{{fav.group.length}}">
+                <text class="tag" wx:for="{{fav.group}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <lp-empty-state
+          wx:else
+          icon="⭐"
+          title="还没有收藏内容"
+          desc="在详情页点一下收藏，常用提示词就会出现在这里"
+          action-text="去看看精选"
+          bind:action="onGoExplore"
+        />
+      </view>
+
+      <view class="section">
+        <view class="section-header">
+          <text class="section-title">关于</text>
+        </view>
+        <view class="surface about-card">
+          <text class="about-title">流金提示词</text>
+          <text class="about-desc">聚合文本提示词与图片提示的小程序，方便随时收藏、回看和复用灵感。</text>
+          <view class="about-divider"></view>
+          <text class="about-subtitle">参考开源项目</text>
+          <view class="project-list">
+            <view
+              class="project-item"
+              wx:for="{{projects}}"
+              wx:for-item="project"
+              wx:key="url"
+              data-url="{{project.url}}"
+              bindtap="onCopyProject"
+            >
+              <text class="project-name">{{project.name}}</text>
+              <text class="project-url">{{project.url}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="section update-section">
+        <view class="surface update-card">
+          <view class="update-copy">
+            <text class="update-title">内容更新</text>
+            <text class="update-desc">数据来源：{{sourceMode}}</text>
+          </view>
+          <view
+            class="update-button {{refreshing ? 'refreshing' : ''}}"
+            bindtap="onRefreshContent"
+          >{{refreshing ? '更新中' : '立即更新'}}</view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+</view>

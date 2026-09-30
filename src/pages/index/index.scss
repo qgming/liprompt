@@ -1,0 +1,98 @@
+@use '../../styles/mixins' as *;
+
+.container,
+.page-scroll {
+  @include lp-viewport-page;
+}
+
+.recommend-section,
+.results-bar,
+.waterfall,
+.list-footer {
+  padding-left: $lp-page-padding;
+  padding-right: $lp-page-padding;
+}
+
+.recommend-section {
+  margin-top: 24rpx;
+}
+
+.recommend-header {
+  margin-bottom: 22rpx;
+}
+
+.recommend-title,
+.results-title,
+.results-count,
+.footer-text {
+  display: block;
+}
+
+.recommend-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: $lp-text-primary;
+}
+
+.recommend-scroll {
+  white-space: nowrap;
+}
+
+.recommend-list {
+  display: inline-flex;
+  gap: 18rpx;
+  padding: 2rpx 2rpx 10rpx;
+}
+
+.results-bar {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-top: 30rpx;
+}
+
+.results-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: $lp-text-primary;
+}
+
+.results-count {
+  flex: 1;
+  font-size: 24rpx;
+  color: $lp-text-tertiary;
+}
+
+.results-action {
+  @include lp-control;
+  @include lp-accent-fill;
+  padding: 13rpx 22rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.waterfall {
+  display: flex;
+  align-items: flex-start;
+  gap: $lp-column-gap;
+  margin-top: 22rpx;
+  padding-bottom: 28rpx;
+}
+
+.waterfall-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $lp-column-gap;
+}
+
+.list-footer {
+  padding-bottom: 48rpx;
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 24rpx;
+  color: $lp-text-tertiary;
+}
